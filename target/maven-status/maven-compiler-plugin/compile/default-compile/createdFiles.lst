@@ -1,0 +1,8 @@
+com\example\controller\UploadImageController$1.class
+com\example\Main.class
+module-info.class
+com\example\controller\TestingController.class
+com\example\util\supabaseUtil.class
+com\example\controller\UploadImageController.class
+com\example\util\dbUtil.class
+com\example\controller\PrimaryController.class

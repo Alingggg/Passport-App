@@ -2,12 +2,10 @@ package com.example.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import com.example.Main;
-import com.example.util.dbUtil;
+import com.example.dao.ImageDAO;
+import com.example.model.Image;
 import com.example.util.supabaseUtil;
 
 import javafx.application.Platform;
@@ -18,7 +16,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 public class UploadImageController {
@@ -27,7 +24,7 @@ public class UploadImageController {
     private Button uploadButton;
     
     @FXML
-    private Button loadImagesButton;
+    private Button backButton;
     
     @FXML
     private ProgressIndicator progressIndicator;
@@ -35,17 +32,17 @@ public class UploadImageController {
     @FXML
     private Label statusLabel;
     
-    @FXML
-    private VBox imageContainer;
+    private ImageDAO imageDAO;
     
     @FXML
     public void initialize() {
+        imageDAO = new ImageDAO();
         uploadButton.setOnAction(event -> uploadImage());
-        loadImagesButton.setOnAction(event -> backToPrimary());
+        backButton.setOnAction(event -> backToPrimary());
     }
     
     /**
-     * Handle image upload to Supabase and store URL in local database
+     * Handle image upload to Supabase and store in database
      */
     private void uploadImage() {
         FileChooser fileChooser = new FileChooser();
@@ -72,8 +69,9 @@ public class UploadImageController {
             uploadTask.setOnSucceeded(e -> {
                 String fileUrl = uploadTask.getValue();
                 if (fileUrl != null) {
-                    // Save URL to database
-                    saveImageUrlToDatabase(fileUrl);
+                    // Create Image object and save to database
+                    Image image = new Image(fileUrl, selectedFile.getName());
+                    saveImageToDatabase(image);
                 } else {
                     Platform.runLater(() -> {
                         progressIndicator.setVisible(false);
@@ -98,37 +96,40 @@ public class UploadImageController {
     }
     
     /**
-     * Save the image URL to the local database
+     * Save the image to the database using DAO
      */
-    private void saveImageUrlToDatabase(String imageUrl) {
-        try {
-            Connection conn = dbUtil.getConnection();
-            String query = "INSERT INTO images (supabase_url) VALUES (?)";
-            
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, imageUrl);
-                int rowsAffected = pstmt.executeUpdate();
-                
-                Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
-                    
-                    if (rowsAffected > 0) {
-                        statusLabel.setText("Upload successful");
-                        showAlert("Success", "Image was uploaded successfully!\nURL: " + imageUrl);
-                    } else {
-                        statusLabel.setText("Database update failed");
-                        showAlert("Error", "Failed to save image URL to database");
-                    }
-                });
+    private void saveImageToDatabase(Image image) {
+        Task<Boolean> saveTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return imageDAO.saveImage(image);
             }
-        } catch (SQLException e) {
+        };
+        
+        saveTask.setOnSucceeded(e -> {
+            Platform.runLater(() -> {
+                progressIndicator.setVisible(false);
+                
+                if (saveTask.getValue()) {
+                    statusLabel.setText("Upload successful");
+                    showAlert("Success", "Image uploaded successfully!\nFile: " + image.getFileName());
+                } else {
+                    statusLabel.setText("Database save failed");
+                    showAlert("Error", "Failed to save image to database");
+                }
+            });
+        });
+        
+        saveTask.setOnFailed(e -> {
             Platform.runLater(() -> {
                 progressIndicator.setVisible(false);
                 statusLabel.setText("Database error");
-                showAlert("Database Error", "Error: " + e.getMessage());
-                e.printStackTrace();
+                showAlert("Database Error", "Error saving to database: " + saveTask.getException().getMessage());
+                saveTask.getException().printStackTrace();
             });
-        }
+        });
+        
+        new Thread(saveTask).start();
     }
     
     /**

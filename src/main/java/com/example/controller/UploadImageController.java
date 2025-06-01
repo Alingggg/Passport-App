@@ -2,11 +2,14 @@ package com.example.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.Main;
 import com.example.dao.ImageDAO;
 import com.example.model.Image;
 import com.example.util.supabaseUtil;
+import com.example.util.UserSession;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -21,7 +24,13 @@ import javafx.stage.FileChooser;
 public class UploadImageController {
     
     @FXML
-    private Button uploadButton;
+    private Button uploadValidIdButton;
+    
+    @FXML
+    private Button uploadBirthCertButton;
+    
+    @FXML
+    private Button submitButton;
     
     @FXML
     private Button backButton;
@@ -30,106 +39,211 @@ public class UploadImageController {
     private ProgressIndicator progressIndicator;
     
     @FXML
-    private Label statusLabel;
+    private Label validIdStatusLabel;
+    
+    @FXML
+    private Label birthCertStatusLabel;
+    
+    @FXML
+    private Label generalStatusLabel;
     
     private ImageDAO imageDAO;
+    private File validIdFile;
+    private File birthCertFile;
     
     @FXML
     public void initialize() {
         imageDAO = new ImageDAO();
-        uploadButton.setOnAction(event -> uploadImage());
+        
+        // Set up temporary user session for testing
+        if (!UserSession.getInstance().isAuthenticated()) {
+            UserSession.getInstance().login(1, "testuser");
+        }
+        
+        uploadValidIdButton.setOnAction(event -> selectDocument("Valid ID"));
+        uploadBirthCertButton.setOnAction(event -> selectDocument("Birth Certificate"));
+        submitButton.setOnAction(event -> submitDocuments());
         backButton.setOnAction(event -> backToPrimary());
+        
+        // Initially disable submit button
+        submitButton.setDisable(true);
     }
     
     /**
-     * Handle image upload to Supabase and store in database
+     * Handle document selection (not upload yet)
      */
-    private void uploadImage() {
+    private void selectDocument(String documentType) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image File");
+        fileChooser.setTitle("Select " + documentType + " File");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.pdf")
         );
         
-        File selectedFile = fileChooser.showOpenDialog(uploadButton.getScene().getWindow());
+        File selectedFile = fileChooser.showOpenDialog(uploadValidIdButton.getScene().getWindow());
         
         if (selectedFile != null) {
-            // Show progress indicator
-            progressIndicator.setVisible(true);
-            statusLabel.setText("Uploading...");
+            // Store the selected file locally (don't upload yet)
+            if (documentType.equals("Valid ID")) {
+                validIdFile = selectedFile;
+                validIdStatusLabel.setText("✓ Selected: " + selectedFile.getName());
+                validIdStatusLabel.setStyle("-fx-text-fill: blue;");
+            } else {
+                birthCertFile = selectedFile;
+                birthCertStatusLabel.setText("✓ Selected: " + selectedFile.getName());
+                birthCertStatusLabel.setStyle("-fx-text-fill: blue;");
+            }
             
-            // Create a background task for uploading
-            Task<String> uploadTask = new Task<>() {
-                @Override
-                protected String call() throws Exception {
-                    return supabaseUtil.uploadFile(selectedFile);
-                }
-            };
+            generalStatusLabel.setText(documentType + " file selected. Ready to submit when both documents are selected.");
             
-            uploadTask.setOnSucceeded(e -> {
-                String fileUrl = uploadTask.getValue();
-                if (fileUrl != null) {
-                    // Create Image object and save to database
-                    Image image = new Image(fileUrl, selectedFile.getName());
-                    saveImageToDatabase(image);
-                } else {
-                    Platform.runLater(() -> {
-                        progressIndicator.setVisible(false);
-                        statusLabel.setText("Upload failed");
-                        showAlert("Error", "Failed to upload image to Supabase");
-                    });
-                }
-            });
-            
-            uploadTask.setOnFailed(e -> {
-                Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
-                    statusLabel.setText("Upload failed");
-                    showAlert("Error", "Upload failed: " + uploadTask.getException().getMessage());
-                    uploadTask.getException().printStackTrace();
-                });
-            });
-            
-            // Start the upload task
-            new Thread(uploadTask).start();
+            // Enable submit button if both documents are selected
+            checkSubmitButtonState();
         }
     }
     
     /**
-     * Save the image to the database using DAO
+     * Submit both documents - upload to Supabase and save to database
      */
-    private void saveImageToDatabase(Image image) {
-        Task<Boolean> saveTask = new Task<>() {
+    private void submitDocuments() {
+        if (validIdFile == null || birthCertFile == null) {
+            showAlert("Error", "Please select both Valid ID and Birth Certificate files before submitting.");
+            return;
+        }
+        
+        progressIndicator.setVisible(true);
+        generalStatusLabel.setText("Uploading documents to Supabase and saving to database...");
+        setButtonsEnabled(false);
+        
+        Task<Boolean> submitTask = new Task<>() {
             @Override
             protected Boolean call() throws Exception {
-                return imageDAO.saveImage(image);
+                // Upload Valid ID to Supabase
+                updateMessage("Uploading Valid ID to Supabase...");
+                String validIdFileUrl = supabaseUtil.uploadFile(validIdFile);
+                if (validIdFileUrl == null) {
+                    throw new Exception("Failed to upload Valid ID to Supabase");
+                }
+                
+                // Upload Birth Certificate to Supabase
+                updateMessage("Uploading Birth Certificate to Supabase...");
+                String birthCertFileUrl = supabaseUtil.uploadFile(birthCertFile);
+                if (birthCertFileUrl == null) {
+                    throw new Exception("Failed to upload Birth Certificate to Supabase");
+                }
+                
+                // Create image records for database
+                List<Image> images = new ArrayList<>();
+                
+                // Create Valid ID image record
+                Image validIdImage = new Image();
+                validIdImage.setFilename(validIdFile.getName());
+                validIdImage.setFileType("Valid ID");
+                validIdImage.setSupabaseUrl(validIdFileUrl);
+                images.add(validIdImage);
+                
+                // Create Birth Certificate image record
+                Image birthCertImage = new Image();
+                birthCertImage.setFilename(birthCertFile.getName());
+                birthCertImage.setFileType("Birth Certificate");
+                birthCertImage.setSupabaseUrl(birthCertFileUrl);
+                images.add(birthCertImage);
+                
+                // Save both images to database
+                updateMessage("Saving to database...");
+                boolean allSaved = true;
+                for (Image image : images) {
+                    if (!imageDAO.saveImage(image)) {
+                        allSaved = false;
+                        break;
+                    }
+                }
+                
+                if (!allSaved) {
+                    throw new Exception("Failed to save some images to database");
+                }
+                
+                return true;
             }
         };
         
-        saveTask.setOnSucceeded(e -> {
+        // Bind the task message to the general status label
+        generalStatusLabel.textProperty().bind(submitTask.messageProperty());
+        
+        submitTask.setOnSucceeded(e -> {
             Platform.runLater(() -> {
                 progressIndicator.setVisible(false);
+                generalStatusLabel.textProperty().unbind();
+                setButtonsEnabled(true);
                 
-                if (saveTask.getValue()) {
-                    statusLabel.setText("Upload successful");
-                    showAlert("Success", "Image uploaded successfully!\nFile: " + image.getFileName());
+                if (submitTask.getValue()) {
+                    // Update status labels to show successful upload
+                    validIdStatusLabel.setText("✓ Uploaded: " + validIdFile.getName());
+                    validIdStatusLabel.setStyle("-fx-text-fill: green;");
+                    
+                    birthCertStatusLabel.setText("✓ Uploaded: " + birthCertFile.getName());
+                    birthCertStatusLabel.setStyle("-fx-text-fill: green;");
+                    
+                    generalStatusLabel.setText("Documents uploaded and saved successfully!");
+                    
+                    showAlert("Success", 
+                        "Both documents have been uploaded to Supabase and saved to the database!\n\n" +
+                        "Valid ID: " + validIdFile.getName() + "\n" +
+                        "Birth Certificate: " + birthCertFile.getName());
+                    
+                    // Reset the form
+                    resetForm();
                 } else {
-                    statusLabel.setText("Database save failed");
-                    showAlert("Error", "Failed to save image to database");
+                    generalStatusLabel.setText("Failed to process documents");
+                    showAlert("Error", "Failed to process documents");
                 }
             });
         });
         
-        saveTask.setOnFailed(e -> {
+        submitTask.setOnFailed(e -> {
             Platform.runLater(() -> {
                 progressIndicator.setVisible(false);
-                statusLabel.setText("Database error");
-                showAlert("Database Error", "Error saving to database: " + saveTask.getException().getMessage());
-                saveTask.getException().printStackTrace();
+                generalStatusLabel.textProperty().unbind();
+                setButtonsEnabled(true);
+                generalStatusLabel.setText("Error occurred during submission");
+                showAlert("Error", "Error during submission: " + submitTask.getException().getMessage());
+                submitTask.getException().printStackTrace();
             });
         });
         
-        new Thread(saveTask).start();
+        new Thread(submitTask).start();
+    }
+    
+    /**
+     * Reset the form after successful submission
+     */
+    private void resetForm() {
+        validIdFile = null;
+        birthCertFile = null;
+        
+        validIdStatusLabel.setText("Not selected");
+        validIdStatusLabel.setStyle("-fx-text-fill: #666;");
+        
+        birthCertStatusLabel.setText("Not selected");
+        birthCertStatusLabel.setStyle("-fx-text-fill: #666;");
+        
+        submitButton.setDisable(true);
+        generalStatusLabel.setText("Ready to upload documents");
+    }
+    
+    /**
+     * Check if submit button should be enabled
+     */
+    private void checkSubmitButtonState() {
+        submitButton.setDisable(validIdFile == null || birthCertFile == null);
+    }
+    
+    /**
+     * Enable/disable buttons
+     */
+    private void setButtonsEnabled(boolean enabled) {
+        uploadValidIdButton.setDisable(!enabled);
+        uploadBirthCertButton.setDisable(!enabled);
+        submitButton.setDisable(!enabled || validIdFile == null || birthCertFile == null);
+        backButton.setDisable(!enabled);
     }
     
     /**

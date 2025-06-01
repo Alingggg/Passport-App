@@ -2,9 +2,9 @@ package com.example.dao;
 
 import com.example.model.Image;
 import com.example.util.dbUtil;
+import com.example.util.UserSession;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,31 +16,27 @@ public class ImageDAO {
      * @return true if successful, false otherwise
      */
     public boolean saveImage(Image image) {
-        String query = "INSERT INTO images (supabase_url, file_name, uploaded_at) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO images (user_id, filename, file_type, supabase_url) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = dbUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, image.getSupabaseUrl());
-            pstmt.setString(2, image.getFileName());
-            pstmt.setTimestamp(3, Timestamp.valueOf(image.getUploadedAt()));
-            
-            int rowsAffected = pstmt.executeUpdate();
-            
-            if (rowsAffected > 0) {
-                // Get the generated ID
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        image.setId(rs.getInt(1));
-                    }
-                }
-                return true;
+            // Use the current user's ID from session
+            Integer userId = UserSession.getInstance().getUserId();
+            if (userId == null) {
+                return false;
             }
             
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, image.getFilename());
+            pstmt.setString(3, image.getFileType());
+            pstmt.setString(4, image.getSupabaseUrl());
+            
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
     
     /**
@@ -49,7 +45,7 @@ public class ImageDAO {
      */
     public List<Image> getAllImages() {
         List<Image> images = new ArrayList<>();
-        String query = "SELECT * FROM images ORDER BY uploaded_at DESC";
+        String query = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images ORDER BY uploaded_at DESC";
         
         try (Connection conn = dbUtil.getConnection();
              Statement stmt = conn.createStatement();
@@ -58,8 +54,10 @@ public class ImageDAO {
             while (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
+                image.setUserId(rs.getInt("user_id"));
+                image.setFilename(rs.getString("filename"));
+                image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
-                image.setFileName(rs.getString("file_name"));
                 image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
                 
                 images.add(image);
@@ -77,7 +75,7 @@ public class ImageDAO {
      * @return Image object or null if not found
      */
     public Image getImageById(int id) {
-        String query = "SELECT * FROM images WHERE id = ?";
+        String query = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE id = ?";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -88,8 +86,10 @@ public class ImageDAO {
             if (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
+                image.setUserId(rs.getInt("user_id"));
+                image.setFilename(rs.getString("filename"));
+                image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
-                image.setFileName(rs.getString("file_name"));
                 image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
                 return image;
             }
@@ -105,18 +105,84 @@ public class ImageDAO {
      * @param id The image ID to delete
      * @return true if successful, false otherwise
      */
-    public boolean deleteImage(int id) {
-        String query = "DELETE FROM images WHERE id = ?";
+    public boolean deleteImage(Integer imageId, Integer userId) {
+        String sql = "DELETE FROM images WHERE id = ? AND user_id = ?";
         
         try (Connection conn = dbUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, imageId);
+            pstmt.setInt(2, userId);
+            
             return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Find images by user ID
+     * @param userId The user ID
+     * @return List of images for the user
+     */
+    public List<Image> findByUserId(Integer userId) {
+        String sql = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE user_id = ?";
+        List<Image> images = new ArrayList<>();
+        
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Image image = new Image();
+                image.setId(rs.getInt("id"));
+                image.setUserId(rs.getInt("user_id"));
+                image.setFilename(rs.getString("filename"));
+                image.setFileType(rs.getString("file_type"));
+                image.setSupabaseUrl(rs.getString("supabase_url"));
+                image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
+                images.add(image);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return images;
+    }
+    
+    /**
+     * Find images by file type for a user
+     * @param userId The user ID
+     * @param fileType The file type
+     * @return List of images matching the file type
+     */
+    public List<Image> findByFileType(Integer userId, String fileType) {
+        String sql = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at " +
+                    "FROM images WHERE user_id = ? AND file_type = ?";
+        List<Image> images = new ArrayList<>();
+        
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, fileType);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Image image = new Image();
+                image.setId(rs.getInt("id"));
+                image.setUserId(rs.getInt("user_id"));
+                image.setFilename(rs.getString("filename"));
+                image.setFileType(rs.getString("file_type"));
+                image.setSupabaseUrl(rs.getString("supabase_url"));
+                image.setUploadedAt(rs.getTimestamp("uploaded_at").toLocalDateTime());
+                images.add(image);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return images;
     }
 }

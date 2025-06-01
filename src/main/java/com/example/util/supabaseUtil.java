@@ -37,7 +37,12 @@ public class supabaseUtil {
      */
     public static String uploadFile(File file) throws IOException {
         // Generate a unique filename to prevent collisions
-        String uniqueFileName = UUID.randomUUID().toString() + "-" + file.getName();
+        String fileName = file.getName()
+            .replaceAll("\\s+", "_")           // Replace spaces with underscores
+            .replaceAll("[^a-zA-Z0-9._-]", "") // Keep only safe characters
+            .toLowerCase();
+        
+        String uniqueFileName = UUID.randomUUID().toString() + "-" + fileName;
         
         byte[] fileContent = Files.readAllBytes(file.toPath());
         String contentType = Files.probeContentType(file.toPath());

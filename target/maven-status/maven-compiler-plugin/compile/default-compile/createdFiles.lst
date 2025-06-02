@@ -7,9 +7,9 @@ com\example\util\supabaseUtil.class
 com\example\dao\ImageDAO.class
 com\example\model\UserWork.class
 com\example\dao\UserMinorInfoDAO.class
-com\example\model\UserAccount.class
 module-info.class
-com\example\dao\UserAccountDAO.class
+com\example\dao\AdminInfoDAO.class
+com\example\dao\AccountDAO.class
 com\example\model\UserParents.class
 com\example\controller\PrimaryController.class
 com\example\util\ConfigLoader.class
@@ -17,6 +17,7 @@ com\example\model\PassportApplication.class
 com\example\model\Image.class
 com\example\model\UserMinorInfo.class
 com\example\dao\UserSpouseDAO.class
+com\example\model\Account.class
 com\example\dao\UserContactDAO.class
 com\example\dao\UserPhilippinePassportDAO.class
 com\example\model\UserSpouse.class
@@ -30,4 +31,5 @@ com\example\dao\PassportApplicationDAO.class
 com\example\dao\UserWorkDAO.class
 com\example\service\ApplicationService.class
 com\example\controller\UploadImageController.class
+com\example\model\AdminInfo.class
 com\example\model\UserForeignPassport.class

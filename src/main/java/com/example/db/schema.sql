@@ -1,20 +1,18 @@
 -- Improved naming following database conventions
 
--- User account table
-CREATE TABLE user_account (
+-- Account table
+CREATE TABLE account (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password TEXT NOT NULL,
+    role VARCHAR(20) NOT NULL CHECK (role IN ('user', 'admin')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Admin account table  
-CREATE TABLE admin_account (
-    admin_id SERIAL PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Admin information table
+CREATE TABLE admin_info (
+    account_id INTEGER PRIMARY KEY REFERENCES account(user_id) ON DELETE CASCADE,
+    full_name VARCHAR(100) NOT NULL
 );
 
 -- Application table

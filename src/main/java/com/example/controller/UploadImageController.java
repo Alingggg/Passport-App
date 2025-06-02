@@ -55,9 +55,9 @@ public class UploadImageController {
     public void initialize() {
         imageDAO = new ImageDAO();
         
-        // Set up temporary user session for testing
+        // Set up temporary user session for testing with new role system
         if (!UserSession.getInstance().isAuthenticated()) {
-            UserSession.getInstance().login(1, "testuser");
+            UserSession.getInstance().login(1, "testuser", "user");
         }
         
         uploadValidIdButton.setOnAction(event -> selectDocument("Valid ID"));

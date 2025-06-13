@@ -1,5 +1,3 @@
--- Improved naming following database conventions
-
 -- Account table
 CREATE TABLE account (
     user_id SERIAL PRIMARY KEY,
@@ -23,7 +21,7 @@ CREATE TABLE passport_application (
     reference_id VARCHAR(50) UNIQUE,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reviewed_at TIMESTAMP NULL,
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Personal information table
@@ -38,7 +36,7 @@ CREATE TABLE user_info (
     civil_status VARCHAR(20) CHECK (civil_status IN ('Single', 'Married', 'Widow', 'Legally Separated', 'Annulled')) NOT NULL,
     current_address TEXT NOT NULL,
     acquired_citizenship VARCHAR(20) CHECK (acquired_citizenship IN ('Birth', 'Election', 'Marriage', 'Naturalization', 'R.A. 9225')),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Contact information table
@@ -48,7 +46,7 @@ CREATE TABLE user_contact (
     mobile_number VARCHAR(20),
     telephone_number VARCHAR(20),
     email_address VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Employment information table
@@ -58,7 +56,7 @@ CREATE TABLE user_work (
     occupation VARCHAR(100),
     work_address TEXT,
     work_telephone_number VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Foreign passport information table
@@ -67,7 +65,7 @@ CREATE TABLE user_foreign_passport (
     has_foreign_passport BOOLEAN DEFAULT FALSE,
     issuing_country VARCHAR(50),
     foreign_passport_number VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Spouse information table
@@ -75,7 +73,7 @@ CREATE TABLE user_spouse (
     user_id INT PRIMARY KEY,
     spouse_full_name VARCHAR(100),
     spouse_citizenship VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Parents information table
@@ -85,7 +83,7 @@ CREATE TABLE user_parents (
     father_citizenship VARCHAR(50),
     mother_maiden_name VARCHAR(100),
     mother_citizenship VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Philippine passport information table
@@ -95,7 +93,7 @@ CREATE TABLE user_philippine_passport (
     philippine_passport_number VARCHAR(50),
     issue_date DATE,
     issue_place VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Minor applicant information table
@@ -104,7 +102,7 @@ CREATE TABLE user_minor_info (
     is_minor BOOLEAN DEFAULT FALSE,
     companion_full_name VARCHAR(100),
     companion_relationship VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
 -- Images table for user uploads
@@ -115,5 +113,5 @@ CREATE TABLE images (
     file_type VARCHAR(20) CHECK (file_type IN ('Valid ID', 'Birth Certificate')) NOT NULL,
     supabase_url TEXT NOT NULL,
     uploaded_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );

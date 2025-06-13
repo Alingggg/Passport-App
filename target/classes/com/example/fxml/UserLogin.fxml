@@ -46,12 +46,12 @@
          </font>
       </Label>
       <TextField fx:id="passTxtF" layoutX="694.0" layoutY="357.0" prefHeight="26.0" prefWidth="229.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-      <Label fx:id="dontLbl" layoutX="705.0" layoutY="400.0" text="Don't have an account?">
+      <Label fx:id="dontLbl" layoutX="694.0" layoutY="400.0" text="Don't have an account?">
          <font>
             <Font name="Arial" size="10.0" />
          </font>
       </Label>
-      <Button layoutX="814.0" layoutY="397.0" mnemonicParsing="false" onAction="#registerBtn" prefHeight="11.0" prefWidth="62.0" style="-fx-background-color: transparent;" text="Register" textFill="#40659c">
+      <Button layoutX="793.0" layoutY="397.0" mnemonicParsing="false" onAction="#registerBtn" prefHeight="11.0" prefWidth="62.0" style="-fx-background-color: transparent;" text="Register" textFill="#40659c">
          <font>
             <Font name="Arial Bold" size="10.0" />
          </font>
@@ -63,6 +63,3 @@
       </Button>
    </children>
 </AnchorPane>
-
-
-

@@ -102,6 +102,7 @@ CREATE TABLE user_minor_info (
     is_minor BOOLEAN DEFAULT FALSE,
     companion_full_name VARCHAR(100),
     companion_relationship VARCHAR(50),
+    companion_contact_number VARCHAR(20),
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 

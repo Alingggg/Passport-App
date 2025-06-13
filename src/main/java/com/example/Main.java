@@ -25,7 +25,7 @@ public class Main extends Application {
         
         // Initialize database schema
         DatabaseInitializer.initializeDatabase();
-        
+
         scene = new Scene(loadFXML("LandingPage"), 950, 626);
         stage.setScene(scene);
         stage.setTitle("Passport Application System");

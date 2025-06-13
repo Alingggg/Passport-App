@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AlreadyPassportHolder">
+<AnchorPane fx:id="whiteBg" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AlreadyPassportHolderController">
    <children>
       <Label fx:id="yetLbl" layoutX="364.0" layoutY="286.0" style="-fx-text-fill: #696868;" text="You are already a passport holder.">
          <font>
             <Font name="Arial Bold" size="30.0" />
          </font>
       </Label>
-      <Button layoutX="518.0" layoutY="348.0" mnemonicParsing="false" onAction="#applyBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="Reapply Now">
+      <Button layoutX="518.0" layoutY="348.0" mnemonicParsing="false" onAction="#reapplyBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="Reapply Now">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>

@@ -8,12 +8,13 @@ import java.sql.*;
 public class UserMinorInfoDAO {
     
     public boolean saveMinorInfo(UserMinorInfo minorInfo) {
-        String sql = "INSERT INTO user_minor_info (user_id, is_minor, companion_full_name, companion_relationship) " +
-                    "VALUES (?, ?, ?, ?) " +
+        String sql = "INSERT INTO user_minor_info (user_id, is_minor, companion_full_name, companion_relationship, companion_contact_number) " +
+                    "VALUES (?, ?, ?, ?, ?) " +
                     "ON CONFLICT (user_id) DO UPDATE SET " +
                     "is_minor = EXCLUDED.is_minor, " +
                     "companion_full_name = EXCLUDED.companion_full_name, " +
-                    "companion_relationship = EXCLUDED.companion_relationship";
+                    "companion_relationship = EXCLUDED.companion_relationship, " +
+                    "companion_contact_number = EXCLUDED.companion_contact_number";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -22,6 +23,7 @@ public class UserMinorInfoDAO {
             pstmt.setBoolean(2, minorInfo.getIsMinor());
             pstmt.setString(3, minorInfo.getCompanionFullName());
             pstmt.setString(4, minorInfo.getCompanionRelationship());
+            pstmt.setString(5, minorInfo.getCompanionContactNumber());
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -45,6 +47,7 @@ public class UserMinorInfoDAO {
                 minorInfo.setIsMinor(rs.getBoolean("is_minor"));
                 minorInfo.setCompanionFullName(rs.getString("companion_full_name"));
                 minorInfo.setCompanionRelationship(rs.getString("companion_relationship"));
+                minorInfo.setCompanionContactNumber(rs.getString("companion_contact_number"));
                 return minorInfo;
             }
         } catch (SQLException e) {

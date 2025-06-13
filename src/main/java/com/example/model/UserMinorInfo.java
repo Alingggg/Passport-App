@@ -5,6 +5,7 @@ public class UserMinorInfo {
     private Boolean isMinor;
     private String companionFullName;
     private String companionRelationship;
+    private String companionContactNumber;
     
     // Constructors
     public UserMinorInfo() {}
@@ -26,4 +27,7 @@ public class UserMinorInfo {
     
     public String getCompanionRelationship() { return companionRelationship; }
     public void setCompanionRelationship(String companionRelationship) { this.companionRelationship = companionRelationship; }
+    
+    public String getCompanionContactNumber() { return companionContactNumber; }
+    public void setCompanionContactNumber(String companionContactNumber) { this.companionContactNumber = companionContactNumber; }
 }

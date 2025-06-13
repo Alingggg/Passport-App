@@ -29,12 +29,12 @@
                         <Image url="@../images/logo.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="btnApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: white;" text="Application">
+                <Button fx:id="btnApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: white;" text="Applications">
                     <font>
                         <Font name="Arial Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-text-fill: #40659C;" text="Profile">
+                <Button fx:id="btnProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-text-fill: #40659C;" text="Users">
                     <font>
                         <Font name="Arial Bold" size="14.0" />
                     </font>

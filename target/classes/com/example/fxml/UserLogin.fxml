@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.User_LoginController">
+<AnchorPane fx:id="whiteBg" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserLoginController">
    <children>
       <AnchorPane fx:id="bg1" prefHeight="635.0" prefWidth="638.0">
          <children>
@@ -46,7 +46,7 @@
          </font>
       </Label>
       <TextField fx:id="passTxtF" layoutX="694.0" layoutY="357.0" prefHeight="26.0" prefWidth="229.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-      <Label fx:id="doesntLbl" layoutX="705.0" layoutY="400.0" text="Doesn't have an account?">
+      <Label fx:id="dontLbl" layoutX="705.0" layoutY="400.0" text="Don't have an account?">
          <font>
             <Font name="Arial" size="10.0" />
          </font>

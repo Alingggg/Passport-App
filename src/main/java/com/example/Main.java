@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.util.ConfigLoader;
 import com.example.util.dbUtil;
+import com.example.util.DatabaseInitializer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,9 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         // Load configuration before anything else
         ConfigLoader.loadProperties();
+        
+        // Initialize database schema
+        DatabaseInitializer.initializeDatabase();
         
         scene = new Scene(loadFXML("LandingPage"), 950, 626);
         stage.setScene(scene);

@@ -3,6 +3,8 @@ package com.example;
 import com.example.util.ConfigLoader;
 import com.example.util.dbUtil;
 import com.example.util.DatabaseInitializer;
+import com.example.util.ResourcePathHelper;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +28,7 @@ public class Main extends Application {
         // Initialize database schema
         DatabaseInitializer.initializeDatabase();
 
-        scene = new Scene(loadFXML("UserViewDetails"), 950, 626);
+        scene = new Scene(loadFXML("LandingPage"), 950, 626);
         stage.setScene(scene);
         stage.setTitle("Passport Application System");
         stage.show();
@@ -43,23 +45,7 @@ public class Main extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        // Check if the path already contains a directory separator
-        String path;
-        if (fxml.contains("/")) {
-            // If it already has a path separator, use as is
-            path = "fxml/" + fxml + ".fxml";
-        } else {
-            // If it's just a filename, try to determine correct directory based on file name
-            if (fxml.startsWith("User")) {
-                path = "fxml/User/" + fxml + ".fxml";
-            } else if (fxml.startsWith("Admin")) {
-                path = "fxml/Admin/" + fxml + ".fxml";
-            } else {
-                // Default location for common files
-                path = "fxml/" + fxml + ".fxml";
-            }
-        }
-        
+        String path = ResourcePathHelper.getFXMLPath(fxml);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(path));
         return fxmlLoader.load();
     }

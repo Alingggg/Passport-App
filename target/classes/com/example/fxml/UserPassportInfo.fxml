@@ -15,34 +15,8 @@
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Label>
-        <AnchorPane fx:id="bg1" prefHeight="626.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-            <children>
-                <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image2.png" />
-                    </image>
-                </ImageView>
-                <Button layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logOutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <ImageView fx:id="logo" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image2.png" /> </image>
-                </ImageView>
-                <Button layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: white;" text="Application">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-text-fill: #40659C;" text="Profile">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-            </children>
-        </AnchorPane>
+        
+        <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
 
         <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="65.0" prefHeight="1195.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
             <content>

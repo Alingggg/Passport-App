@@ -24,30 +24,6 @@
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="bg1" prefHeight="643.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-         <children>
-            <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.jpg" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="579.0" mnemonicParsing="false" onAction="#logoutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="pic1" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.jpg" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="Application" textFill="#40659c">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
       <Button layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="Profile" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="14.0" />
@@ -58,6 +34,8 @@
             <Font name="Arial Bold" size="30.0" />
          </font>
       </Label>
+
+      <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
    </children>
 </AnchorPane>
 

@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
-public class View_DetailsController {
+public class ViewDetailsController {
 
     @FXML
     private AnchorPane bg1;

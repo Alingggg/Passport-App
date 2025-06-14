@@ -4,25 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class Admin_ApplicationDets_Controller {
+public class AdminApplicationDenyingController {
 
     @FXML
     private Button btnLogout;
-    @FXML
-    private ImageView logo;
     @FXML
     private Button btnApplication;
     @FXML
     private Button btnProfile;
     @FXML
-    private AnchorPane scrollableContent;
+    private AnchorPane denyReasonPane;
     @FXML
     private Label lblAppDetails;
-    @FXML
-    private Label lblUser;
     @FXML
     private Label lblLastName;
     @FXML
@@ -48,7 +43,11 @@ public class Admin_ApplicationDets_Controller {
     @FXML
     private Label lblCivilStatus;
     @FXML
+    private Label txtCivilStatus;
+    @FXML
     private Label lblGender;
+    @FXML
+    private Label txtGender;
     @FXML
     private Label lblMobile;
     @FXML
@@ -108,6 +107,8 @@ public class Admin_ApplicationDets_Controller {
     @FXML
     private Label lblForeignPassport;
     @FXML
+    private Label txtForeignPassportHolder;
+    @FXML
     private Label lblCountry;
     @FXML
     private Label txtCountry;
@@ -117,6 +118,8 @@ public class Admin_ApplicationDets_Controller {
     private Label txtForeignPassNum;
     @FXML
     private Label lblPassportIssued;
+    @FXML
+    private Label txtPhPassportIssued;
     @FXML
     private Label lblPhPassportNum;
     @FXML
@@ -131,6 +134,8 @@ public class Admin_ApplicationDets_Controller {
     private Label txtPlaceOfIssue;
     @FXML
     private Label lbl18yo;
+    @FXML
+    private Label txt18yo;
     @FXML
     private Label lbltravelingcom;
     @FXML
@@ -150,49 +155,46 @@ public class Admin_ApplicationDets_Controller {
     @FXML
     private Button btnPSAImage;
     @FXML
-    private ImageView btnNext;
-    @FXML
     private Button btnAcceptApplication;
     @FXML
     private Button btnDenyApplication;
+    @FXML
+    private Label lblAppAdminID;
 
     @FXML
-    private void logoutBtn(ActionEvent event) {
-        System.out.println("Logout button clicked!");
+    void logoutBtn(ActionEvent event) {
+
     }
 
     @FXML
-    private void applicationBtn(ActionEvent event) {
-        System.out.println("Application button clicked!");
+    void applicationBtn(ActionEvent event) {
+
     }
 
     @FXML
-    private void profileBtn(ActionEvent event) {
-        System.out.println("Profile button clicked!");
+    void profileBtn(ActionEvent event) {
+
     }
 
     @FXML
-    private void viewValidId(ActionEvent event) {
-        System.out.println("View Valid ID button clicked!");
+    void acceptApplication(ActionEvent event) {
+
     }
 
     @FXML
-    private void viewPSABirthCert(ActionEvent event) {
-        System.out.println("View PSA Birth Certificate button clicked!");
+    void denyApplication(ActionEvent event) {
+        if (denyReasonPane != null) {
+            denyReasonPane.setVisible(true);
+        }
     }
 
     @FXML
-    private void acceptApplication(ActionEvent event) {
-        System.out.println("Accept Application button clicked!");
+    void viewValidId(ActionEvent event) {
+
     }
 
     @FXML
-    private void denyApplication(ActionEvent event) {
-        System.out.println("Deny Application button clicked!");
-    }
+    void viewPSABirthCert(ActionEvent event) {
 
-    @FXML
-    public void initialize() {
-        // Initialize any required components
     }
 }

@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
 
-public class Admin_UserDetails_Controller {
+public class AdminUserDetailsController {
 
     @FXML
     private AnchorPane scrollableContent;

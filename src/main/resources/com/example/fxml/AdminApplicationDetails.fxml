@@ -10,43 +10,16 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Admin_UserDetails_Controller">
+<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AdminApplicationDetailsController">
     <children>
-        <AnchorPane prefHeight="626.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-            <children>
-                <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnLogout" layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logoutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <ImageView fx:id="logo" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: white;" text="Applications">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-text-fill: #40659C;" text="Users">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-            </children>
-        </AnchorPane>
+        
+        <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
 
         <ScrollPane hbarPolicy="NEVER" layoutX="250.0" layoutY="0.0" prefHeight="626.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
             <content>
-                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1190.0" prefWidth="685.0">
+                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1190.0" prefWidth="686.0">
                     <children>
-                        <Label fx:id="lblUserDetails" layoutX="69.0" layoutY="108.0" style="-fx-text-fill: #696868;" text="User Details">
+                        <Label fx:id="lblAppDetails" layoutX="69.0" layoutY="108.0" style="-fx-text-fill: #696868;" text="Application Details">
                             <font>
                                 <Font name="Arial Bold" size="21.0" />
                             </font>

@@ -8,42 +8,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.View_DetailsController">
+<AnchorPane fx:id="whiteBg" prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ViewDetailsController">
    <children>
       <Label fx:id="userLbl" layoutX="890.0" layoutY="20.0" prefHeight="20.0" prefWidth="42.0" style="-fx-text-fill: #696868;" text="User">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="bg1" prefHeight="626.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-         <children>
-            <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logOutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="logo" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="Application" textFill="#40659c">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="Profile" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
+      
+      <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
+
+
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="65.0" prefHeight="1195.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
          <content>
             <AnchorPane fx:id="vi" minHeight="0.0" minWidth="0.0" prefHeight="1812.0" prefWidth="670.0">
@@ -271,11 +246,6 @@
                            </font>
                         </Label>
                      </graphic></Button>
-                  <ImageView fx:id="btnNext" fitHeight="26.0" fitWidth="28.0" layoutX="26.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/next.logo.png" />
-                     </image>
-                  </ImageView>
                   <Button layoutX="493.0" layoutY="1122.0" mnemonicParsing="false" onAction="#cancelBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #F20707; -fx-background-radius: 15;" text="Cancel Application" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
@@ -312,6 +282,3 @@
       </ImageView>
    </children>
 </AnchorPane>
-
-
-

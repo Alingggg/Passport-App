@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.DropShadow?>
@@ -10,37 +11,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Admin_ApplicationDets_Controller">
+<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AdminApplicationDenyingController">
     <children>
-        <AnchorPane prefHeight="626.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-            <children>
-                <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnLogout" layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logoutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <ImageView fx:id="logo" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-text-fill: #40659C;" text="Application">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: white;" text="Profile">
-                    <font>
-                        <Font name="Arial Bold" size="14.0" />
-                    </font>
-                </Button>
-            </children>
-        </AnchorPane>
+    
+        <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
 
         <ScrollPane hbarPolicy="NEVER" layoutX="250.0" layoutY="0.0" prefHeight="626.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
             <content>
@@ -91,11 +65,13 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
+                        <Label fx:id="txtCivilStatus" layoutX="109.0" layoutY="279.0" prefHeight="27.0" prefWidth="122.0" />
                         <Label fx:id="lblGender" layoutX="520.0" layoutY="283.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Gender:">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
+                        <Label fx:id="txtGender" layoutX="571.0" layoutY="279.0" prefHeight="27.0" prefWidth="86.0" />
                         <Label fx:id="lblMobile" layoutX="38.0" layoutY="323.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Mobile Number:">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
@@ -181,6 +157,7 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
+                        <Label fx:id="txtForeignPassportHolder" layoutX="249.0" layoutY="666.0" prefHeight="27.0" prefWidth="80.0" />
                         <Label fx:id="lblCountry" layoutX="340.0" layoutY="670.0" prefHeight="16.0" prefWidth="54.0" style="-fx-text-fill: #696868;" text="Country:">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
@@ -198,6 +175,7 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
+                        <Label fx:id="txtPhPassportIssued" layoutX="330.0" layoutY="706.0" prefHeight="27.0" prefWidth="80.0" />
                         <Label fx:id="lblPhPassportNum" layoutX="449.0" layoutY="710.0" prefHeight="16.0" prefWidth="80.0" style="-fx-text-fill: #696868;" text="Passport No.">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
@@ -221,6 +199,7 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
+                        <Label fx:id="txt18yo" layoutX="202.0" layoutY="786.0" prefHeight="27.0" prefWidth="80.0" />
                         <Label fx:id="lbltravelingcom" layoutX="318.0" layoutY="786.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
@@ -281,28 +260,46 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Button>
-                  <AnchorPane prefHeight="86.0" prefWidth="699.0" style="-fx-background-color: white;">
-                     <children>
-                        <Label fx:id="lblAppAdminID" layoutX="26.0" layoutY="33.0" style="-fx-text-fill: #696868;" text="Admin ID:">
-                           <font>
-                              <Font name="Arial Bold" size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" height="40.0" radius="9.5" spread="0.2" width="0.0">
-                           <color>
-                              <Color red="0.410526305437088" green="0.40444445610046387" blue="0.40444445610046387" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </AnchorPane>
+                        <AnchorPane prefHeight="86.0" prefWidth="699.0" style="-fx-background-color: white;">
+                            <children>
+                                <Label fx:id="lblAppAdminID" layoutX="26.0" layoutY="33.0" style="-fx-text-fill: #696868;" text="Admin ID:">
+                                    <font>
+                                        <Font name="Arial Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <effect>
+                                <DropShadow blurType="TWO_PASS_BOX" height="40.0" radius="9.5" spread="0.2" width="0.0">
+                                    <color>
+                                        <Color red="0.410526305437088" green="0.40444445610046387" blue="0.40444445610046387" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                        </AnchorPane>
                     </children>
                 </AnchorPane>
             </content>
         </ScrollPane>
+        <AnchorPane fx:id="denyReasonPane" layoutX="327.0" layoutY="192.0" prefHeight="242.0" prefWidth="546.0" style="-fx-background-color: white; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;" visible="false">
+            <children>
+                <Label layoutX="32.0" layoutY="35.0" text="Select reason for denying application" textFill="#f20707">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                </Label>
+                <CheckBox layoutX="56.0" layoutY="72.0" mnemonicParsing="false" text="Lack of required documents" />
+                <CheckBox layoutX="56.0" layoutY="112.0" mnemonicParsing="false" text="Incomplete application" />
+                <CheckBox layoutX="56.0" layoutY="151.0" mnemonicParsing="false" text="Invalid or expired documents" />
+                <CheckBox layoutX="322.0" layoutY="72.0" mnemonicParsing="false" text="Blurry or illegible documents" />
+                <CheckBox layoutX="322.0" layoutY="112.0" mnemonicParsing="false" text="Discrepancies in information" />
+                <Button layoutX="383.0" layoutY="194.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="125.0" style="-fx-background-color: #F20707; -fx-background-radius: 10;" text="Submit" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
-
 
 

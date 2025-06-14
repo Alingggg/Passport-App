@@ -6,42 +6,14 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="1245.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.User_Edit_ApplicationController">
+<AnchorPane fx:id="whiteBg" prefHeight="1245.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserEditApplicationController">
    <children>
-      <AnchorPane fx:id="bg1" prefHeight="626.0" prefWidth="250.0" style="-fx-background-color: #40659C;">
-         <children>
-            <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.jpg" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logOutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="pic1" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/image2.jpg" />
-               </image>
-            </ImageView>
-            <Button layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="Application" textFill="#40659c">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-background-radius: 15;" text="Profile" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
+      <!-- Include the sidebar -->
+      <fx:include fx:id="sidebar" source="components/Sidebar.fxml" />
+      
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="1195.0" prefWidth="688.0" style="-fx-background-color: transparent;">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1830.0" prefWidth="670.0" style="-fx-background-color: transparent;">
@@ -341,22 +313,12 @@
                      </font>
                   </Label>
                   <Button layoutX="37.0" layoutY="882.0" mnemonicParsing="false" onAction="#uploadValidIDBtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;" />
-                  <ImageView fx:id="pic2" fitHeight="27.0" fitWidth="122.0" layoutX="304.0" layoutY="896.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Group%2020.png" />
-                     </image>
-                  </ImageView>
                   <Label fx:id="uploadPSALbl" layoutX="40.0" layoutY="960.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
                   <Button layoutX="37.0" layoutY="985.0" mnemonicParsing="false" onAction="#uploadPSABtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;" />
-                  <ImageView fx:id="pic3" fitHeight="27.0" fitWidth="122.0" layoutX="304.0" layoutY="999.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Group%2020.png" />
-                     </image>
-                  </ImageView>
                   <Button layoutX="492.0" layoutY="1072.0" mnemonicParsing="false" onAction="#reapplyBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Reapply" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
@@ -371,11 +333,6 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Label fx:id="userLbl" layoutX="890.0" layoutY="20.0" style="-fx-text-fill: #696868;" text="User">
-         <font>
-            <Font name="Arial Bold" size="16.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
 

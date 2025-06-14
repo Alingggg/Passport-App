@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
-public class User_Edit_ApplicationController {
+public class UserEditApplicationController {
 
     @FXML
     private AnchorPane bg1;

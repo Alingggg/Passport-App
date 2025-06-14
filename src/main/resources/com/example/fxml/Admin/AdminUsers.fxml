@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AdminUsersController">
+
+   <children>
+
+      <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
+
+      <AnchorPane layoutX="251.0" prefHeight="86.0" prefWidth="699.0" style="-fx-background-color: white;">
+
+         <children>
+
+            <Label fx:id="lblAdminID" layoutX="26.0" layoutY="33.0" style="-fx-text-fill: #696868;" text="Admin ID:">
+
+               <font>
+
+                  <Font name="Arial Bold" size="16.0" />
+
+               </font>
+
+            </Label>
+
+         </children>
+
+         <effect>
+
+            <DropShadow blurType="TWO_PASS_BOX" height="40.0" radius="9.5" spread="0.2" width="0.0">
+
+               <color>
+
+                  <Color red="0.410526305437088" green="0.40444445610046387" blue="0.40444445610046387" />
+
+               </color>
+
+            </DropShadow>
+
+         </effect>
+
+      </AnchorPane>
+
+      <Label fx:id="lblUsers" layoutX="275.0" layoutY="115.0" style="-fx-text-fill: #696868;" text="Users">
+
+         <font>
+
+            <Font name="Arial Bold" size="22.0" />
+
+         </font>
+
+      </Label>
+
+      <Label fx:id="lblSearchUser" layoutX="275.0" layoutY="162.0" style="-fx-text-fill: black;" text="Search user :">
+
+         <font>
+
+            <Font name="Arial Bold" size="14.0" />
+
+         </font>
+
+      </Label>
+
+      <TextField fx:id="tfSearch" layoutX="369.0" layoutY="157.0" prefHeight="26.0" prefWidth="556.0" style="-fx-background-radius: 15;" />
+
+      <ImageView fx:id="btnSearch" fitHeight="16.0" fitWidth="19.0" layoutX="891.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+
+         <image>
+
+            <Image url="@search.png" />
+
+         </image>
+
+      </ImageView>
+
+      <ScrollPane layoutX="261.0" layoutY="207.0" prefHeight="418.0" prefWidth="678.0" style="-fx-background-color: white;">
+
+         <content>
+
+            <VBox prefHeight="469.0" prefWidth="656.0" spacing="10.0">
+
+               <children>
+
+                  <AnchorPane fx:id="scrollSearch1" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+
+                     <children>
+
+                        <Label fx:id="lblName" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblPassportID" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblIssueDate" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblExpiryDate" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblStatus" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="btnViewDetails4111111" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="10.0" />
+
+                           </font>
+
+                        </Label>
+
+                     </children>
+
+                  </AnchorPane>
+
+                  <AnchorPane fx:id="scrollSearch2" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+
+                     <children>
+
+                        <Label fx:id="lblName1" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblPassportID1" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblIssueDate1" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblExpiryDate1" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="lblStatus1" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label fx:id="btnViewDetails41111111" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+
+                           <font>
+
+                              <Font name="Arial Bold" size="10.0" />
+
+                           </font>
+
+                        </Label>
+
+                     </children>
+
+                  </AnchorPane>
+                  <AnchorPane fx:id="scrollSearch3" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+                     <children>
+                        <Label fx:id="lblName11" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPassportID11" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblIssueDate11" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblExpiryDate11" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblStatus11" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="btnViewDetails411111111" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+                           <font>
+                              <Font name="Arial Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="scrollSearch4" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+                     <children>
+                        <Label fx:id="lblName12" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPassportID12" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblIssueDate12" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblExpiryDate12" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblStatus12" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="btnViewDetails411111112" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+                           <font>
+                              <Font name="Arial Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="scrollSearch5" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+                     <children>
+                        <Label fx:id="lblName13" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPassportID13" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblIssueDate13" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblExpiryDate13" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblStatus13" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="btnViewDetails411111113" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+                           <font>
+                              <Font name="Arial Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="scrollSearch6" prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;">
+                     <children>
+                        <Label fx:id="lblName14" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Name">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPassportID14" layoutX="180.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Passport ID">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblIssueDate14" layoutX="280.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblExpiryDate14" layoutX="380.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblStatus14" layoutX="480.0" layoutY="15.0" style="-fx-text-fill: #40659C;" text="Status">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="btnViewDetails411111114" layoutX="545.0" layoutY="15.0" prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="      View Details">
+                           <font>
+                              <Font name="Arial Bold" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+
+               </children>
+
+            </VBox>
+
+         </content>
+
+      </ScrollPane>
+
+   </children>
+
+   <effect>
+
+      <DropShadow height="0.0" radius="0.0" width="0.0" />
+
+   </effect>
+
+</AnchorPane>
+
+
+

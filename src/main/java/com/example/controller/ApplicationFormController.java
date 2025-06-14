@@ -11,6 +11,10 @@ import javafx.scene.layout.AnchorPane;
 
 public class ApplicationFormController {
 
+    // Add this field to access the included sidebar controller
+    @FXML
+    private SidebarController sidebarController;
+
     @FXML
     private AnchorPane bg1;
 
@@ -25,21 +29,6 @@ public class ApplicationFormController {
 
     @FXML
     private Label userLbl;
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-        System.out.println("Profile button clicked");
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        System.out.println("Application button clicked");
-    }
-
-    @FXML
-    void logOutBtn(ActionEvent event) {
-        System.out.println("Logout button clicked");
-    }
 
     @FXML
     private ScrollPane scrollPane;
@@ -72,6 +61,11 @@ public class ApplicationFormController {
 
     @FXML
     public void initialize() {
+        // Set the active tab in the sidebar
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
+
         // Scroll Pane setup
         if (scrollPane != null) {
             scrollPane.setFitToWidth(true);

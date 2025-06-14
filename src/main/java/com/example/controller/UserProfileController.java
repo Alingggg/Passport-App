@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 
 public class UserProfileController {
 
+    @FXML
+    private SidebarController sidebarController;
 
     @FXML
     private AnchorPane bg1;
@@ -27,6 +29,15 @@ public class UserProfileController {
 
     @FXML
     private Label userLbl;
+
+    @FXML
+    public void initialize() {
+        // Initialize the sidebar
+        if (sidebarController != null) {
+            // Set the active tab to "profile" since we're on the profile page
+            sidebarController.setActiveTab("profile");
+        }
+    }
 
     @FXML
     void profileBtn(ActionEvent event) {

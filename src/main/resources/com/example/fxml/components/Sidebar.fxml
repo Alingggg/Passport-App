@@ -13,17 +13,32 @@
             <Image url="@../../images/logo.png" />
          </image>
       </ImageView>
+      
+      <!-- User buttons (visible for regular users) -->
+      <Button fx:id="btnUserProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Profile">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUserApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Application">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <!-- Admin buttons (initially hidden, shown for admins) -->
+      <Button fx:id="btnAdminUsers" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#usersBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Users" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnAdminApplications" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationsBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Applications" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      
       <Button fx:id="btnLogout" layoutX="33.0" layoutY="570.0" mnemonicParsing="false" onAction="#logOutBtn" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Log out">
-         <font>
-            <Font name="Arial Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnProfile" layoutX="33.0" layoutY="159.0" mnemonicParsing="false" onAction="#profileBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Profile">
-         <font>
-            <Font name="Arial Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnApplication" layoutX="33.0" layoutY="208.0" mnemonicParsing="false" onAction="#applicationBtn" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;" text="Application">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>

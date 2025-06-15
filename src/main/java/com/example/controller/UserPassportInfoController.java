@@ -7,6 +7,7 @@ import com.example.service.ApplicationService;
 import com.example.model.UserProfile;
 import com.example.util.UserSession;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,67 +20,71 @@ public class UserPassportInfoController {
     private SidebarController sidebarController;
 
     @FXML
-    private Label passportInfoLbl;
-
-    @FXML
     private ScrollPane scrollPane;
 
     @FXML
     private AnchorPane scrollContent;
 
     // Name fields
-    @FXML private Label lnTxtF;
-    @FXML private Label fnTxtF;
-    @FXML private Label mnTxtF;
+    @FXML private Label lblLastName;
+    @FXML private Label lblFirstName;
+    @FXML private Label lblMiddleName;
 
     // Date fields
-    @FXML private Label dayCombo;
-    @FXML private Label monthCombo;
-    @FXML private Label yearCombo;
+    @FXML private Label lblBirthDay;
+    @FXML private Label lblBirthMonth;
+    @FXML private Label lblBirthYear;
 
     // Personal info fields
-    @FXML private Label pBirthTxtF;
-    @FXML private Label cmpAddressTxtF;
-    @FXML private Label civilRadio;
-    @FXML private Label genderCombo;
+    @FXML private Label lblPlaceOfBirth;
+    @FXML private Label lblCompleteAddress;
+    @FXML private Label lblCivilStatus;
+    @FXML private Label lblGender;
 
     // Contact fields
-    @FXML private Label mobileNum1TxtF;
-    @FXML private Label mobileNum2TxtF;
-    @FXML private Label telNum1TxtF;
-    @FXML private Label telNum2TxtF;
-    @FXML private Label emailAddTxtF;
+    @FXML private Label lblMobileNumber1;
+    @FXML private Label lblMobileNumber2;
+    @FXML private Label lblTelephoneNumber1;
+    @FXML private Label lblTelephoneNumber2;
+    @FXML private Label lblEmailAddress;
 
     // Work fields
-    @FXML private Label occupationTxtF;
-    @FXML private Label workTelTxtF;
-    @FXML private Label workAddTxtF;
+    @FXML private Label lblOccupation;
+    @FXML private Label lblWorkTelephone;
+    @FXML private Label lblWorkAddress;
 
     // Family fields
-    @FXML private Label whNameTxtF;
-    @FXML private Label fatherTxtF;
-    @FXML private Label motherTxtF;
+    @FXML private Label lblSpouseName;
+    @FXML private Label lblFatherName;
+    @FXML private Label lblMotherName;
 
     // Citizenship fields
-    @FXML private Label citizen1TxtF;
-    @FXML private Label citizen2TxtF;
-    @FXML private Label citizen3TxtF;
-    @FXML private Label acquiredByRadio;
+    @FXML private Label lblSpouseCitizenship;
+    @FXML private Label lblFatherCitizenship;
+    @FXML private Label lblMotherCitizenship;
+    @FXML private Label lblCitizenshipAcquiredBy;
 
     // Passport fields
-    @FXML private Label foreignRadio;
-    @FXML private Label countryTxtF;
-    @FXML private Label passNoTxtF;
-    @FXML private Label philPassRadio;
-    @FXML private Label passNo2TxtF;
-    @FXML private Label txtIssueDate;
-    @FXML private Label placeIssueTxtF;
+    @FXML private Label lblForeignPassportHolder;
+    @FXML private Label lblForeignCountry;
+    @FXML private Label lblForeignPassportNumber;
+    @FXML private Label lblPhilippinePassport;
+    @FXML private Label lblPhilippinePassportNumber;
+    @FXML private Label lblIssueDate;
+    @FXML private Label lblPlaceOfIssue;
+    @FXML private Label lblIssueMonth;
+    @FXML private Label lblIssueDay;
+    @FXML private Label lblIssueYear;
 
     // Minor info fields
-    @FXML private Label minor18Radio;
-    @FXML private Label travCompTxtF;
-    @FXML private Label compRSTxtF;
-    @FXML private Label contactNoTxtF;
+    @FXML private Label lblMinor18;
+    @FXML private Label lblTravelingCompanion;
+    @FXML private Label lblCompanionRelationship;
+    @FXML private Label lblContactNumber;
+    
+    // Image view labels
+    @FXML private Label lblViewImage1;
+    @FXML private Label lblViewImage2;
 
     private ApplicationService applicationService;
 
@@ -90,7 +95,9 @@ public class UserPassportInfoController {
         }
 
         applicationService = new ApplicationService();
-        loadUserData();
+        
+        // Use Platform.runLater to delay the authentication check until after the scene is fully initialized
+        Platform.runLater(this::loadUserData);
     }
 
     private void loadUserData() {
@@ -98,7 +105,12 @@ public class UserPassportInfoController {
             UserSession session = UserSession.getInstance();
             if (!session.isAuthenticated()) {
                 // User not logged in, redirect to login
-                Main.setRoot("UserLogin");
+                try {
+                    Main.setRoot("UserLogin");
+                } catch (IOException e) {
+                    System.err.println("Error loading UserLogin.fxml: " + e.getMessage());
+                    e.printStackTrace();
+                }
                 return;
             }
 
@@ -118,82 +130,86 @@ public class UserPassportInfoController {
         // Basic info
         if (profile.getUserInfo() != null) {
             var userInfo = profile.getUserInfo();
-            setText(lnTxtF, userInfo.getLastName());
-            setText(fnTxtF, userInfo.getFirstName());
-            setText(mnTxtF, userInfo.getMiddleName());
-            setText(pBirthTxtF, userInfo.getBirthPlace());
-            setText(cmpAddressTxtF, userInfo.getCurrentAddress());
-            setText(civilRadio, userInfo.getCivilStatus());
-            setText(genderCombo, userInfo.getGender());
-            setText(acquiredByRadio, userInfo.getAcquiredCitizenship());
+            setText(lblLastName, userInfo.getLastName());
+            setText(lblFirstName, userInfo.getFirstName());
+            setText(lblMiddleName, userInfo.getMiddleName());
+            setText(lblPlaceOfBirth, userInfo.getBirthPlace());
+            setText(lblCompleteAddress, userInfo.getCurrentAddress());
+            setText(lblCivilStatus, userInfo.getCivilStatus());
+            setText(lblGender, userInfo.getGender());
+            setText(lblCitizenshipAcquiredBy, userInfo.getAcquiredCitizenship());
 
             // Birth date
             if (userInfo.getBirthDate() != null) {
-                setText(dayCombo, String.valueOf(userInfo.getBirthDate().getDayOfMonth()));
-                setText(monthCombo, userInfo.getBirthDate().getMonth().toString());
-                setText(yearCombo, String.valueOf(userInfo.getBirthDate().getYear()));
+                setText(lblBirthDay, String.valueOf(userInfo.getBirthDate().getDayOfMonth()));
+                setText(lblBirthMonth, userInfo.getBirthDate().getMonth().toString());
+                setText(lblBirthYear, String.valueOf(userInfo.getBirthDate().getYear()));
             }
         }
 
         // Contact info
         if (profile.getUserContact() != null) {
             var contact = profile.getUserContact();
-            setText(mobileNum1TxtF, contact.getMobileNumber());
-            setText(telNum1TxtF, contact.getTelephoneNumber());
-            setText(emailAddTxtF, contact.getEmailAddress());
+            setText(lblMobileNumber1, contact.getMobileNumber());
+            setText(lblTelephoneNumber1, contact.getTelephoneNumber());
+            setText(lblEmailAddress, contact.getEmailAddress());
         }
 
         // Work info
         if (profile.getUserWork() != null) {
             var work = profile.getUserWork();
-            setText(occupationTxtF, work.getOccupation());
-            setText(workTelTxtF, work.getWorkTelephoneNumber());
-            setText(workAddTxtF, work.getWorkAddress());
+            setText(lblOccupation, work.getOccupation());
+            setText(lblWorkTelephone, work.getWorkTelephoneNumber());
+            setText(lblWorkAddress, work.getWorkAddress());
         }
 
         // Spouse info
         if (profile.getSpouse() != null) {
             var spouse = profile.getSpouse();
-            setText(whNameTxtF, spouse.getSpouseFullName());
-            setText(citizen1TxtF, spouse.getSpouseCitizenship());
+            setText(lblSpouseName, spouse.getSpouseFullName());
+            setText(lblSpouseCitizenship, spouse.getSpouseCitizenship());
         }
 
         // Parents info
         if (profile.getParents() != null) {
             var parents = profile.getParents();
-            setText(fatherTxtF, parents.getFatherFullName());
-            setText(motherTxtF, parents.getMotherMaidenName());
-            setText(citizen2TxtF, parents.getFatherCitizenship());
-            setText(citizen3TxtF, parents.getMotherCitizenship());
+            setText(lblFatherName, parents.getFatherFullName());
+            setText(lblMotherName, parents.getMotherMaidenName());
+            setText(lblFatherCitizenship, parents.getFatherCitizenship());
+            setText(lblMotherCitizenship, parents.getMotherCitizenship());
         }
 
         // Foreign passport info
         if (profile.getForeignPassport() != null) {
             var foreign = profile.getForeignPassport();
-            setText(foreignRadio, foreign.getHasForeignPassport() ? "YES" : "NO");
-            setText(countryTxtF, foreign.getIssuingCountry());
-            setText(passNoTxtF, foreign.getForeignPassportNumber());
+            setText(lblForeignPassportHolder, foreign.getHasForeignPassport() ? "YES" : "NO");
+            setText(lblForeignCountry, foreign.getIssuingCountry());
+            setText(lblForeignPassportNumber, foreign.getForeignPassportNumber());
         }
 
         // Philippine passport info
         if (profile.getPhilippinePassport() != null) {
             var phil = profile.getPhilippinePassport();
-            setText(philPassRadio, phil.getHasPhilippinePassport() ? "YES" : "NO");
-            setText(passNo2TxtF, phil.getPhilippinePassportNumber());
-            setText(placeIssueTxtF, phil.getIssuePlace());
+            setText(lblPhilippinePassport, phil.getHasPhilippinePassport() ? "YES" : "NO");
+            setText(lblPhilippinePassportNumber, phil.getPhilippinePassportNumber());
+            setText(lblPlaceOfIssue, phil.getIssuePlace());
             
             if (phil.getIssueDate() != null) {
-                setText(txtIssueDate, phil.getIssueDate().toString());
+                setText(lblIssueDate, phil.getIssueDate().toString());
+                // If you need to set the individual components of the issue date
+                setText(lblIssueDay, String.valueOf(phil.getIssueDate().getDayOfMonth()));
+                setText(lblIssueMonth, phil.getIssueDate().getMonth().toString());
+                setText(lblIssueYear, String.valueOf(phil.getIssueDate().getYear()));
             }
         }
 
         // Minor info
         if (profile.getMinorInfo() != null) {
             var minor = profile.getMinorInfo();
-            setText(minor18Radio, minor.getIsMinor() ? "YES" : "NO");
-            setText(travCompTxtF, minor.getCompanionFullName());
-            setText(compRSTxtF, minor.getCompanionRelationship());
-            setText(contactNoTxtF, minor.getCompanionContactNumber());
+            setText(lblMinor18, minor.getIsMinor() ? "YES" : "NO");
+            setText(lblTravelingCompanion, minor.getCompanionFullName());
+            setText(lblCompanionRelationship, minor.getCompanionRelationship());
+            setText(lblContactNumber, minor.getCompanionContactNumber());
         }
     }
 

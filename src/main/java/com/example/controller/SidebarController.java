@@ -80,7 +80,7 @@ public class SidebarController {
     @FXML
     void profileBtn(ActionEvent event) {
         try {
-            Main.setRoot("User/UserProfile");
+            Main.setRoot("UserProfile");
         } catch (IOException e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();
@@ -90,7 +90,7 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
-            Main.setRoot("User/UserApplicationPending");
+            Main.setRoot("UserApplicationPending");
         } catch (IOException e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();
@@ -100,7 +100,7 @@ public class SidebarController {
     @FXML
     void usersBtn(ActionEvent event) {
         try {
-            Main.setRoot("Admin/AdminUsers");
+            Main.setRoot("AdminUsers");
         } catch (IOException e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class SidebarController {
     @FXML
     void applicationsBtn(ActionEvent event) {
         try {
-            Main.setRoot("Admin/AdminApplications");
+            Main.setRoot("AdminApplications");
         } catch (IOException e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();

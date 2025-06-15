@@ -18,7 +18,7 @@ public class AdminUserDetailsController {
     @FXML
     private Label lblUserDetails;
     @FXML
-    private Label lblUser; // This label was in the FXML but not in the original controller. Added for completeness.
+    private Label lblUser;
     @FXML
     private Label lblLastName;
     @FXML
@@ -34,7 +34,7 @@ public class AdminUserDetailsController {
     @FXML
     private Label lblBirthdate;
     @FXML
-    private Label txtBirthdate; // This label was in the FXML but not in the original controller. Added for completeness.
+    private Label txtBirthdate;
     @FXML
     private Label lblPlaceofBirth;
     @FXML
@@ -46,11 +46,11 @@ public class AdminUserDetailsController {
     @FXML
     private Label lblCivilStatus;
     @FXML
-    private Label txtCivilStatus; // This label was in the FXML but not in the original controller. Added for completeness.
+    private Label txtCivilStatus;
     @FXML
     private Label lblGender;
     @FXML
-    private Label txtGender; // This label was in the FXML but not in the original controller. Added for completeness.
+    private Label txtGender;
     @FXML
     private Label lblMobile;
     @FXML

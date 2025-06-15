@@ -14,9 +14,7 @@ public class UserProfileController {
 
     @FXML
     public void initialize() {
-        // Initialize the sidebar
         if (sidebarController != null) {
-            // Set the active tab to "profile" since we're on the profile page
             sidebarController.setActiveTab("profile");
         }
     }

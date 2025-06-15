@@ -13,7 +13,7 @@ public class UserSession {
     // Cache admin info to avoid repeated DB calls
     private AdminInfo adminInfo;
     private AdminInfoDAO adminInfoDAO;
-    private String adminId;  // New field to store admin ID
+    private String adminId; 
     
     private UserSession() {
         this.authenticated = false;

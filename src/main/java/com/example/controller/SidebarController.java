@@ -90,8 +90,7 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
-            // Here you can check application status to determine where to route
-            Main.setRoot("User/UserApplicationPending");  // Or another appropriate page
+            Main.setRoot("User/UserApplicationPending");
         } catch (IOException e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();
@@ -121,10 +120,8 @@ public class SidebarController {
     @FXML
     void logOutBtn(ActionEvent event) {
         try {
-            // Clear the user session
             userSession.logout();
             
-            // Navigate back to landing page
             Main.setRoot("LandingPage");
         } catch (IOException e) {
             System.err.println("Error loading LandingPage.fxml: " + e.getMessage());

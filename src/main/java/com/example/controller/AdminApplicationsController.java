@@ -67,21 +67,4 @@ public class AdminApplicationsController {
         }
     }
 
-        private void setupApplicantEntry(AnchorPane applicantPane, Label lastNameLabel, Label firstNameLabel,
-                                         Label middleNameLabel, Label viewButton,
-                                         String lastName, String firstName, String middleName) {
-                if (applicantPane != null && lastNameLabel != null && firstNameLabel != null &&
-                        middleNameLabel != null && viewButton != null) {
-
-                        lastNameLabel.setText(lastName);
-                        firstNameLabel.setText(firstName);
-                        middleNameLabel.setText(middleName);
-
-                        viewButton.setOnMouseClicked(event -> {
-                                System.out.println("View Application button clicked for: " + firstName + " " + lastName);
-                        });
-                } else {
-                        System.err.println("Error");
-                }
-        }
 }

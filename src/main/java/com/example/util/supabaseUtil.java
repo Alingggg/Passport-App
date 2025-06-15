@@ -15,15 +15,15 @@ import java.util.UUID;
 public class supabaseUtil {
     // Get Supabase connection details from configuration
     private static String getSupabaseUrl() {
-        return ConfigLoader.get("SUPABASE_URL", "https://your-project-id.supabase.co");
+        return ConfigLoader.get("SUPABASE_URL");
     }
     
     private static String getSupabaseApiKey() {
-        return ConfigLoader.get("SUPABASE_API_KEY", "your-default-key");
+        return ConfigLoader.get("SUPABASE_API_KEY");
     }
     
     private static String getStorageBucket() {
-        return ConfigLoader.get("SUPABASE_STORAGE_BUCKET", "images");
+        return ConfigLoader.get("SUPABASE_STORAGE_BUCKET");
     }
     
     private static final HttpClient client = HttpClient.newHttpClient();

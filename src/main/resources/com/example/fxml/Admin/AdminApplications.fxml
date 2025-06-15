@@ -15,6 +15,8 @@
 
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
 
+      <fx:include fx:id="adminHeader" source="../components/AdminHeader.fxml" layoutX="251.0" />
+
       <Label fx:id="lblApplications" layoutX="275.0" layoutY="115.0" style="-fx-text-fill: #696868;" text="Applications">
          <font>
             <Font name="Arial Bold" size="22.0" />
@@ -198,6 +200,3 @@
       </ScrollPane>
    </children>
 </AnchorPane>
-
-
-

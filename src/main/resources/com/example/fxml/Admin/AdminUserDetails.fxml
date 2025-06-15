@@ -254,28 +254,10 @@
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Button>
-                  <AnchorPane prefHeight="86.0" prefWidth="699.0" style="-fx-background-color: white;">
-                     <children>
-                        <Label fx:id="lblAppAdminID" layoutX="26.0" layoutY="33.0" style="-fx-text-fill: #696868;" text="Admin ID:">
-                           <font>
-                              <Font name="Arial Bold" size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" height="40.0" radius="9.5" spread="0.2" width="0.0">
-                           <color>
-                              <Color red="0.410526305437088" green="0.40444445610046387" blue="0.40444445610046387" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </content>
         </ScrollPane>
+        <fx:include fx:id="adminHeader" source="../components/AdminHeader.fxml" layoutX="251.0" />
     </children>
 </AnchorPane>
-
-
-

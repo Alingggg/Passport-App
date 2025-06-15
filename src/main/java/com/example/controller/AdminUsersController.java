@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.util.UserSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,12 +12,9 @@ public class AdminUsersController {
 
     @FXML
     private SidebarController sidebarController;
-
-    @FXML
-    private Label lblAdminID;
     
     @FXML
-    private Label lblAdminName;
+    private AdminHeaderController adminHeaderController;
 
     @FXML
     private Label lblUsers;
@@ -132,21 +128,6 @@ public class AdminUsersController {
             sidebarController.setActiveTab("users");
         }
         
-        // Set admin ID and name from UserSession
-        UserSession userSession = UserSession.getInstance();
-        if (userSession.isAuthenticated() && userSession.isAdmin()) {
-            // Set the admin ID if the label exists
-            if (lblAdminID != null) {
-                String adminId = userSession.getAdminId();
-                lblAdminID.setText(adminId != null ? adminId : "N/A");
-            }
-            
-            // Set the admin name if the label exists
-            if (lblAdminName != null) {
-                String adminName = userSession.getAdminFullName();
-                lblAdminName.setText(adminName != null ? adminName : userSession.getUsername());
-            }
-        }
     }
 
     private void handleSearchClick() {

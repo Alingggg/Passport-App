@@ -2,7 +2,9 @@ package com.example.controller;
 
 import com.example.Main;
 import com.example.dao.AccountDAO;
+import com.example.dao.AdminInfoDAO;
 import com.example.model.Account;
+import com.example.model.AdminInfo;
 import com.example.util.PasswordUtil;
 import com.example.util.UserSession;
 
@@ -21,10 +23,12 @@ public class AdminLoginController {
     private TextField passTxtF;
     
     private AccountDAO accountDAO;
+    private AdminInfoDAO adminInfoDAO;
     
     @FXML
     public void initialize() {
         accountDAO = new AccountDAO();
+        adminInfoDAO = new AdminInfoDAO();
     }
     
     @FXML
@@ -60,9 +64,20 @@ public class AdminLoginController {
                          "This account is not authorized for admin login.");
                 return;
             }
+            
+            // Get admin info to retrieve admin ID
+            AdminInfo adminInfo = adminInfoDAO.findByAccountId(account.getUserId());
+            if (adminInfo == null) {
+                showAlert(Alert.AlertType.ERROR, "Login Failed", 
+                         "Admin details not found. Please contact system administrator.");
+                return;
+            }
 
-            // Login successful - create user session
-            UserSession.getInstance().login(account.getUserId(), account.getUsername(), account.getRole());
+            // Login successful - create user session with admin info
+            UserSession userSession = UserSession.getInstance();
+            userSession.login(account.getUserId(), account.getUsername(), account.getRole());
+            // This is redundant since login() already sets it, but keeping for clarity
+            userSession.setAdminId(adminInfo.getAdminId());
 
             // Clear form
             clearForm();
@@ -81,6 +96,16 @@ public class AdminLoginController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Login Error", 
                      "An error occurred during login: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    void userBtn(ActionEvent event) {
+        try {
+            Main.setRoot("User/UserLogin");
+        } catch (IOException e) {
+            System.err.println("Error loading UserLogin.fxml: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     

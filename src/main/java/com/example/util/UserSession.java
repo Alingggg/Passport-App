@@ -13,6 +13,7 @@ public class UserSession {
     // Cache admin info to avoid repeated DB calls
     private AdminInfo adminInfo;
     private AdminInfoDAO adminInfoDAO;
+    private String adminId;  // New field to store admin ID
     
     private UserSession() {
         this.authenticated = false;
@@ -34,6 +35,14 @@ public class UserSession {
         
         // Clear cached admin info on new login
         this.adminInfo = null;
+        
+        // If this is an admin login, fetch and cache the admin ID
+        if ("admin".equals(role) && userId != null) {
+            this.adminInfo = adminInfoDAO.findByAccountId(userId);
+            if (this.adminInfo != null) {
+                this.adminId = this.adminInfo.getAdminId();
+            }
+        }
     }
     
     public void login(Integer userId, String username) {
@@ -47,6 +56,7 @@ public class UserSession {
         this.role = null;
         this.authenticated = false;
         this.adminInfo = null;
+        this.adminId = null;
     }
     
     // Getters
@@ -58,6 +68,39 @@ public class UserSession {
     // Role checking methods
     public boolean isUser() { return "user".equals(role); }
     public boolean isAdmin() { return "admin".equals(role); }
+    
+    /**
+     * Get admin ID (only for admin users)
+     */
+    public String getAdminId() {
+        if (!isAdmin() || userId == null) {
+            return null;
+        }
+        
+        // Return cached value if available
+        if (adminId != null) {
+            return adminId;
+        }
+        
+        // Fetch from database and cache if needed
+        if (adminInfo == null) {
+            adminInfo = adminInfoDAO.findByAccountId(userId);
+        }
+        
+        if (adminInfo != null) {
+            adminId = adminInfo.getAdminId();
+            return adminId;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Set admin ID for the current session
+     */
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
     
     /**
      * Get admin full name (only for admin users)
@@ -97,12 +140,13 @@ public class UserSession {
      */
     public void clearAdminCache() {
         this.adminInfo = null;
+        this.adminId = null;
     }
     
     // For debugging/testing
     @Override
     public String toString() {
-        return String.format("UserSession{userId=%d, username='%s', role='%s', authenticated=%b}", 
-                           userId, username, role, authenticated);
+        return String.format("UserSession{userId=%d, username='%s', role='%s', authenticated=%b, adminId='%s'}", 
+                          userId, username, role, authenticated, adminId);
     }
 }

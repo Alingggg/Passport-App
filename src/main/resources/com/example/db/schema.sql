@@ -10,6 +10,7 @@ CREATE TABLE account (
 -- Admin information table
 CREATE TABLE admin_info (
     account_id INTEGER PRIMARY KEY REFERENCES account(user_id) ON DELETE CASCADE,
+    admin_id VARCHAR(10) UNIQUE NOT NULL,
     full_name VARCHAR(100) NOT NULL
 );
 

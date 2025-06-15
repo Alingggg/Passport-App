@@ -5,30 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
 public class UserApplicationFormController {
 
-    // Add this field to access the included sidebar controller
     @FXML
     private SidebarController sidebarController;
-
-    @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private AnchorPane whiteBg;
-
-    @FXML
-    private Label applicationLbl;
-
-    @FXML
-    private Label userLbl;
 
     @FXML
     private ScrollPane scrollPane;

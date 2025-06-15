@@ -6,9 +6,6 @@ import com.example.Main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
 public class UserProfileController {
 
@@ -16,46 +13,11 @@ public class UserProfileController {
     private SidebarController sidebarController;
 
     @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private AnchorPane whiteBg;
-
-    @FXML
-    private Label yetLbl;
-
-    @FXML
-    private Label userLbl;
-
-    @FXML
     public void initialize() {
         // Initialize the sidebar
         if (sidebarController != null) {
             // Set the active tab to "profile" since we're on the profile page
             sidebarController.setActiveTab("profile");
-        }
-    }
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-        try {
-            Main.setRoot("UserProfile");
-        } catch (IOException e) {
-            System.err.println("Error loading UserProfile.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        try {
-            Main.setRoot("NotPassportHolder");
-        } catch (IOException e) {
-            System.err.println("Error loading NotPassportHolder.fxml: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -69,15 +31,4 @@ public class UserProfileController {
         }
     }
 
-    @FXML
-    void logoutBtn(ActionEvent event) {
-        try {
-            Main.setRoot("LandingPage");
-        } catch (IOException e) {
-            System.err.println("Error loading LandingPage.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
 }
-

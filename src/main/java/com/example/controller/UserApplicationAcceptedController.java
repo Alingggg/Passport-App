@@ -7,30 +7,16 @@ import javafx.scene.control.Button;
 public class UserApplicationAcceptedController {
 
     @FXML
-    private Button btnApplication;
-
-    @FXML
-    private Button btnLogout;
-
-    @FXML
-    private Button btnProfile;
+    private SidebarController sidebarController;
 
     @FXML
     private Button btnViewDetails;
 
     @FXML
-    void handleApplication(ActionEvent event) {
-        System.out.println("Application button clicked.");
-    }
-
-    @FXML
-    void handleLogout(ActionEvent event) {
-        System.out.println("Logout button clicked.");
-    }
-
-    @FXML
-    void handleProfile(ActionEvent event) {
-        System.out.println("Profile button clicked.");
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
     }
 
     @FXML
@@ -39,4 +25,3 @@ public class UserApplicationAcceptedController {
     }
 
 }
-

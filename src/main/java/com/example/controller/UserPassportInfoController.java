@@ -10,26 +10,16 @@ import com.example.util.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
 public class UserPassportInfoController {
 
     @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private AnchorPane whiteBg;
+    private SidebarController sidebarController;
 
     @FXML
     private Label passportInfoLbl;
-
-    @FXML
-    private Label userLbl;
 
     @FXML
     private ScrollPane scrollPane;
@@ -95,6 +85,10 @@ public class UserPassportInfoController {
 
     @FXML
     public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("profile");
+        }
+
         applicationService = new ApplicationService();
         loadUserData();
     }
@@ -106,11 +100,6 @@ public class UserPassportInfoController {
                 // User not logged in, redirect to login
                 Main.setRoot("UserLogin");
                 return;
-            }
-
-            // Display username in header
-            if (userLbl != null) {
-                userLbl.setText(session.getDisplayName());
             }
 
             // Load complete user profile
@@ -215,37 +204,6 @@ public class UserPassportInfoController {
     }
 
     @FXML
-    void profileBtn(ActionEvent event) {
-        try {
-            Main.setRoot("UserProfile");
-        } catch (IOException e) {
-            System.err.println("Error loading UserProfile.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        try {
-            Main.setRoot("UserApplication");
-        } catch (IOException e) {
-            System.err.println("Error loading UserApplication.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void logOutBtn(ActionEvent event) {
-        UserSession.getInstance().logout();
-        try {
-            Main.setRoot("LandingPage");
-        } catch (IOException e) {
-            System.err.println("Error loading LandingPage.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     void uploadValidIDBtn(ActionEvent event) {
         System.out.println("Upload Valid ID clicked");
     }
@@ -265,4 +223,3 @@ public class UserPassportInfoController {
         }
     }
 }
-

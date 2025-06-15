@@ -10,6 +10,9 @@ import javafx.scene.image.ImageView;
 public class AdminUserDetailsController {
 
     @FXML
+    private SidebarController sidebarController;
+
+    @FXML
     private AnchorPane scrollableContent;
 
     @FXML
@@ -142,13 +145,6 @@ public class AdminUserDetailsController {
     private Label lblCompanionContact;
     @FXML
     private Label txtCompanionContact;
-
-    @FXML
-    private Button btnLogout;
-    @FXML
-    private Button btnApplication;
-    @FXML
-    private Button btnProfile;
     @FXML
     private Button btnValidImage;
     @FXML
@@ -163,18 +159,10 @@ public class AdminUserDetailsController {
     private ImageView btnNext;
 
     @FXML
-    void logoutBtn(ActionEvent event) {
-        System.out.println("Logout button clicked!");
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        System.out.println("Application button clicked!");
-    }
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-        System.out.println("Profile button clicked!");
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("users");
+        }
     }
 
     @FXML

@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserAlreadyPassportHolderController">
+<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserAlreadyPassportHolderController">
    <children>
-      <Label fx:id="yetLbl" layoutX="364.0" layoutY="286.0" style="-fx-text-fill: #696868;" text="You are already a passport holder.">
+      <Label layoutX="364.0" layoutY="286.0" style="-fx-text-fill: #696868;" text="You are already a passport holder.">
          <font>
             <Font name="Arial Bold" size="30.0" />
          </font>
@@ -19,7 +19,7 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="userLbl" layoutX="890.0" layoutY="20.0" style="-fx-text-fill: #696868;" text="User">
+      <Label layoutX="890.0" layoutY="20.0" style="-fx-text-fill: #696868;" text="User">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>

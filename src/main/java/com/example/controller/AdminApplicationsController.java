@@ -8,11 +8,7 @@ import javafx.scene.layout.VBox;
 public class AdminApplicationsController {
 
         @FXML
-        private Label btnUsers;
-        @FXML
-        private Label btnApplications;
-        @FXML
-        private Label btnLogout;
+    private SidebarController sidebarController;
 
         @FXML
         private Label lblAppAdminID;
@@ -63,6 +59,13 @@ public class AdminApplicationsController {
         @FXML private Label lblFirstName51;
         @FXML private Label lblMiddleName51;
         @FXML private Label btnApplication61;
+
+        @FXML
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("applications");
+        }
+    }
 
         private void setupApplicantEntry(AnchorPane applicantPane, Label lastNameLabel, Label firstNameLabel,
                                          Label middleNameLabel, Label viewButton,

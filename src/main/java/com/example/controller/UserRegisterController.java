@@ -19,30 +19,6 @@ import javafx.scene.layout.AnchorPane;
 public class UserRegisterController {
 
     @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private ImageView pic2;
-
-    @FXML
-    private AnchorPane whiteBg;
-
-    @FXML
-    private Label registerLbl;
-
-    @FXML
-    private Label emailLbl;
-
-    @FXML
-    private Label passLbl;
-
-    @FXML
-    private Label confirmLbl;
-
-    @FXML
     private TextField emailTxtF;
 
     @FXML
@@ -50,9 +26,6 @@ public class UserRegisterController {
 
     @FXML
     private PasswordField confirmTxtF;
-
-    @FXML
-    private Label alreadyLbl;
 
     private AccountDAO accountDAO;
 
@@ -108,11 +81,6 @@ public class UserRegisterController {
             showAlert(Alert.AlertType.ERROR, "Registration Error", 
                      "An error occurred during registration: " + e.getMessage());
         }
-    }
-
-    @FXML
-    void userBtn(ActionEvent event) {
-        System.out.println("User button clicked");
     }
 
     @FXML
@@ -183,4 +151,3 @@ public class UserRegisterController {
         }
     }
 }
-

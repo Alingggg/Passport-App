@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserPassportInfoController">
+<AnchorPane prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserPassportInfoController">
     <children>
-        <Label fx:id="userLbl" layoutX="890.0" layoutY="20.0" prefHeight="20.0" prefWidth="42.0" style="-fx-text-fill: #696868;" text="User">
+        <Label layoutX="890.0" layoutY="20.0" prefHeight="20.0" prefWidth="42.0" style="-fx-text-fill: #696868;" text="User">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
@@ -261,7 +261,7 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-      <ImageView fx:id="pic1" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/image2.jpg" />
          </image>

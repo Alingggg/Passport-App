@@ -10,28 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 public class AdminLoginController {
     
-    @FXML
-    private AnchorPane bg1;
-    @FXML
-    private ImageView pic1;
-    @FXML
-    private ImageView pic2;
-    @FXML
-    private AnchorPane whiteBg;
-    @FXML
-    private Label loginLbl;
-    @FXML
-    private Label lblUsername;
-    @FXML
-    private Label passLbl;
     @FXML
     private TextField usernameTxtF;
     @FXML
@@ -101,16 +84,6 @@ public class AdminLoginController {
         }
     }
     
-    @FXML
-    void userBtn(ActionEvent event) {
-        try {
-            Main.setRoot("User/UserLogin");
-        } catch (IOException e) {
-            System.err.println("Error loading UserLogin.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
     private boolean validateInput(String username, String password) {
         if (username.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Validation Error", 
@@ -141,4 +114,3 @@ public class AdminLoginController {
         passTxtF.clear();
     }
 }
-

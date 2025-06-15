@@ -3,23 +3,9 @@ package com.example.controller;
 import com.example.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class LandingPageController {
-
-    @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private ImageView pic2;
-
-    @FXML
-    private AnchorPane whiteBg;
 
     @FXML
     void adminBtn(ActionEvent event) {
@@ -41,5 +27,3 @@ public class LandingPageController {
         }
     }
 }
-
-

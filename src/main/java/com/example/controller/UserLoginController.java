@@ -13,36 +13,9 @@ import com.example.util.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
 public class UserLoginController {
-
-    @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private ImageView pic2;
-
-    @FXML
-    private AnchorPane whiteBg;
-
-    @FXML
-    private Label loginLbl;
-
-    @FXML
-    private Label emailLbl;
-
-    @FXML
-    private Label passLbl;
-
-    @FXML
-    private Label doesntLbl;
 
     @FXML
     private TextField emailTxtF;
@@ -119,11 +92,6 @@ public class UserLoginController {
         }
     }
 
-    @FXML
-    void userBtn(ActionEvent event) {
-        System.out.println("User button clicked");
-    }
-
     private boolean validateInput(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Validation Error", 
@@ -181,6 +149,3 @@ public class UserLoginController {
         passTxtF.clear();
     }
 }
-
-
-

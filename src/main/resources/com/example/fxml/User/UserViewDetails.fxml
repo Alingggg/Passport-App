@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserViewDetailsController">
+<AnchorPane prefHeight="1143.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserViewDetailsController">
    <children>
-      <Label fx:id="userLbl" layoutX="890.0" layoutY="20.0" prefHeight="20.0" prefWidth="42.0" style="-fx-text-fill: #696868;" text="User">
+      <Label layoutX="890.0" layoutY="20.0" prefHeight="20.0" prefWidth="42.0" style="-fx-text-fill: #696868;" text="User">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
@@ -23,7 +23,7 @@
          <content>
             <AnchorPane fx:id="vi" minHeight="0.0" minWidth="0.0" prefHeight="1812.0" prefWidth="670.0">
                <children>
-                  <Label fx:id="applicationLbl" layoutX="65.0" layoutY="20.0" style="-fx-text-fill: #696868;" text="Application">
+                  <Label layoutX="65.0" layoutY="20.0" style="-fx-text-fill: #696868;" text="Application">
                      <font>
                         <Font name="Arial Bold" size="21.0" />
                      </font>
@@ -265,7 +265,7 @@
                   <Label fx:id="minor18Radio" layoutX="210.0" layoutY="745.0" prefHeight="27.0" prefWidth="42.0" />
                   <Button layoutX="16.0" layoutY="13.0" mnemonicParsing="false" onAction="#arrowBtn" prefHeight="34.0" prefWidth="35.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fx:id="arrow" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/arrow_back.png" />
                            </image>
@@ -275,7 +275,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <ImageView fx:id="pic1" fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="55.0" fitWidth="219.0" layoutX="16.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/image2.jpg" />
          </image>

@@ -3,20 +3,15 @@ package com.example.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.ScrollPane; // Added import
-import javafx.scene.layout.AnchorPane; // Added import
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 
 public class AdminUsersController {
 
     @FXML
-    private Label btnUsers;
-    @FXML
-    private Label btnApplications;
-    @FXML
-    private Label btnLogout;
+    private SidebarController sidebarController;
 
     @FXML
     private Label lblAdminID;
@@ -126,20 +121,11 @@ public class AdminUsersController {
     @FXML
     private Label btnViewDetails411111114;
 
-    private void handleUsersClick() {
-        System.out.println("Users button clicked!");
-        btnUsers.setStyle("-fx-background-color: white; -fx-text-fill: #40659C; -fx-background-radius: 15;");
-        btnApplications.setStyle("-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;");
-    }
-
-    private void handleApplicationsClick() {
-        System.out.println("Applications button clicked!");
-        btnApplications.setStyle("-fx-background-color: white; -fx-text-fill: #40659C; -fx-background-radius: 15;");
-        btnUsers.setStyle("-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;");
-    }
-
-    private void handleLogoutClick() {
-        System.out.println("Logout button clicked!");
+    @FXML
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("users");
+        }
     }
 
     private void handleSearchClick() {

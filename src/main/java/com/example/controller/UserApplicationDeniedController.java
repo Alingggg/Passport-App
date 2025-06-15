@@ -6,30 +6,16 @@ import javafx.scene.control.Button;
 public class UserApplicationDeniedController {
 
     @FXML
-    private Button btnApplication;
-
-    @FXML
-    private Button btnLogout;
-
-    @FXML
-    private Button btnProfile;
+    private SidebarController sidebarController;
 
     @FXML
     private Button btnReapply;
 
     @FXML
-    private void handleProfile() {
-        System.out.println("Profile button clicked");
-    }
-
-    @FXML
-    private void handleApplication() {
-        System.out.println("Application button clicked");
-    }
-
-    @FXML
-    private void handleLogout() {
-        System.out.println("Logout button clicked");
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
     }
 
     @FXML
@@ -37,4 +23,3 @@ public class UserApplicationDeniedController {
         System.out.println("Reapply button clicked");
     }
 }
-

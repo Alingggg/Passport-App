@@ -8,45 +8,43 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="whiteBg" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserLoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserLoginController">
    <children>
-      <AnchorPane fx:id="bg1" prefHeight="635.0" prefWidth="638.0">
+      <AnchorPane prefHeight="635.0" prefWidth="638.0">
          <children>
-            <ImageView fx:id="pic1" fitHeight="635.0" fitWidth="671.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="635.0" fitWidth="671.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/image1.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <Button layoutX="877.0" layoutY="25.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="31.0" prefWidth="50.0" style="-fx-background-radius: 9; -fx-background-color: transparent;" text="User" textFill="#696868">
-         <font>
-            <Font name="Arial Bold" size="14.0" />
-         </font>
-      </Button>
-      <ImageView fx:id="pic2" fitHeight="59.0" fitWidth="214.0" layoutX="702.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="890" layoutY="20" style="-fx-text-fill: #696868;" text="User">
+         <font><Font name="Arial Bold" size="16" /></font>
+      </Label>
+      <ImageView fitHeight="59.0" fitWidth="214.0" layoutX="702.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/ad1f1b93.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="loginLbl" layoutX="756.0" layoutY="218.0" text="Log in your account">
+      <Label layoutX="756.0" layoutY="218.0" text="Log in your account">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="emailLbl" layoutX="702.0" layoutY="268.0" text="Email:">
+      <Label layoutX="702.0" layoutY="268.0" text="Email:">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="emailTxtF" layoutX="694.0" layoutY="290.0" prefHeight="26.0" prefWidth="229.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-      <Label fx:id="passLbl" layoutX="702.0" layoutY="335.0" text="Password:">
+      <Label layoutX="702.0" layoutY="335.0" text="Password:">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="passTxtF" layoutX="694.0" layoutY="357.0" prefHeight="26.0" prefWidth="229.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-      <Label fx:id="dontLbl" layoutX="694.0" layoutY="400.0" text="Don't have an account?">
+      <Label layoutX="694.0" layoutY="400.0" text="Don't have an account?">
          <font>
             <Font name="Arial" size="10.0" />
          </font>

@@ -3,47 +3,23 @@ package com.example.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
 public class UserViewDetailsController {
 
     @FXML
-    private AnchorPane bg1;
+    private SidebarController sidebarController;
 
     @FXML
-    private ImageView pic1;
-
-    @FXML
-    private AnchorPane whiteBg;
-
-    @FXML
-    private Label userLbl;
-
-    @FXML
-    private Label applicationLbl;
-
-    @FXML
-    private ImageView arrow;
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
+    }
 
     @FXML
     void arrowBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
-
-    @FXML
-    void logOutBtn(ActionEvent event) {
         System.out.println("thank you");
     }
 
@@ -294,4 +270,3 @@ public class UserViewDetailsController {
     }
 
 }
-

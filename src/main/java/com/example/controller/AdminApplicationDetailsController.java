@@ -10,13 +10,10 @@ import javafx.scene.layout.AnchorPane;
 public class AdminApplicationDetailsController {
 
     @FXML
-    private Button btnLogout;
+    private SidebarController sidebarController;
+
     @FXML
     private ImageView logo;
-    @FXML
-    private Button btnApplication;
-    @FXML
-    private Button btnProfile;
     @FXML
     private AnchorPane scrollableContent;
     @FXML
@@ -157,21 +154,6 @@ public class AdminApplicationDetailsController {
     private Button btnDenyApplication;
 
     @FXML
-    private void logoutBtn(ActionEvent event) {
-        System.out.println("Logout button clicked!");
-    }
-
-    @FXML
-    private void applicationBtn(ActionEvent event) {
-        System.out.println("Application button clicked!");
-    }
-
-    @FXML
-    private void profileBtn(ActionEvent event) {
-        System.out.println("Profile button clicked!");
-    }
-
-    @FXML
     private void viewValidId(ActionEvent event) {
         System.out.println("View Valid ID button clicked!");
     }
@@ -193,6 +175,8 @@ public class AdminApplicationDetailsController {
 
     @FXML
     public void initialize() {
-        // Initialize any required components
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
     }
 }

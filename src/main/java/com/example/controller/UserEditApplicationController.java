@@ -5,41 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 
 public class UserEditApplicationController {
 
     @FXML
-    private AnchorPane bg1;
-
-    @FXML
-    private ImageView pic1;
-
-    @FXML
-    private AnchorPane whiteBg;
+    private SidebarController sidebarController;
 
     @FXML
     private Label applicationLbl;
-
-    @FXML
-    private Label userLbl;
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
-
-    @FXML
-    void logOutBtn(ActionEvent event) {
-        System.out.println("thank you");
-    }
 
     @FXML
     private ScrollPane scrollPane;
@@ -84,6 +58,10 @@ public class UserEditApplicationController {
 
     @FXML
     public void initialize() {
+
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("application");
+        }
 
         // Scroll Pane
         if (scrollPane != null) {
@@ -221,7 +199,6 @@ public class UserEditApplicationController {
             issueDaysCombo.setValue(daysInMonth);
         }
     }
-
 
     @FXML
     private Label pBirthLbl;
@@ -446,12 +423,6 @@ public class UserEditApplicationController {
     private Label forVerificationLbl;
 
     @FXML
-    private ImageView pic2;
-
-    @FXML
-    private ImageView pic3;
-
-    @FXML
     private Label uploadVAlidIDLbl;
 
     @FXML
@@ -478,5 +449,3 @@ public class UserEditApplicationController {
     }
 
 }
-
-

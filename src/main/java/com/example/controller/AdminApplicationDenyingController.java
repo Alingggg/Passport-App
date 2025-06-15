@@ -9,11 +9,8 @@ import javafx.scene.layout.AnchorPane;
 public class AdminApplicationDenyingController {
 
     @FXML
-    private Button btnLogout;
-    @FXML
-    private Button btnApplication;
-    @FXML
-    private Button btnProfile;
+    private SidebarController sidebarController;
+
     @FXML
     private AnchorPane denyReasonPane;
     @FXML
@@ -162,18 +159,10 @@ public class AdminApplicationDenyingController {
     private Label lblAppAdminID;
 
     @FXML
-    void logoutBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void applicationBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void profileBtn(ActionEvent event) {
-
+    public void initialize() {
+        if (sidebarController != null) {
+            sidebarController.setActiveTab("applications");
+        }
     }
 
     @FXML

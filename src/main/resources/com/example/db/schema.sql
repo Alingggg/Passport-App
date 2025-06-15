@@ -22,6 +22,7 @@ CREATE TABLE passport_application (
     reference_id VARCHAR(50) UNIQUE,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reviewed_at TIMESTAMP NULL,
+    is_received_card BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
@@ -93,6 +94,7 @@ CREATE TABLE user_philippine_passport (
     has_philippine_passport BOOLEAN DEFAULT FALSE,
     philippine_passport_number VARCHAR(50),
     issue_date DATE,
+    expiry_date DATE,
     issue_place VARCHAR(100),
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );

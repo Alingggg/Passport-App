@@ -46,9 +46,7 @@ public class UserApplicationFormController {
     @FXML private TextField txtCitizenOthers;
     @FXML private TextField lblCompleteAddress;
     @FXML private TextField lblMobileNumber1;
-    // @FXML private TextField lblMobileNumber2;
     @FXML private TextField lblTelephoneNumber1;
-    // @FXML private TextField lblTelephoneNumber2;
     @FXML private TextField lblEmailAddress;
     @FXML private TextField lblOccupation;
     @FXML private TextField lblCountry;
@@ -424,23 +422,15 @@ public class UserApplicationFormController {
     private UserContact createUserContact() {
         UserContact contact = new UserContact();
         
-        // Set mobile numbers
+        // Set mobile number
         if (lblMobileNumber1.getText() != null && !lblMobileNumber1.getText().isEmpty()) {
             contact.setMobileNumber(lblMobileNumber1.getText());
         }
-        
-        // if (lblMobileNumber2.getText() != null && !lblMobileNumber2.getText().isEmpty()) {
-        //     contact.setMobileNumber2(lblMobileNumber2.getText());
-        // }
         
         // Set telephone numbers
         if (lblTelephoneNumber1.getText() != null && !lblTelephoneNumber1.getText().isEmpty()) {
             contact.setTelephoneNumber(lblTelephoneNumber1.getText());
         }
-        
-        // if (lblTelephoneNumber2.getText() != null && !lblTelephoneNumber2.getText().isEmpty()) {
-        //     contact.setTelephoneNumber2(lblTelephoneNumber2.getText());
-        // }
         
         // Set email
         contact.setEmailAddress(lblEmailAddress.getText());

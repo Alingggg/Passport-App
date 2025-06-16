@@ -120,14 +120,12 @@
                   </font>
                </Label>
                <TextField fx:id="lblMobileNumber1" layoutX="118.0" layoutY="228.0" prefHeight="27.0" prefWidth="158.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <TextField fx:id="lblMobileNumber2" layoutX="118.0" layoutY="263.0" prefHeight="27.0" prefWidth="158.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
                <Label layoutX="365.0" layoutY="234.0" prefHeight="16.0" prefWidth="114.0" style="-fx-text-fill: #696868;" text="Telephone Number:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
                <TextField fx:id="lblTelephoneNumber1" layoutX="489.0" layoutY="228.0" prefHeight="27.0" prefWidth="169.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <TextField fx:id="lblTelephoneNumber2" layoutX="489.0" layoutY="262.0" prefHeight="27.0" prefWidth="168.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
                <Label layoutX="18.0" layoutY="306.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Email Address:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
@@ -313,18 +311,18 @@
                   </font>
                </Label>
                <TextField fx:id="lblContactNumber" layoutX="524.0" layoutY="734.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="36.0" layoutY="802.0" style="-fx-text-fill: #696868;" text="For Verification">
+               <Label layoutX="18.0" layoutY="802.0" style="-fx-text-fill: #696868;" text="For Verification">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
                </Label>
                <!-- Valid ID Upload Section -->
-               <Label layoutX="37.0" layoutY="859.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
+               <Label layoutX="18.0" layoutY="859.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="37.0" layoutY="882.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="882.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadValidID" mnemonicParsing="false" onAction="#uploadValidIDBtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblValidIdFilename" layoutX="10.0" layoutY="19.0" prefHeight="16.0" prefWidth="280.0" style="-fx-text-fill: white;" text="No file selected" />
@@ -349,12 +347,12 @@
                </AnchorPane>
                
                <!-- PSA Birth Certificate Upload Section -->
-               <Label layoutX="38.0" layoutY="960.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
+               <Label layoutX="18.0" layoutY="960.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="37.0" layoutY="985.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="985.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadPSA" mnemonicParsing="false" onAction="#uploadPSABtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblPSAFilename" layoutX="10.0" layoutY="19.0" prefHeight="16.0" prefWidth="280.0" style="-fx-text-fill: white;" text="No file selected" />

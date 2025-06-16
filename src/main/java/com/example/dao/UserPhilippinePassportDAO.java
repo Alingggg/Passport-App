@@ -14,8 +14,8 @@ public class UserPhilippinePassportDAO {
                     "has_philippine_passport = EXCLUDED.has_philippine_passport, " +
                     "philippine_passport_number = EXCLUDED.philippine_passport_number, " +
                     "issue_date = EXCLUDED.issue_date, " +
-                    "expiry_date = EXCLUDED.expiry_date" +
-                    "issue_place = EXCLUDED.issue_place, ";
+                    "issue_place = EXCLUDED.issue_place, " +
+                    "expiry_date = EXCLUDED.expiry_date";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -25,19 +25,19 @@ public class UserPhilippinePassportDAO {
             pstmt.setString(3, philippinePassport.getPhilippinePassportNumber());
             
             if (philippinePassport.getIssueDate() != null) {
-                pstmt.setDate(4, Date.valueOf(philippinePassport.getIssueDate()));
+                pstmt.setDate(4, java.sql.Date.valueOf(philippinePassport.getIssueDate()));
             } else {
-                pstmt.setNull(4, Types.DATE);
+                pstmt.setNull(4, java.sql.Types.DATE);
             }
             
+            pstmt.setString(5, philippinePassport.getIssuePlace());
+            
             if (philippinePassport.getExpiryDate() != null) {
-                pstmt.setDate(5, Date.valueOf(philippinePassport.getExpiryDate()));
+                pstmt.setDate(6, java.sql.Date.valueOf(philippinePassport.getExpiryDate()));
             } else {
-                pstmt.setNull(5, Types.DATE);
+                pstmt.setNull(6, java.sql.Types.DATE);
             }
-
-            pstmt.setString(6, philippinePassport.getIssuePlace());
-
+            
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

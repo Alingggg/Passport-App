@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.IOException;
 
 import com.example.Main;
+import com.example.service.ApplicationService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,8 @@ public class UserProfileController {
 
     @FXML
     private SidebarController sidebarController;
+
+    private final ApplicationService applicationService = new ApplicationService();
 
     @FXML
     public void initialize() {
@@ -22,9 +25,16 @@ public class UserProfileController {
     @FXML
     void applyBtn(ActionEvent event) {
         try {
-            Main.setRoot("UserNotPassportHolder");
+            // Check if the user has an existing application
+            if (applicationService.hasExistingApplication()) {
+                System.out.println("User has an existing application. Navigating to UserApplicationStatus from UserProfile...");
+                Main.setRoot("UserApplicationStatus");
+            } else {
+                System.out.println("User does not have an existing application. Navigating to UserNotPassportHolder from UserProfile...");
+                Main.setRoot("UserNotPassportHolder");
+            }
         } catch (IOException e) {
-            System.err.println("Error loading UserNotPassportHolder.fxml: " + e.getMessage());
+            System.err.println("Error loading FXML from UserProfileController applyBtn: " + e.getMessage());
             e.printStackTrace();
         }
     }

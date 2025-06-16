@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserApplicationDeniedController">
+<AnchorPane prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserApplicationStatusController">
    <children>
 
       <Label layoutX="406.0" layoutY="267.0" style="-fx-text-fill: #696868;" text="Application Status: ">
@@ -20,7 +20,7 @@
          </font>
       </Label>
 
-      <Button fx:id="btnReapply" layoutX="518.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleReapply" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="Re-apply">
+      <Button fx:id="btnView" layoutX="518.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleView" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15;" text="View Details">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
@@ -33,7 +33,18 @@
       </Label>
       
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
-      <Label fx:id="lblFeedback" alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="306.0" style="-fx-text-fill: #F20707;" text="   " textAlignment="CENTER">
+      
+      <!-- Modified lblFeedback for better centering -->
+      <Label fx:id="lblFeedback" 
+             layoutX="225.0"
+             layoutY="306.0" 
+             prefWidth="500.0"
+             alignment="CENTER" 
+             contentDisplay="CENTER" 
+             style="-fx-text-fill: #F20707;" 
+             text=""
+             textAlignment="CENTER"
+             wrapText="true"> <!-- Allow text to wrap if it's too long for the width -->
          <font>
             <Font name="Arial Italic" size="11" />
          </font>

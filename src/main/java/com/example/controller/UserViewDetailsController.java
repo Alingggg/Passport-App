@@ -257,12 +257,12 @@ public class UserViewDetailsController {
 
     @FXML
     void viewValidIDImage(ActionEvent event) {
-        viewImageByType("valid_id");
+        viewImageByType("Valid ID");
     }
 
     @FXML
     void viewPSAImage(ActionEvent event) {
-        viewImageByType("psa_birth_certificate");
+        viewImageByType("Birth Certificate");
     }
     
     private void viewImageByType(String imageType) {

@@ -610,42 +610,44 @@ public class UserApplicationFormController {
             @Override
             protected List<Image> call() throws Exception {
                 List<Image> uploadedImages = new ArrayList<>();
-                
                 try {
-                    // Upload Valid ID to Supabase
-                    updateMessage("Uploading Valid ID to Supabase...");
-                    String validIdUrl = supabaseUtil.uploadFile(validIdFile);
-                    if (validIdUrl == null) {
-                        throw new IOException("Failed to upload Valid ID to Supabase");
+                    if (validIdFile != null) {
+                        updateMessage("Uploading Valid ID to Supabase...");
+                        String validIdSupabaseUrl = supabaseUtil.uploadFile(validIdFile); // This returns the public URL structure
+                        if (validIdSupabaseUrl == null) {
+                            throw new IOException("Failed to upload Valid ID to Supabase");
+                        }
+                        // Extract the unique filename from the URL that supabaseUtil constructed
+                        String uniqueValidIdName = validIdSupabaseUrl.substring(validIdSupabaseUrl.lastIndexOf('/') + 1);
+                        
+                        Image validIdImage = new Image();
+                        validIdImage.setFilename(uniqueValidIdName); // STORE THE UNIQUE FILENAME
+                        validIdImage.setFileType("Valid ID");
+                        validIdImage.setSupabaseUrl(validIdSupabaseUrl); // Store the original public-like URL for reference if needed
+                        uploadedImages.add(validIdImage);
                     }
-                    
-                    // Create Valid ID image record
-                    Image validIdImage = new Image();
-                    validIdImage.setFilename(validIdFile.getName());
-                    validIdImage.setFileType("Valid ID");
-                    validIdImage.setSupabaseUrl(validIdUrl);
-                    uploadedImages.add(validIdImage);
-                    
-                    // Upload PSA Birth Certificate to Supabase
-                    updateMessage("Uploading Birth Certificate to Supabase...");
-                    String psaUrl = supabaseUtil.uploadFile(psaFile);
-                    if (psaUrl == null) {
-                        throw new IOException("Failed to upload Birth Certificate to Supabase");
+
+                    if (psaFile != null) {
+                        updateMessage("Uploading Birth Certificate to Supabase...");
+                        String psaSupabaseUrl = supabaseUtil.uploadFile(psaFile);
+                        if (psaSupabaseUrl == null) {
+                            throw new IOException("Failed to upload Birth Certificate to Supabase");
+                        }
+                        String uniquePsaName = psaSupabaseUrl.substring(psaSupabaseUrl.lastIndexOf('/') + 1);
+
+                        Image psaImage = new Image();
+                        psaImage.setFilename(uniquePsaName); // STORE THE UNIQUE FILENAME
+                        psaImage.setFileType("Birth Certificate");
+                        psaImage.setSupabaseUrl(psaSupabaseUrl);
+                        uploadedImages.add(psaImage);
                     }
-                    
-                    // Create PSA Birth Certificate image record
-                    Image psaImage = new Image();
-                    psaImage.setFilename(psaFile.getName());
-                    psaImage.setFileType("Birth Certificate");
-                    psaImage.setSupabaseUrl(psaUrl);
-                    uploadedImages.add(psaImage);
                     
                     updateMessage("Upload completed successfully");
                     return uploadedImages;
                 } catch (Exception e) {
                     updateMessage("Upload failed: " + e.getMessage());
                     e.printStackTrace();
-                    throw e;
+                    throw e; // Re-throw to be caught by onFailed
                 }
             }
         };
@@ -679,7 +681,7 @@ public class UserApplicationFormController {
         // Show the progress stage and wait until it's closed
         progressStage.showAndWait();
         
-        return images;
+        return images; // This will be populated after showAndWait() if task is successful
     }
 
     // Helper method to convert month name to number

@@ -22,9 +22,9 @@ public class UserProfileController {
     @FXML
     void applyBtn(ActionEvent event) {
         try {
-            Main.setRoot("ApplicationForm");
+            Main.setRoot("UserNotPassportHolder");
         } catch (IOException e) {
-            System.err.println("Error loading ApplicationForm.fxml: " + e.getMessage());
+            System.err.println("Error loading UserNotPassportHolder.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }

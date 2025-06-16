@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.Main;
 import com.example.dao.UserPhilippinePassportDAO;
+import com.example.model.PassportApplication;
 import com.example.model.UserPhilippinePassport;
 import com.example.service.ApplicationService;
 import com.example.util.UserSession;
@@ -85,21 +86,20 @@ public class SidebarController {
     
     @FXML
     void profileBtn(ActionEvent event) {
-        // Existing logic for profileBtn remains unchanged.
-        // It determines view based on whether detailed passport info is available.
         try {
             Integer userId = userSession.getUserId();
-            if (userId == null) { 
+            if (userId == null) {
                 Main.setRoot("UserLogin");
                 return;
             }
-            UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(userId);
-            
-            if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
-                System.out.println("User has passport. Navigating to UserPassportInfo...");
+
+            PassportApplication application = applicationService.getUserApplication();
+
+            if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
+                System.out.println("User has an accepted application. Navigating to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");
             } else {
-                System.out.println("User doesn't have passport. Navigating to UserProfile...");
+                System.out.println("User does not have an accepted application. Navigating to UserProfile...");
                 Main.setRoot("UserProfile");
             }
         } catch (IOException e) {

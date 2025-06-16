@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import com.example.Main;
 import com.example.dao.AccountDAO;
-import com.example.dao.UserPhilippinePassportDAO;
 import com.example.model.Account;
-import com.example.model.UserPhilippinePassport;
+import com.example.model.PassportApplication;
+import com.example.service.ApplicationService;
 import com.example.util.PasswordUtil;
 import com.example.util.UserSession;
 
@@ -24,12 +24,12 @@ public class UserLoginController {
     private TextField passTxtF;
 
     private AccountDAO accountDAO;
-    private UserPhilippinePassportDAO philippinePassportDAO;
+    private ApplicationService applicationService;
 
     @FXML
     public void initialize() {
         accountDAO = new AccountDAO();
-        philippinePassportDAO = new UserPhilippinePassportDAO();
+        applicationService = new ApplicationService();
     }
 
     @FXML
@@ -72,8 +72,8 @@ public class UserLoginController {
             // Clear form
             clearForm();
 
-            // Check if user has Philippine passport and route accordingly
-            routeUserBasedOnPassportStatus(account.getUserId());
+            // Check user's application status and route accordingly
+            routeUserBasedOnApplicationStatus(account.getUserId()); // Changed method name for clarity
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,18 +113,22 @@ public class UserLoginController {
         return email.matches(emailRegex);
     }
 
-    private void routeUserBasedOnPassportStatus(Integer userId) {
+    // Renamed and updated logic
+    private void routeUserBasedOnApplicationStatus(Integer userId) {
         try {
-            // Check if user has Philippine passport information
-            UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(userId);
+            // UserSession is already set, so ApplicationService can use it if its methods rely on the session.
+            // Or, if ApplicationService methods need userId explicitly, ensure they are called correctly.
+            // Assuming applicationService.getUserApplication() correctly fetches for the logged-in user (via UserSession)
+            PassportApplication application = applicationService.getUserApplication(); 
             
-            if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
-                // User has Philippine passport - go to UserPassportInfo to view their data
-                System.out.println("User has Philippine passport. Routing to UserPassportInfo...");
+            if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
+                // User has an accepted application - go to UserPassportInfo
+                System.out.println("User has an accepted application. Routing to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");
             } else {
-                // User doesn't have Philippine passport - go to UserProfile to apply
-                System.out.println("User doesn't have Philippine passport. Routing to UserProfile...");
+                // User doesn't have an accepted application (or no application at all) - go to UserProfile
+                // UserProfileController will then decide whether to show UserApplicationStatus or UserNotPassportHolder
+                System.out.println("User does not have an accepted application. Routing to UserProfile...");
                 Main.setRoot("UserProfile");
             }
             

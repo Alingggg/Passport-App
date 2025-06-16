@@ -22,7 +22,6 @@ CREATE TABLE passport_application (
     reference_id VARCHAR(50) UNIQUE,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reviewed_at TIMESTAMP NULL,
-    is_received_card BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 

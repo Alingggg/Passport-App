@@ -34,12 +34,6 @@ public class Main extends Application {
         stage.show();
     }
 
-    @Override
-    public void stop() {
-        // Close database connection when application exits
-        dbUtil.closeConnection();
-    }
-
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }

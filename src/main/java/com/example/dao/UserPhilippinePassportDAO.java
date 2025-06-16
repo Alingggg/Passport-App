@@ -8,13 +8,14 @@ import java.sql.*;
 public class UserPhilippinePassportDAO {
     
     public boolean savePhilippinePassport(UserPhilippinePassport philippinePassport) {
-        String sql = "INSERT INTO user_philippine_passport (user_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place) " +
-                    "VALUES (?, ?, ?, ?, ?) " +
+        String sql = "INSERT INTO user_philippine_passport (user_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place, expiry_date) " +
+                    "VALUES (?, ?, ?, ?, ?, ?) " +
                     "ON CONFLICT (user_id) DO UPDATE SET " +
                     "has_philippine_passport = EXCLUDED.has_philippine_passport, " +
                     "philippine_passport_number = EXCLUDED.philippine_passport_number, " +
                     "issue_date = EXCLUDED.issue_date, " +
-                    "issue_place = EXCLUDED.issue_place";
+                    "expiry_date = EXCLUDED.expiry_date" +
+                    "issue_place = EXCLUDED.issue_place, ";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -29,8 +30,14 @@ public class UserPhilippinePassportDAO {
                 pstmt.setNull(4, Types.DATE);
             }
             
-            pstmt.setString(5, philippinePassport.getIssuePlace());
-            
+            if (philippinePassport.getExpiryDate() != null) {
+                pstmt.setDate(5, Date.valueOf(philippinePassport.getExpiryDate()));
+            } else {
+                pstmt.setNull(5, Types.DATE);
+            }
+
+            pstmt.setString(6, philippinePassport.getIssuePlace());
+
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,6 +66,12 @@ public class UserPhilippinePassportDAO {
                 }
                 
                 philippinePassport.setIssuePlace(rs.getString("issue_place"));
+
+                Date expiryDate = rs.getDate("expiry_date");
+                if (expiryDate != null) {
+                    philippinePassport.setExpiryDate(expiryDate.toLocalDate());
+                }
+
                 return philippinePassport;
             }
         } catch (SQLException e) {

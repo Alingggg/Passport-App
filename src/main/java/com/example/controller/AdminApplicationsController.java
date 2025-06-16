@@ -1,69 +1,79 @@
 package com.example.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import com.example.model.PassportApplication;
+import com.example.model.UserInfo;
+import com.example.dao.PassportApplicationDAO;
+import com.example.dao.UserInfoDAO;
+import com.example.controller.components.ApplicantCardController;
+
+import java.util.List;
 
 public class AdminApplicationsController {
 
-        @FXML
+    @FXML
     private SidebarController sidebarController;
 
-        @FXML
-        private Label lblAppAdminID;
-        @FXML
-        private Label lblApplications;
+    @FXML
+    private Label lblAppAdminID;
+    @FXML
+    private Label lblApplications;
 
-        @FXML
-        private VBox applicationsVBox;
+    @FXML
+    private VBox applicationsVBox;
 
-        @FXML private AnchorPane applicant1;
-        @FXML private Label lblLastName;
-        @FXML private Label lblFirstName;
-        @FXML private Label lblMiddleName;
-        @FXML private Label btnApplication;
+    private PassportApplicationDAO applicationDAO = new PassportApplicationDAO();
+    private UserInfoDAO userInfoDAO = new UserInfoDAO();
 
-        @FXML private AnchorPane applicant2;
-        @FXML private Label lblLastName2;
-        @FXML private Label lblFirstName1;
-        @FXML private Label lblMiddleName1;
-        @FXML private Label btnApplication2;
-
-        @FXML private AnchorPane applicant3;
-        @FXML private Label lblLastName3;
-        @FXML private Label lblFirstName2;
-        @FXML private Label lblMiddleName2;
-        @FXML private Label btnApplication3;
-
-        @FXML private AnchorPane applicant4;
-        @FXML private Label lblLastNam4;
-        @FXML private Label lblFirstName3;
-        @FXML private Label lblMiddleName3;
-        @FXML private Label btnApplication4;
-
-        @FXML private AnchorPane applicant5;
-        @FXML private Label lblLastName5;
-        @FXML private Label lblFirstName4;
-        @FXML private Label lblMiddleName4;
-        @FXML private Label btnApplication5;
-
-        @FXML private AnchorPane applicant6;
-        @FXML private Label lblLastName6;
-        @FXML private Label lblFirstName5;
-        @FXML private Label lblMiddleName5;
-        @FXML private Label btnApplication6;
-
-        @FXML private AnchorPane applicant61;
-        @FXML private Label lblLastName61;
-        @FXML private Label lblFirstName51;
-        @FXML private Label lblMiddleName51;
-        @FXML private Label btnApplication61;
-
-        @FXML
+    @FXML
     public void initialize() {
         if (sidebarController != null) {
             sidebarController.setActiveTab("applications");
+        }
+        loadPendingApplications();
+    }
+
+    private void loadPendingApplications() {
+        applicationsVBox.getChildren().clear();
+        List<PassportApplication> pendingApps = applicationDAO.getPendingApplications();
+        System.out.println("Pending applications found: " + pendingApps.size());
+
+        for (PassportApplication app : pendingApps) {
+            try {
+                UserInfo userInfo = userInfoDAO.findByUserId(app.getUserId());
+                if (userInfo == null) {
+                    System.out.println("No user info found for userId: " + app.getUserId());
+                    continue;
+                }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fxml/components/ApplicantCard.fxml"));
+                Node cardNode = loader.load();
+                ApplicantCardController cardController = loader.getController();
+
+                cardController.setData(
+                    userInfo.getLastName(),
+                    userInfo.getFirstName(),
+                    userInfo.getMiddleName(),
+                    app
+                );
+
+                cardController.setOnViewApplicationAction(() -> {
+                    try {
+                        AdminApplicationDetailsController.setCurrentApplication(app);
+                        com.example.Main.setRoot("AdminApplicationDetails");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                applicationsVBox.getChildren().add(cardNode);
+                System.out.println("Added card for user: " + userInfo.getFirstName() + " " + userInfo.getLastName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

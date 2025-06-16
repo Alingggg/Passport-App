@@ -63,7 +63,7 @@ public class AdminApplicationDetailsController {
     @FXML
     public void initialize() {
         if (sidebarController != null) {
-            sidebarController.setActiveTab("application");
+            sidebarController.setActiveTab("applications");
         }
         Platform.runLater(this::loadApplicationDetails);
     }

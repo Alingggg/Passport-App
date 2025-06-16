@@ -1,7 +1,11 @@
 package com.example.controller;
 
 import com.example.Main;
+import com.example.dao.UserPhilippinePassportDAO;
+import com.example.model.UserPhilippinePassport;
+import com.example.service.ApplicationService;
 import com.example.util.UserSession;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,6 +30,8 @@ public class SidebarController {
     private Button btnLogout;
     
     private final UserSession userSession = UserSession.getInstance();
+    private final UserPhilippinePassportDAO philippinePassportDAO = new UserPhilippinePassportDAO();
+    private final ApplicationService applicationService = new ApplicationService();
     
     @FXML
     public void initialize() {
@@ -79,10 +85,25 @@ public class SidebarController {
     
     @FXML
     void profileBtn(ActionEvent event) {
+        // Existing logic for profileBtn remains unchanged.
+        // It determines view based on whether detailed passport info is available.
         try {
-            Main.setRoot("UserProfile");
+            Integer userId = userSession.getUserId();
+            if (userId == null) { 
+                Main.setRoot("UserLogin");
+                return;
+            }
+            UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(userId);
+            
+            if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
+                System.out.println("User has passport. Navigating to UserPassportInfo...");
+                Main.setRoot("UserPassportInfo");
+            } else {
+                System.out.println("User doesn't have passport. Navigating to UserProfile...");
+                Main.setRoot("UserProfile");
+            }
         } catch (IOException e) {
-            System.err.println("Navigation error: " + e.getMessage());
+            System.err.println("Navigation error in profileBtn: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -90,9 +111,29 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
-            Main.setRoot("UserApplicationPending");
+            Integer userId = userSession.getUserId();
+            if (userId == null) { 
+                Main.setRoot("UserLogin");
+                return;
+            }
+
+            // Check if an application already exists using ApplicationService
+            if (applicationService.hasExistingApplication()) {
+                System.out.println("User has an existing application. Navigating to UserApplicationStatus...");
+                Main.setRoot("UserApplicationStatus");
+            } else {
+                // No existing application, logic based on passport ownership
+                UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(userId);
+                if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
+                    System.out.println("User has passport but no current application. Navigating to UserAlreadyPassportHolder...");
+                    Main.setRoot("UserAlreadyPassportHolder");
+                } else {
+                    System.out.println("User doesn't have passport and no current application. Navigating to UserNotPassportHolder...");
+                    Main.setRoot("UserNotPassportHolder");
+                }
+            }
         } catch (IOException e) {
-            System.err.println("Navigation error: " + e.getMessage());
+            System.err.println("Navigation error in applicationBtn: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -120,8 +161,10 @@ public class SidebarController {
     @FXML
     void logOutBtn(ActionEvent event) {
         try {
+            // Clear the user session
             userSession.logout();
             
+            // Navigate back to landing page
             Main.setRoot("LandingPage");
         } catch (IOException e) {
             System.err.println("Error loading LandingPage.fxml: " + e.getMessage());

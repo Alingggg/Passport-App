@@ -18,28 +18,22 @@ public class dbUtil {
         return ConfigLoader.get("DB_PASSWORD", "postgres");
     }
     
-    private static Connection connection = null;
-    
     /**
-     * Get a database connection (creates one if it doesn't exist)
+     * Get a new database connection
      */
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(getUrl(), getUser(), getPassword());
-        }
-        return connection;
+        // Always return a new connection
+        return DriverManager.getConnection(getUrl(), getUser(), getPassword());
     }
     
     /**
-     * Close the database connection
+     * Close the database connection - This method is no longer appropriate
+     * for a utility that doesn't manage a static connection.
+     * Connections should be closed by the code that acquires them.
      */
     public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        // This method should ideally be removed or log a warning.
+        // For now, let's make it a no-op or log.
+        System.err.println("Warning: dbUtil.closeConnection() called. Connections should be managed and closed by the calling code (e.g., using try-with-resources).");
     }
 }

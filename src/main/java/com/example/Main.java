@@ -1,7 +1,6 @@
 package com.example;
 
 import com.example.util.ConfigLoader;
-import com.example.util.dbUtil;
 import com.example.util.DatabaseInitializer;
 import com.example.util.ResourcePathHelper;
 

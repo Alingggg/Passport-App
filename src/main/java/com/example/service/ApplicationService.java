@@ -148,4 +148,19 @@ public class ApplicationService {
         
         return profile;
     }
+
+    public UserProfile getCompleteUserProfile(int userId) {
+        UserProfile profile = new UserProfile();
+        profile.setUserInfo(userInfoDAO.findByUserId(userId));
+        profile.setUserContact(userContactDAO.findByUserId(userId));
+        profile.setUserWork(userWorkDAO.findByUserId(userId));
+        profile.setForeignPassport(foreignPassportDAO.findByUserId(userId));
+        profile.setSpouse(spouseDAO.findByUserId(userId));
+        profile.setParents(parentsDAO.findByUserId(userId));
+        profile.setPhilippinePassport(philippinePassportDAO.findByUserId(userId));
+        profile.setMinorInfo(minorInfoDAO.findByUserId(userId));
+        profile.setImages(imageDAO.findByUserId(userId));
+        profile.setApplication(applicationDAO.findByUserId(userId));
+        return profile;
+    }
 }

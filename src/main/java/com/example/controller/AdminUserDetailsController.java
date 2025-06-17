@@ -1,187 +1,259 @@
 package com.example.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import com.example.model.*;
+import com.example.service.ApplicationService;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.image.ImageView;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class AdminUserDetailsController {
+    private static PassportApplication currentApplication;
 
-    @FXML
-    private SidebarController sidebarController;
+    public static void setCurrentApplication(PassportApplication app) {
+        currentApplication = app;
+    }
 
-    @FXML
-    private AnchorPane scrollableContent;
+    @FXML private SidebarController sidebarController;
 
-    @FXML
-    private Label lblUserDetails;
-    @FXML
-    private Label lblUser;
-    @FXML
-    private Label lblLastName;
-    @FXML
-    private Label txtLastName;
-    @FXML
-    private Label lblFirstName;
-    @FXML
-    private Label txtFirstName;
-    @FXML
-    private Label lblMiddleName;
-    @FXML
-    private Label txtMiddleName;
-    @FXML
-    private Label lblBirthdate;
-    @FXML
-    private Label txtBirthdate;
-    @FXML
-    private Label lblPlaceofBirth;
-    @FXML
-    private Label txtPlaceOfBirth;
-    @FXML
-    private Label lblAddress;
-    @FXML
-    private Label txtAddress;
-    @FXML
-    private Label lblCivilStatus;
-    @FXML
-    private Label txtCivilStatus;
-    @FXML
-    private Label lblGender;
-    @FXML
-    private Label txtGender;
-    @FXML
-    private Label lblMobile;
-    @FXML
-    private Label txtMobile1;
-    @FXML
-    private Label txtMobile2;
-    @FXML
-    private Label lblTelNum;
-    @FXML
-    private Label txtTel1;
-    @FXML
-    private Label txtTel2;
-    @FXML
-    private Label lblEmailAdd;
-    @FXML
-    private Label txtEmail;
-    @FXML
-    private Label lblOccupation;
-    @FXML
-    private Label txtOccupation;
-    @FXML
-    private Label lblWorkTel;
-    @FXML
-    private Label txtWorkTel;
-    @FXML
-    private Label lblWorkAddress;
-    @FXML
-    private Label txtWorkAddress;
-    @FXML
-    private Label lblNameWH;
-    @FXML
-    private Label txtNameWH;
-    @FXML
-    private Label lblWHCitizenship;
-    @FXML
-    private Label txtWHCitizenship;
-    @FXML
-    private Label lblNameFather;
-    @FXML
-    private Label txtNameFather;
-    @FXML
-    private Label lblMaidenName;
-    @FXML
-    private Label txtMaidenName;
-    @FXML
-    private Label lblFatherCitizenship;
-    @FXML
-    private Label txtFatherCitizenship;
-    @FXML
-    private Label lblMotherCitizenship;
-    @FXML
-    private Label txtMotherCitizenship;
-    @FXML
-    private Label lblCitizenship;
-    @FXML
-    private Label txtCitizenshipAcquired;
-    @FXML
-    private Label lblForeignPassport;
-    @FXML
-    private Label lblCountry;
-    @FXML
-    private Label txtCountry;
-    @FXML
-    private Label lblForeignPassNum;
-    @FXML
-    private Label txtForeignPassNum;
-    @FXML
-    private Label lblPassportIssued;
-    @FXML
-    private Label lblPhPassportNum;
-    @FXML
-    private Label txtPhPassportNum;
-    @FXML
-    private Label lblIssueDate;
-    @FXML
-    private Label txtIssueDate;
-    @FXML
-    private Label lblPlaceofIssue;
-    @FXML
-    private Label txtPlaceOfIssue;
-    @FXML
-    private Label lbl18yo;
-    @FXML
-    private Label lbltravelingcom;
-    @FXML
-    private Label txtTravelingCompanion;
-    @FXML
-    private Label lblComRelationship;
-    @FXML
-    private Label txtComRelationship;
-    @FXML
-    private Label lblCompanionContact;
-    @FXML
-    private Label txtCompanionContact;
-    @FXML
-    private Button btnValidImage;
-    @FXML
-    private Button btnPSAImage;
-    @FXML
-    private Button btnAcceptApplication;
-    @FXML
-    private Button btnDenyApplication;
-    @FXML
-    private ImageView logo;
-    @FXML
-    private ImageView btnNext;
+    // --- All your @FXML Label and Button fields here (as in your file) ---
+    @FXML private Label lblLastName;
+    @FXML private Label lblFirstName;
+    @FXML private Label lblMiddleName;
+    @FXML private Label lblBirthDate;
+    @FXML private Label lblPlaceOfBirth;
+    @FXML private Label lblCompleteAddress;
+    @FXML private Label lblCivilStatus;
+    @FXML private Label lblGender;
+    @FXML private Label lblMobileNumber1;
+    @FXML private Label lblTelephoneNumber1;
+    @FXML private Label lblEmailAddress;
+    @FXML private Label lblOccupation;
+    @FXML private Label lblWorkTelephone;
+    @FXML private Label lblWorkAddress;
+    @FXML private Label lblSpouseName;
+    @FXML private Label lblSpouseCitizenship;
+    @FXML private Label lblFatherName;
+    @FXML private Label lblMotherName;
+    @FXML private Label lblFatherCitizenship;
+    @FXML private Label lblMotherCitizenship;
+    @FXML private Label lblCitizenshipAcquiredBy;
+    @FXML private Label lblForeignPassportHolder;
+    @FXML private Label lblCountry;
+    @FXML private Label lblForeignPassportNo;
+    @FXML private Label lblPhilippinePassportHolder;
+    @FXML private Label lblPhilippinePassportNo;
+    @FXML private Label lblIssueDate;
+    @FXML private Label lblPlaceOfIssue;
+    @FXML private Label lblIsMinor;
+    @FXML private Label lblTravelingCompanion;
+    @FXML private Label lblCompanionRelationship;
+    @FXML private Label lblMinorContactNumber;
+    @FXML private Button btnViewValidID;
+    @FXML private Button btnViewPSA;
+    @FXML private Button btnAcceptApplication;
+    @FXML private Button btnDenyApplication;
+
+    private ApplicationService applicationService = new ApplicationService();
+    private UserProfile currentUserProfile;
 
     @FXML
     public void initialize() {
         if (sidebarController != null) {
             sidebarController.setActiveTab("users");
         }
+        Platform.runLater(this::loadApplicationDetails);
+    }
+
+    private void loadApplicationDetails() {
+        if (currentApplication == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
+            return;
+        }
+        int userId = currentApplication.getUserId();
+        currentUserProfile = applicationService.getCompleteUserProfile(userId);
+
+        if (currentUserProfile != null) {
+            populateFields(currentUserProfile);
+            configureImageViewButtons(currentUserProfile.getImages());
+        } else {
+            showAlert(Alert.AlertType.WARNING, "No Data", "No application details found for the selected user.");
+        }
+    }
+
+    private void populateFields(UserProfile profile) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+
+        UserInfo userInfo = profile.getUserInfo();
+        if (userInfo != null) {
+            setText(lblLastName, userInfo.getLastName());
+            setText(lblFirstName, userInfo.getFirstName());
+            setText(lblMiddleName, userInfo.getMiddleName());
+            if (userInfo.getBirthDate() != null) {
+                setText(lblBirthDate, userInfo.getBirthDate().format(dateFormatter));
+            }
+            setText(lblPlaceOfBirth, userInfo.getBirthPlace());
+            setText(lblCompleteAddress, userInfo.getCurrentAddress());
+            setText(lblCivilStatus, userInfo.getCivilStatus());
+            setText(lblGender, userInfo.getGender());
+            setText(lblCitizenshipAcquiredBy, userInfo.getAcquiredCitizenship());
+        }
+
+        UserContact contact = profile.getUserContact();
+        if (contact != null) {
+            setText(lblMobileNumber1, contact.getMobileNumber());
+            setText(lblTelephoneNumber1, contact.getTelephoneNumber());
+            setText(lblEmailAddress, contact.getEmailAddress());
+        }
+
+        UserWork work = profile.getUserWork();
+        if (work != null) {
+            setText(lblOccupation, work.getOccupation());
+            setText(lblWorkTelephone, work.getWorkTelephoneNumber());
+            setText(lblWorkAddress, work.getWorkAddress());
+        }
+
+        UserSpouse spouse = profile.getSpouse();
+        if (spouse != null) {
+            setText(lblSpouseName, spouse.getSpouseFullName());
+            setText(lblSpouseCitizenship, spouse.getSpouseCitizenship());
+        } else {
+            setText(lblSpouseName, "N/A");
+            setText(lblSpouseCitizenship, "N/A");
+        }
+
+        UserParents parents = profile.getParents();
+        if (parents != null) {
+            setText(lblFatherName, parents.getFatherFullName());
+            setText(lblMotherName, parents.getMotherMaidenName());
+            setText(lblFatherCitizenship, parents.getFatherCitizenship());
+            setText(lblMotherCitizenship, parents.getMotherCitizenship());
+        }
+
+        UserForeignPassport foreignPassport = profile.getForeignPassport();
+        if (foreignPassport != null) {
+            setText(lblForeignPassportHolder, foreignPassport.getHasForeignPassport() ? "YES" : "NO");
+            if (foreignPassport.getHasForeignPassport()) {
+                setText(lblCountry, foreignPassport.getIssuingCountry());
+                setText(lblForeignPassportNo, foreignPassport.getForeignPassportNumber());
+            } else {
+                setText(lblCountry, "N/A");
+                setText(lblForeignPassportNo, "N/A");
+            }
+        }
+
+        UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
+        if (philippinePassport != null) {
+            setText(lblPhilippinePassportHolder, philippinePassport.getHasPhilippinePassport() ? "YES" : "NO");
+            if (philippinePassport.getHasPhilippinePassport()) {
+                setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
+                if (philippinePassport.getIssueDate() != null) {
+                    setText(lblIssueDate, philippinePassport.getIssueDate().format(dateFormatter));
+                }
+                setText(lblPlaceOfIssue, philippinePassport.getIssuePlace());
+            } else {
+                setText(lblPhilippinePassportNo, "N/A");
+                setText(lblIssueDate, "N/A");
+                setText(lblPlaceOfIssue, "N/A");
+            }
+        }
+
+        UserMinorInfo minorInfo = profile.getMinorInfo();
+        if (minorInfo != null) {
+            setText(lblIsMinor, minorInfo.getIsMinor() ? "YES" : "NO");
+            if (minorInfo.getIsMinor()) {
+                setText(lblTravelingCompanion, minorInfo.getCompanionFullName());
+                setText(lblCompanionRelationship, minorInfo.getCompanionRelationship());
+                setText(lblMinorContactNumber, minorInfo.getCompanionContactNumber());
+            } else {
+                setText(lblTravelingCompanion, "N/A");
+                setText(lblCompanionRelationship, "N/A");
+                setText(lblMinorContactNumber, "N/A");
+            }
+        }
+    }
+
+    private void configureImageViewButtons(List<com.example.model.Image> images) {
+        boolean hasValidId = false;
+        boolean hasPsa = false;
+
+        if (images != null) {
+            for (com.example.model.Image img : images) {
+                if ("Valid ID".equals(img.getFileType())) {
+                    hasValidId = true;
+                } else if ("Birth Certificate".equals(img.getFileType())) {
+                    hasPsa = true;
+                }
+            }
+        }
+        btnViewValidID.setDisable(!hasValidId);
+        btnViewPSA.setDisable(!hasPsa);
+    }
+
+    private void setText(Label label, String text) {
+        if (label != null) {
+            label.setText(text != null && !text.trim().isEmpty() ? text : "N/A");
+        }
     }
 
     @FXML
-    void viewValidId(ActionEvent event) {
-        System.out.println("View Valid ID button clicked!");
+    private void viewValidIDImage(ActionEvent event) {
+        viewImageByType("Valid ID");
     }
 
     @FXML
-    void viewPSABirthCert(ActionEvent event) {
-        System.out.println("View PSA Birth Certificate button clicked!");
+    private void viewPSAImage(ActionEvent event) {
+        viewImageByType("Birth Certificate");
     }
 
-    @FXML
-    void acceptApplication(ActionEvent event) {
-        System.out.println("Accept Application button clicked!");
+    private void viewImageByType(String imageType) {
+        if (currentUserProfile == null || currentUserProfile.getImages() == null) {
+            showAlert(Alert.AlertType.INFORMATION, "No Image", "No image data available.");
+            return;
+        }
+
+        String imageUrl = null;
+        for (com.example.model.Image img : currentUserProfile.getImages()) {
+            if (imageType.equals(img.getFileType())) {
+                imageUrl = img.getSupabaseUrl();
+                break;
+            }
+        }
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            try {
+                javafx.stage.Stage imageStage = new javafx.stage.Stage();
+                javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView(new javafx.scene.image.Image(imageUrl, true));
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(800); // Adjust as needed
+                imageView.setFitHeight(600); // Adjust as needed
+
+                javafx.scene.layout.StackPane pane = new javafx.scene.layout.StackPane(imageView);
+                javafx.scene.Scene scene = new javafx.scene.Scene(pane);
+
+                imageStage.setTitle(imageType.replace("_", " ").toUpperCase() + " Image");
+                imageStage.setScene(scene);
+                imageStage.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error", "Could not open image: " + e.getMessage());
+            }
+        } else {
+            showAlert(Alert.AlertType.INFORMATION, "No Image", "No " + imageType.replace("_", " ") + " image found for this application.");
+        }
     }
 
-    @FXML
-    void denyApplication(ActionEvent event) {
-        System.out.println("Deny Application button clicked!");
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

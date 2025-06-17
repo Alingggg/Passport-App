@@ -111,16 +111,16 @@ public class PassportApplicationDAO {
         return findByUserId(userId) != null;
     }
     
-    public List<PassportApplication> getPendingApplications() {
-        String sql = "SELECT * FROM passport_application WHERE status = 'Pending' ORDER BY submitted_at DESC";
+    public List<PassportApplication> getApplicationsByStatus(String status) {
+        String sql = "SELECT * FROM passport_application WHERE status = ? ORDER BY submitted_at DESC";
         List<PassportApplication> applications = new ArrayList<>();
         try (Connection conn = dbUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, status);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 PassportApplication app = new PassportApplication();
                 app.setUserId(rs.getInt("user_id"));
-                // set other fields as needed
                 applications.add(app);
             }
         } catch (SQLException e) {

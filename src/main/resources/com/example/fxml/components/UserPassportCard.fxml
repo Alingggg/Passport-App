@@ -16,17 +16,12 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="280.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Issue Date">
+      <Label layoutX="310.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Issue Date">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="379.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="480.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Status">
+      <Label layoutX="433.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Expiry Date">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -46,17 +41,12 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblIssueDate" layoutX="280.0" layoutY="34.0" style="-fx-text-fill: #40659C;" text="   ">
+      <Label fx:id="lblIssueDate" layoutX="310.0" layoutY="34.0" style="-fx-text-fill: #40659C;" text="   ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblExpiryDate" layoutX="379.0" layoutY="34.0" style="-fx-text-fill: #40659C;" text="   ">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblStatus" layoutX="480.0" layoutY="34.0" style="-fx-text-fill: #40659C;" text="   ">
+      <Label fx:id="lblExpiryDate" layoutX="433.0" layoutY="34.0" style="-fx-text-fill: #40659C;" text="   ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>

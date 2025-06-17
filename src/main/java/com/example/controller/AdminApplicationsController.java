@@ -39,7 +39,7 @@ public class AdminApplicationsController {
 
     private void loadPendingApplications() {
         applicationsVBox.getChildren().clear();
-        List<PassportApplication> pendingApps = applicationDAO.getPendingApplications();
+        List<PassportApplication> pendingApps = applicationDAO.getApplicationsByStatus("Pending");
         System.out.println("Pending applications found: " + pendingApps.size());
 
         for (PassportApplication app : pendingApps) {

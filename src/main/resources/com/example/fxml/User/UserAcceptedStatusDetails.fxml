@@ -21,27 +21,27 @@
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="354" layoutY="222" style="-fx-text-fill: #696868;" text="Reference Number:">
+      <Label layoutX="375.0" layoutY="222.0" style="-fx-text-fill: #696868;" text="Reference Number:">
          <font><Font name="Arial Bold" size="28" /></font>
       </Label>
 
-      <Label fx:id="lblReferenceNumber" layoutX="624.0" layoutY="220.0" prefHeight="36.0" prefWidth="203.0" style="-fx-text-fill: #06C012;">
+      <Label fx:id="lblReferenceNumber" layoutX="645.0" layoutY="220.0" prefHeight="36.0" prefWidth="203.0" style="-fx-text-fill: #06C012;">
          <font><Font name="Arial Bold" size="30" /></font>
       </Label>
 
-      <Label layoutX="392" layoutY="329" text="To complete the process, visit your selected Consular Office for:">
+      <Label layoutX="412.0" layoutY="328.0" text="To complete the process, visit your selected Consular Office for:">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="533" layoutY="358" style="-fx-text-fill: #40659C;" text="Biometrics capture">
+      <Label layoutX="553.0" layoutY="357.0" style="-fx-text-fill: #40659C;" text="Biometrics capture">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="497" layoutY="374" style="-fx-text-fill: #40659C;" text="Passport claiming instructions">
+      <Label layoutX="517.0" layoutY="373.0" style="-fx-text-fill: #40659C;" text="Passport claiming instructions">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="451" layoutY="430" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
+      <Label layoutX="471.0" layoutY="429.0" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
          <font><Font name="Arial Italic" size="11" /></font>
       </Label>
    </children>

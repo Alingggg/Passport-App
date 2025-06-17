@@ -65,7 +65,7 @@ CREATE TABLE user_foreign_passport (
     user_id INT PRIMARY KEY,
     has_foreign_passport BOOLEAN DEFAULT FALSE,
     issuing_country VARCHAR(50),
-    foreign_passport_number VARCHAR(50),
+    foreign_passport_number VARCHAR(50) UNIQUE,
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE user_parents (
 CREATE TABLE user_philippine_passport (
     user_id INT PRIMARY KEY,
     has_philippine_passport BOOLEAN DEFAULT FALSE,
-    philippine_passport_number VARCHAR(50),
+    philippine_passport_number VARCHAR(50) UNIQUE,
     issue_date DATE,
     expiry_date DATE,
     issue_place VARCHAR(100),

@@ -7,10 +7,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.io.IOException;
+import com.example.Main;
 
 public class AdminApplicationDetailsController {
     private static PassportApplication currentApplication;
@@ -56,6 +61,8 @@ public class AdminApplicationDetailsController {
     @FXML private Label lblMinorContactNumber;
     @FXML private Button btnViewValidID;
     @FXML private Button btnViewPSA;
+    @FXML private Button btnAcceptApplication;
+    @FXML private Button btnDenyApplication;
 
     private ApplicationService applicationService = new ApplicationService();
     private UserProfile currentUserProfile;
@@ -249,12 +256,64 @@ public class AdminApplicationDetailsController {
 
     @FXML
     private void acceptApplication() {
-        System.err.println("Application accepted.");
+        if (currentApplication == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No application selected to accept.");
+            return;
+        }
+
+        boolean success = applicationService.processApplicationAcceptance(currentApplication.getUserId());
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been ACCEPTED.");
+            // Optionally, disable buttons or navigate away
+            btnAcceptApplication.setDisable(true);
+            btnDenyApplication.setDisable(true);
+            // Refresh the view or navigate back
+            // loadApplicationDetails(); // To see updated status if staying on page
+            // Or navigate back:
+            try { Main.setRoot("AdminApplications"); } catch (IOException e) { e.printStackTrace(); }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Failed", "Could not update application status to ACCEPTED.");
+        }
     }
 
     @FXML
     private void denyApplication() {
-        System.err.println("Application denied.");
+        if (currentApplication == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No application selected to deny.");
+            return;
+        }
+
+        List<String> denialReasons = Arrays.asList(
+                "Lack of required documents",
+                "Incomplete application",
+                "Invalid or expired documents",
+                "Blurry or illegible documents",
+                "Discrepancies in information"
+        );
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(denialReasons.get(0), denialReasons);
+        dialog.setTitle("Deny Application");
+        dialog.setHeaderText("Select a reason for denying the application:");
+        dialog.setContentText("Reason:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(selectedReason -> {
+            boolean success = applicationService.processApplicationDenial(currentApplication.getUserId(), selectedReason);
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been DENIED. Reason: " + selectedReason);
+                // Optionally, disable buttons or navigate away
+                btnAcceptApplication.setDisable(true);
+                btnDenyApplication.setDisable(true);
+                // Refresh the view or navigate back
+                // loadApplicationDetails(); // To see updated status if staying on page
+                // Or navigate back:
+                try { Main.setRoot("AdminApplications"); } catch (IOException e) { e.printStackTrace(); }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Failed", "Could not update application status to DENIED.");
+            }
+        });
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

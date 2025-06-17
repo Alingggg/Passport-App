@@ -23,7 +23,7 @@
          </font>
       </Label>
 
-      <Label fx:id="lblSearchUser" layoutX="275.0" layoutY="162.0" style="-fx-text-fill: black;" text="Search user :">
+      <!-- <Label fx:id="lblSearchUser" layoutX="275.0" layoutY="162.0" style="-fx-text-fill: black;" text="Search user :">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
@@ -35,9 +35,9 @@
          <image>
             <Image url="@search.png" />
          </image>
-      </ImageView>
+      </ImageView> -->
 
-      <ScrollPane layoutX="261.0" layoutY="207.0" prefHeight="418.0" prefWidth="678.0" style="-fx-background-color: white;">
+      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;">
          <content>
             <VBox fx:id="usersVBox" prefHeight="416.0" prefWidth="656.0" spacing="10.0">
                <!-- Static AnchorPanes (scrollSearch1, scrollSearch2, etc.) are removed -->

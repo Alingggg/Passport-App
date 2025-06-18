@@ -13,35 +13,35 @@
          <font><Font name="Arial Bold" size="16" /></font>
       </Label>
 
-      <Label layoutX="480.0" layoutY="99.0" style="-fx-text-fill: #696868;" text="Application Status">
+      <Label layoutX="480.0" layoutY="138.0" style="-fx-text-fill: #696868;" text="Application Status">
          <font><Font name="Arial Bold" size="30" /></font>
       </Label>
 
-      <Label layoutX="336.0" layoutY="183.0" text="Your application for a Philippine passport has been successfully submitted and accepted" wrapText="true">
+      <Label layoutX="422.0" layoutY="222.0" text="Your application for a Philippine passport has been accepted" wrapText="true">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="375.0" layoutY="222.0" style="-fx-text-fill: #696868;" text="Reference Number:">
+      <Label layoutX="375.0" layoutY="261.0" style="-fx-text-fill: #696868;" text="Reference Number:">
          <font><Font name="Arial Bold" size="28" /></font>
       </Label>
 
-      <Label fx:id="lblReferenceNumber" layoutX="645.0" layoutY="220.0" prefHeight="36.0" prefWidth="203.0" style="-fx-text-fill: #06C012;">
+      <Label fx:id="lblReferenceNumber" layoutX="645.0" layoutY="259.0" prefHeight="36.0" prefWidth="203.0" style="-fx-text-fill: #06C012;">
          <font><Font name="Arial Bold" size="30" /></font>
       </Label>
 
-      <Label layoutX="412.0" layoutY="328.0" text="To complete the process, visit your selected Consular Office for:">
+      <Label layoutX="412.0" layoutY="367.0" text="To complete the process, visit your selected Consular Office for:">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="553.0" layoutY="357.0" style="-fx-text-fill: #40659C;" text="Biometrics capture">
+      <Label layoutX="553.0" layoutY="388.0" style="-fx-text-fill: #40659C;" text="Biometrics capture">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="517.0" layoutY="373.0" style="-fx-text-fill: #40659C;" text="Passport claiming instructions">
+      <Label layoutX="517.0" layoutY="404.0" style="-fx-text-fill: #40659C;" text="Passport claiming instructions">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="471.0" layoutY="429.0" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
+      <Label layoutX="471.0" layoutY="468.0" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
          <font><Font name="Arial Italic" size="11" /></font>
       </Label>
    </children>

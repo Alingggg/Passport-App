@@ -14,16 +14,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1245.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserApplicationFormController">
+<AnchorPane prefHeight="1045.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserApplicationFormController">
    <children>
-      <!-- Include the sidebar -->
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
       
-      <!-- Rest of your existing content, but remove the old sidebar code -->
-      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="1195.0" prefWidth="688.0" style="-fx-background-color: transparent;">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="570.0" prefWidth="700.0" style="-fx-background-color: transparent;">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1830.0" prefWidth="670.0" style="-fx-background-color: transparent;">
-               <!-- Define ToggleGroups -->
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="670.0" style="-fx-background-color: transparent;">
                <fx:define>
                   <ToggleGroup fx:id="civilStatusGroup" />
                   <ToggleGroup fx:id="citizenshipGroup" />
@@ -310,19 +307,19 @@
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblContactNumber" layoutX="524.0" layoutY="734.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="802.0" style="-fx-text-fill: #696868;" text="For Verification">
+               <TextField fx:id="lblContactNumber" layoutX="524.0" layoutY="735.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="808.0" style="-fx-text-fill: #696868;" text="For Verification">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
                </Label>
                <!-- Valid ID Upload Section -->
-               <Label layoutX="18.0" layoutY="859.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
+               <Label layoutX="18.0" layoutY="849.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="18.0" layoutY="882.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="872.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadValidID" mnemonicParsing="false" onAction="#uploadValidIDBtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblValidIdFilename" layoutX="10.0" layoutY="19.0" prefHeight="16.0" prefWidth="280.0" style="-fx-text-fill: white;" text="No file selected" />
@@ -347,12 +344,12 @@
                </AnchorPane>
                
                <!-- PSA Birth Certificate Upload Section -->
-               <Label layoutX="18.0" layoutY="960.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
+               <Label layoutX="18.0" layoutY="950.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="18.0" layoutY="985.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="975.0" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadPSA" mnemonicParsing="false" onAction="#uploadPSABtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblPSAFilename" layoutX="10.0" layoutY="19.0" prefHeight="16.0" prefWidth="280.0" style="-fx-text-fill: white;" text="No file selected" />
@@ -376,7 +373,7 @@
                   </children>
                </AnchorPane>
                
-               <Button layoutX="492.0" layoutY="1072.0" mnemonicParsing="false" onAction="#applyBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Apply" textFill="WHITE">
+               <Button layoutX="492.0" layoutY="1035.0" mnemonicParsing="false" onAction="#applyBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Apply" textFill="WHITE">
                   <font>
                      <Font name="Arial Bold" size="13.0" />
                   </font>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1245.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserPassportInfoController">
+<AnchorPane prefHeight="1035.0" prefWidth="938.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UserPassportInfoController">
    <children>
       <!-- Include the sidebar -->
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
@@ -19,9 +19,9 @@
          </image>
       </ImageView>
 
-      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="1000.0" prefWidth="688.0" style="-fx-background-color: transparent;">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="570.0" prefWidth="700.0" style="-fx-background-color: transparent;">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1440.0" prefWidth="670.0" style="-fx-background-color: transparent;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1015.0" prefWidth="650.0" style="-fx-background-color: transparent;">
                <children>
                   <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Passport Details">
                      <font>

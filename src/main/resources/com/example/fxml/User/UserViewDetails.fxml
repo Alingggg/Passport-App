@@ -278,22 +278,10 @@
                      </font>
                   </Button>
                   
-                  <Button fx:id="btnBack" layoutX="492.0" layoutY="1072.0" mnemonicParsing="false" onAction="#backBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Back" textFill="WHITE">
+                  <Button fx:id="btnNavigate" layoutX="492.0" layoutY="1072.0" mnemonicParsing="false" onAction="#navigateBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Navigate" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font>
-                  </Button>
-                  <!-- Removed Cancel Application button, replaced with Back -->
-                  
-                  <Button fx:id="arrowBtn" layoutX="16.0" layoutY="13.0" mnemonicParsing="false" onAction="#backBtn" prefHeight="34.0" prefWidth="35.0" style="-fx-background-color: transparent;">
-                     <!-- Add arrow icon if needed, or remove if backBtn is sufficient -->
-                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/arrow_back_icon.png" /> <!-- Assuming you have a back arrow icon -->
-                           </image>
-                        </ImageView>
-                     </graphic>
                   </Button>
                </children>
             </AnchorPane>

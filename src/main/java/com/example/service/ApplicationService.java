@@ -241,4 +241,42 @@ public class ApplicationService {
         
         return true; 
     }
+
+    /**
+     * Delete all user application data for a given userId.
+     * This removes all related records from all user-related tables.
+     */
+    public boolean deleteCompleteApplication(int userId) {
+        Connection conn = null;
+        try {
+            conn = dbUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            // Delete in order: child tables first, then parent (application)
+            boolean imagesDeleted = imageDAO.deleteByUserId(userId);
+            boolean minorInfoDeleted = minorInfoDAO.deleteByUserId(userId);
+            boolean philippinePassportDeleted = philippinePassportDAO.deleteByUserId(userId);
+            boolean parentsDeleted = parentsDAO.deleteByUserId(userId);
+            boolean spouseDeleted = spouseDAO.deleteByUserId(userId);
+            boolean foreignPassportDeleted = foreignPassportDAO.deleteByUserId(userId);
+            boolean userWorkDeleted = userWorkDAO.deleteByUserId(userId);
+            boolean userContactDeleted = userContactDAO.deleteByUserId(userId);
+            boolean userInfoDeleted = userInfoDAO.deleteByUserId(userId);
+            boolean applicationDeleted = applicationDAO.deleteByUserId(userId);
+
+            // You may want to check all deletes, but usually if the row doesn't exist, it's not an error
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (conn != null) {
+                try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+        }
+    }
 }

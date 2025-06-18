@@ -73,4 +73,17 @@ public class UserContactDAO {
         }
         return null;
     }
+
+    public boolean deleteByUserId(Integer userId) {
+        String sql = "DELETE FROM user_contact WHERE user_id = ?";
+        try (Connection conn = dbUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

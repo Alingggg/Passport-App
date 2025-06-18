@@ -143,4 +143,21 @@ public class PassportApplicationDAO {
         }
         return applications;
     }
+    
+    /**
+     * Delete a passport application for a user.
+     * @param userId The user ID whose application should be deleted.
+     * @return true if a row was deleted, false otherwise.
+     */
+    public boolean deleteByUserId(Integer userId) {
+        String sql = "DELETE FROM passport_application WHERE user_id = ?";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -12,15 +12,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image; // For potential image display later
-import javafx.scene.image.ImageView; // For potential image display later
-import javafx.stage.Stage; // For potential image display later
-import javafx.scene.Scene; // For potential image display later
-import javafx.scene.layout.StackPane; // For potential image display later
-
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -84,13 +83,13 @@ public class UserViewDetailsController {
     @FXML private Button btnViewValidID;
     @FXML private Button btnViewPSA;
 
-    // Navigation Buttons
-    @FXML private Button btnBack;
-    @FXML private Button arrowBtn; // Assuming this also acts as a back button
+    // Navigation Button
+    @FXML private Button btnNavigate;
 
     private ApplicationService applicationService;
     private UserSession userSession;
-    private UserProfile currentUserProfile; // To store fetched profile for image viewing
+    private UserProfile currentUserProfile;
+    private String currentStatus; // Track status for button logic
 
     public UserViewDetailsController() {
         this.applicationService = new ApplicationService();
@@ -119,14 +118,57 @@ public class UserViewDetailsController {
         }
 
         currentUserProfile = applicationService.getCompleteUserProfile();
+        PassportApplication application = currentUserProfile != null ? currentUserProfile.getApplication() : null;
+        currentStatus = (application != null && application.getStatus() != null) ? application.getStatus().toUpperCase() : "";
 
         if (currentUserProfile != null) {
             populateFields(currentUserProfile);
             // Enable/disable view image buttons based on image availability
             configureImageViewButtons(currentUserProfile.getImages());
+            configureNavigateBtn();
         } else {
             showAlert(Alert.AlertType.WARNING, "No Data", "No application details found for the current user.");
-            // Optionally disable all fields or show a message
+        }
+    }
+
+    private void configureNavigateBtn() {
+        if (btnNavigate == null) return;
+
+        if ("DENIED".equals(currentStatus)) {
+            btnNavigate.setText("Reapply");
+            btnNavigate.setOnAction(event -> {
+                try {
+                    Main.setRoot("UserApplicationForm");
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go to application form.");
+                }
+            });
+        } else if ("PENDING".equals(currentStatus)) {
+            btnNavigate.setText("Cancel Application");
+            btnNavigate.setStyle("-fx-background-color: #F20707; -fx-text-fill: white; -fx-background-radius: 15;"); // Red button
+            btnNavigate.setOnAction(event -> {
+                boolean deleted = applicationService.deleteCompleteApplication(userSession.getUserId());
+                if (deleted) {
+                    showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been cancelled.");
+                    try {
+                        Main.setRoot("UserNotPassportHolder");
+                    } catch (IOException e) {
+                        showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go to application start.");
+                    }
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to cancel your application. Please try again.");
+                }
+            });
+        } else {
+            btnNavigate.setText("Back");
+            btnNavigate.setStyle(""); // Default style
+            btnNavigate.setOnAction(event -> {
+                try {
+                    Main.setRoot("UserApplicationStatus");
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go back.");
+                }
+            });
         }
     }
 
@@ -281,14 +323,11 @@ public class UserViewDetailsController {
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
             try {
-                // For simplicity, opening in default browser.
-                // new ProcessBuilder("cmd", "/c", "start", imageUrl).start(); 
-                // Or, display in a new JavaFX window:
                 Stage imageStage = new Stage();
                 ImageView imageView = new ImageView(new javafx.scene.image.Image(imageUrl, true)); // true for background loading
                 imageView.setPreserveRatio(true);
-                imageView.setFitWidth(800); // Adjust as needed
-                imageView.setFitHeight(600); // Adjust as needed
+                imageView.setFitWidth(800);
+                imageView.setFitHeight(600);
 
                 StackPane pane = new StackPane(imageView);
                 Scene scene = new Scene(pane);
@@ -308,10 +347,9 @@ public class UserViewDetailsController {
 
 
     @FXML
-    void backBtn(ActionEvent event) {
+    void navigateBtn(ActionEvent event) {
         try {
-            // Navigate back to the application status page or another appropriate page
-            Main.setRoot("UserApplicationStatus");
+            Main.setRoot("UserApplicationForm");
         } catch (IOException e) {
             System.err.println("Error navigating back: " + e.getMessage());
             e.printStackTrace();

@@ -84,7 +84,7 @@ public class ApplicationService {
             
             // Create passport application
             PassportApplication application = new PassportApplication(userId);
-            if (!applicationDAO.createApplication(application)) {
+            if (!applicationDAO.saveApplication(application)) {
                 conn.rollback();
                 return false;
             }

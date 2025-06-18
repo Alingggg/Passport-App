@@ -221,13 +221,20 @@ public class UserApplicationFormController {
         ApplicationService applicationService = new ApplicationService(); // Instantiate ApplicationService for the check
 
         // Check if the user already has an application before proceeding
-        if (applicationService.hasExistingApplication()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING); // Changed to WARNING for better user feedback
-            alert.setTitle("Application Already Submitted");
-            alert.setHeaderText("Duplicate Application Attempt");
-            alert.setContentText("You have already submitted an application. You cannot submit another one at this time.");
-            alert.showAndWait();
-            return; // Stop further processing
+        PassportApplication existingApplication = applicationService.getUserApplication();
+
+        if (existingApplication != null) {
+            String status = existingApplication.getStatus();
+            // Prevent new application only if status is Pending or Accepted
+            if ("Pending".equalsIgnoreCase(status) || "Accepted".equalsIgnoreCase(status)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Application In Progress");
+                alert.setHeaderText("Existing Application Found");
+                alert.setContentText("You already have an application with the status '" + status + "'. You cannot submit a new one at this time.");
+                alert.showAndWait();
+                return; // Stop further processing
+            }
+            // If the status is "Denied", the method will continue, allowing re-application.
         }
         
         // Validate required files

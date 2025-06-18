@@ -10,13 +10,28 @@ import java.util.UUID;
 
 public class PassportApplicationDAO {
     
-    public boolean createApplication(PassportApplication application) {
-        String sql = "INSERT INTO passport_application (user_id, reference_id) VALUES (?, ?)";
+    /**
+     * Saves an application for a user.
+     * If an application for the user already exists, it overrides the existing entry,
+     * effectively resetting it for a new submission (e.g., after being denied).
+     * It generates a new reference_id and resets status, feedback, and timestamps.
+     * @param application The application object, containing at least the user_id.
+     * @return true if the operation was successful, false otherwise.
+     */
+    public boolean saveApplication(PassportApplication application) {
+        String sql = "INSERT INTO passport_application (user_id, reference_id, status, feedback, submitted_at, reviewed_at) " +
+                     "VALUES (?, ?, 'Pending', NULL, CURRENT_TIMESTAMP, NULL) " +
+                     "ON CONFLICT (user_id) DO UPDATE SET " +
+                     "reference_id = EXCLUDED.reference_id, " +
+                     "status = 'Pending', " +
+                     "feedback = NULL, " +
+                     "submitted_at = CURRENT_TIMESTAMP, " +
+                     "reviewed_at = NULL";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            // Generate a unique reference ID
+            // Generate a new unique reference ID for both insert and update cases
             String referenceId = "PA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             
             pstmt.setInt(1, application.getUserId());

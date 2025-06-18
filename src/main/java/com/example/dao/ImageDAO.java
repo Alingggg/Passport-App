@@ -11,12 +11,18 @@ import java.util.List;
 public class ImageDAO {
     
     /**
-     * Save an image record to the database
-     * @param image The image object to save
-     * @return true if successful, false otherwise
+     * Saves an image record to the database.
+     * If an image for the user with the same file_type already exists, it overrides the existing entry.
+     * @param image The image object to save, containing filename, fileType, and supabaseUrl.
+     * @return true if successful, false otherwise.
      */
     public boolean saveImage(Image image) {
-        String sql = "INSERT INTO images (user_id, filename, file_type, supabase_url) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO images (user_id, filename, file_type, supabase_url, uploaded_at) " +
+                     "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) " +
+                     "ON CONFLICT (user_id, file_type) DO UPDATE SET " +
+                     "filename = EXCLUDED.filename, " +
+                     "supabase_url = EXCLUDED.supabase_url, " +
+                     "uploaded_at = CURRENT_TIMESTAMP";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -24,6 +30,7 @@ public class ImageDAO {
             // Use the current user's ID from session
             Integer userId = UserSession.getInstance().getUserId();
             if (userId == null) {
+                System.err.println("saveImage failed: No user in session.");
                 return false;
             }
             

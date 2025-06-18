@@ -36,7 +36,7 @@ CREATE TABLE user_info (
     gender VARCHAR(10) CHECK (gender IN ('Male', 'Female')) NOT NULL,
     civil_status VARCHAR(20) CHECK (civil_status IN ('Single', 'Married', 'Widow', 'Legally Separated', 'Annulled')) NOT NULL,
     current_address TEXT NOT NULL,
-    acquired_citizenship VARCHAR(20) CHECK (acquired_citizenship IN ('Birth', 'Election', 'Marriage', 'Naturalization', 'R.A. 9225')),
+    acquired_citizenship VARCHAR(40) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 

@@ -126,6 +126,16 @@ public class AdminLoginController {
 
         return true;
     }
+
+    @FXML
+    void switchBtn(ActionEvent event) {
+        try {
+            Main.setRoot("UserLogin");
+        } catch (IOException e) {
+            System.err.println("Error loading UserLogin.fxml: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

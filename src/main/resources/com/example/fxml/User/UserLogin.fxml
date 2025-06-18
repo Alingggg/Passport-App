@@ -55,9 +55,19 @@
             <Font name="Arial Bold" size="10.0" />
          </font>
       </Button>
-      <Button layoutX="727.0" layoutY="438.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Log in" textFill="WHITE">
+      <Button layoutX="727.0" layoutY="425.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Log in" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="754.0" layoutY="587.0" text="Login as Admin?">
+         <font>
+            <Font name="Arial" size="10.0" />
+         </font>
+      </Label>
+      <Button layoutX="827.0" layoutY="583.0" mnemonicParsing="false" onAction="#switchBtn" prefHeight="18.0" prefWidth="47.0" style="-fx-background-color: transparent;" text="Switch" textFill="#40659c">
+         <font>
+            <Font name="Arial Bold" size="10.0" />
          </font>
       </Button>
    </children>

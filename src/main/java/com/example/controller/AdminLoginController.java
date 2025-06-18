@@ -11,6 +11,7 @@ import com.example.util.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class AdminLoginController {
     @FXML
     private TextField usernameTxtF;
     @FXML
-    private TextField passTxtF;
+    private PasswordField passTxtF;
     
     private AccountDAO accountDAO;
     private AdminInfoDAO adminInfoDAO;

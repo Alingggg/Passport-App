@@ -25,7 +25,7 @@
          <font><Font name="Arial Bold" size="28" /></font>
       </Label>
 
-      <Label fx:id="lblReferenceNumber" layoutX="645.0" layoutY="259.0" prefHeight="36.0" prefWidth="203.0" style="-fx-text-fill: #06C012;">
+      <Label fx:id="lblReferenceNumber" layoutX="645.0" layoutY="259.0" prefHeight="36.0" prefWidth="233.0" style="-fx-text-fill: #06C012;">
          <font><Font name="Arial Bold" size="30" /></font>
       </Label>
 

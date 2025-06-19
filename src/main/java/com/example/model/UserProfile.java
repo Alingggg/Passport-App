@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class UserProfile {
     private UserInfo userInfo;
-    private UserContact userContact;
-    private UserWork userWork;
+    private List<UserContact> userContacts;
+    private List<UserWork> userWorks;
     private UserForeignPassport foreignPassport;
     private UserSpouse spouse;
     private UserParents parents;
@@ -24,11 +24,11 @@ public class UserProfile {
     public UserInfo getUserInfo() { return userInfo; }
     public void setUserInfo(UserInfo userInfo) { this.userInfo = userInfo; }
     
-    public UserContact getUserContact() { return userContact; }
-    public void setUserContact(UserContact userContact) { this.userContact = userContact; }
+    public List<UserContact> getUserContacts() { return userContacts; }
+    public void setUserContacts(List<UserContact> userContacts) { this.userContacts = userContacts; }
     
-    public UserWork getUserWork() { return userWork; }
-    public void setUserWork(UserWork userWork) { this.userWork = userWork; }
+    public List<UserWork> getUserWorks() { return userWorks; }
+    public void setUserWorks(List<UserWork> userWorks) { this.userWorks = userWorks; }
     
     public UserForeignPassport getForeignPassport() { return foreignPassport; }
     public void setForeignPassport(UserForeignPassport foreignPassport) { this.foreignPassport = foreignPassport; }
@@ -56,8 +56,8 @@ public class UserProfile {
      */
     public boolean isComplete() {
         return userInfo != null && 
-               userContact != null && 
-               userWork != null && 
+               userContacts != null && !userContacts.isEmpty() && 
+               userWorks != null && !userWorks.isEmpty() && 
                foreignPassport != null && 
                spouse != null && 
                parents != null && 

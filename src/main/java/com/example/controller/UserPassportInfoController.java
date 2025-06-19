@@ -43,12 +43,18 @@ public class UserPassportInfoController {
     // Contact Information Labels
     @FXML private Label lblMobileNumber1;
     @FXML private Label lblTelephoneNumber1;
-    @FXML private Label lblEmailAddress;
+    @FXML private Label lblEmailAddress1;
+    @FXML private Label lblMobileNumber2;
+    @FXML private Label lblTelephoneNumber2;
+    @FXML private Label lblEmailAddress2;
 
     // Work Information Labels
-    @FXML private Label lblOccupation;
-    @FXML private Label lblWorkTelephone;
-    @FXML private Label lblWorkAddress;
+    @FXML private Label lblOccupation1;
+    @FXML private Label lblWorkTelephone1;
+    @FXML private Label lblWorkAddress1;
+    @FXML private Label lblOccupation2;
+    @FXML private Label lblWorkTelephone2;
+    @FXML private Label lblWorkAddress2;
 
     // Family Information Labels
     @FXML private Label lblSpouseName;
@@ -143,19 +149,37 @@ public class UserPassportInfoController {
         }
 
         // UserContact
-        UserContact contact = profile.getUserContact();
-        if (contact != null) {
-            setText(lblMobileNumber1, contact.getMobileNumber());
-            setText(lblTelephoneNumber1, contact.getTelephoneNumber());
-            setText(lblEmailAddress, contact.getEmailAddress());
+        List<UserContact> contacts = profile.getUserContacts();
+        if (contacts != null) {
+            if (contacts.size() > 0 && contacts.get(0) != null) {
+                UserContact contact1 = contacts.get(0);
+                setText(lblMobileNumber1, contact1.getMobileNumber());
+                setText(lblTelephoneNumber1, contact1.getTelephoneNumber());
+                setText(lblEmailAddress1, contact1.getEmailAddress());
+            }
+            if (contacts.size() > 1 && contacts.get(1) != null) {
+                UserContact contact2 = contacts.get(1);
+                setText(lblMobileNumber2, contact2.getMobileNumber());
+                setText(lblTelephoneNumber2, contact2.getTelephoneNumber());
+                setText(lblEmailAddress2, contact2.getEmailAddress());
+            }
         }
 
         // UserWork
-        UserWork work = profile.getUserWork();
-        if (work != null) {
-            setText(lblOccupation, work.getOccupation());
-            setText(lblWorkTelephone, work.getWorkTelephoneNumber());
-            setText(lblWorkAddress, work.getWorkAddress());
+        List<UserWork> works = profile.getUserWorks();
+        if (works != null) {
+            if (works.size() > 0 && works.get(0) != null) {
+                UserWork work1 = works.get(0);
+                setText(lblOccupation1, work1.getOccupation());
+                setText(lblWorkTelephone1, work1.getWorkTelephoneNumber());
+                setText(lblWorkAddress1, work1.getWorkAddress());
+            }
+            if (works.size() > 1 && works.get(1) != null) {
+                UserWork work2 = works.get(1);
+                setText(lblOccupation2, work2.getOccupation());
+                setText(lblWorkTelephone2, work2.getWorkTelephoneNumber());
+                setText(lblWorkAddress2, work2.getWorkAddress());
+            }
         }
 
         // UserSpouse

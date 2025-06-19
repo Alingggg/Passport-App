@@ -25,7 +25,7 @@
                   <ToggleGroup fx:id="minorGroup" />
                </fx:define>
                
-               <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Form Form">
+               <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Form">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
@@ -96,7 +96,7 @@
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbAnnulled" layoutX="430.0" layoutY="195.0" mnemonicParsing="false" text="Annuled" toggleGroup="$civilStatusGroup">
+               <RadioButton fx:id="rbAnnulled" layoutX="421.0" layoutY="194.0" mnemonicParsing="false" text="Annulled" toggleGroup="$civilStatusGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>

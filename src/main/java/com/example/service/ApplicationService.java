@@ -28,8 +28,8 @@ public class ApplicationService {
     // Submit complete passport application with all user data
     public boolean submitCompleteApplication(
             UserInfo userInfo,
-            UserContact userContact,
-            UserWork userWork,
+            List<UserContact> userContacts,
+            List<UserWork> userWorks,
             UserForeignPassport foreignPassport,
             UserSpouse spouse,
             UserParents parents,
@@ -49,8 +49,6 @@ public class ApplicationService {
             
             // Set user IDs for all objects
             userInfo.setUserId(userId);
-            userContact.setUserId(userId);
-            userWork.setUserId(userId);
             foreignPassport.setUserId(userId);
             spouse.setUserId(userId);
             parents.setUserId(userId);
@@ -59,8 +57,8 @@ public class ApplicationService {
             
             // Save all user data
             if (!userInfoDAO.saveUserInfo(userInfo) ||
-                !userContactDAO.saveUserContact(userContact) ||
-                !userWorkDAO.saveUserWork(userWork) ||
+                !userContactDAO.saveUserContacts(userId, userContacts) ||
+                !userWorkDAO.saveUserWorks(userId, userWorks) ||
                 !foreignPassportDAO.saveForeignPassport(foreignPassport) ||
                 !spouseDAO.saveSpouse(spouse) ||
                 !parentsDAO.saveParents(parents) ||
@@ -131,8 +129,8 @@ public class ApplicationService {
         
         UserProfile profile = new UserProfile();
         profile.setUserInfo(userInfoDAO.findByUserId(userId));
-        profile.setUserContact(userContactDAO.findByUserId(userId));
-        profile.setUserWork(userWorkDAO.findByUserId(userId));
+        profile.setUserContacts(userContactDAO.findByUserId(userId));
+        profile.setUserWorks(userWorkDAO.findByUserId(userId));
         profile.setForeignPassport(foreignPassportDAO.findByUserId(userId));
         profile.setSpouse(spouseDAO.findByUserId(userId));
         profile.setParents(parentsDAO.findByUserId(userId));
@@ -144,11 +142,78 @@ public class ApplicationService {
         return profile;
     }
 
+    public boolean updateCompleteUserProfile(UserProfile profile) {
+        Integer userId = UserSession.getInstance().getUserId();
+        if (userId == null) {
+            return false;
+        }
+
+        // 1. Update UserInfo
+        UserInfo userInfo = profile.getUserInfo();
+        userInfo.setUserId(userId);
+        userInfoDAO.saveUserInfo(userInfo);
+
+        // Save contacts
+        userContactDAO.saveUserContacts(userId, profile.getUserContacts());
+
+        // Save work info
+        userWorkDAO.saveUserWorks(userId, profile.getUserWorks());
+
+        // Save foreign passport info
+        UserForeignPassport foreignPassport = profile.getForeignPassport();
+        if (foreignPassport != null) {
+            foreignPassport.setUserId(userId);
+            foreignPassportDAO.saveForeignPassport(foreignPassport);
+        }
+
+        // Save spouse info
+        UserSpouse spouse = profile.getSpouse();
+        if (spouse != null) {
+            spouse.setUserId(userId);
+            spouseDAO.saveSpouse(spouse);
+        }
+
+        // Save parents info
+        UserParents parents = profile.getParents();
+        if (parents != null) {
+            parents.setUserId(userId);
+            parentsDAO.saveParents(parents);
+        }
+
+        // Save Philippine passport info
+        UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
+        if (philippinePassport != null) {
+            philippinePassport.setUserId(userId);
+            philippinePassportDAO.savePhilippinePassport(philippinePassport);
+        }
+
+        // Save minor info
+        UserMinorInfo minorInfo = profile.getMinorInfo();
+        if (minorInfo != null) {
+            minorInfo.setUserId(userId);
+            minorInfoDAO.saveMinorInfo(minorInfo);
+        }
+
+        // 2. Handle images (assuming images are part of the profile)
+        List<Image> images = profile.getImages();
+        if (images != null) {
+            // Delete old images if any
+            imageDAO.deleteByUserId(userId);
+            // Save new images
+            for (Image image : images) {
+                image.setUserId(userId);
+                imageDAO.saveImage(image);
+            }
+        }
+
+        return true;
+    }
+
     public UserProfile getCompleteUserProfile(int userId) {
         UserProfile profile = new UserProfile();
         profile.setUserInfo(userInfoDAO.findByUserId(userId));
-        profile.setUserContact(userContactDAO.findByUserId(userId));
-        profile.setUserWork(userWorkDAO.findByUserId(userId));
+        profile.setUserContacts(userContactDAO.findByUserId(userId));
+        profile.setUserWorks(userWorkDAO.findByUserId(userId));
         profile.setForeignPassport(foreignPassportDAO.findByUserId(userId));
         profile.setSpouse(spouseDAO.findByUserId(userId));
         profile.setParents(parentsDAO.findByUserId(userId));

@@ -131,6 +131,25 @@ public class UserApplicationFormController {
             lblGender.setValue("Male");
             lblGender.setEditable(false); // Make non-editable
         }
+
+        // Setup listeners for dependent fields
+        setupDependentField(lblMobileNumber1, lblMobileNumber2);
+        setupDependentField(lblTelephoneNumber1, lblTelephoneNumber2);
+        setupDependentField(lblEmailAddress1, lblEmailAddress2);
+        setupDependentField(lblOccupation1, lblOccupation2);
+        setupDependentField(lblWorkAddress1, lblWorkAddress2);
+        setupDependentField(lblWorkTelephone1, lblWorkTelephone2);
+    }
+
+    private void setupDependentField(TextField primaryField, TextField secondaryField) {
+        // Initially disable the secondary field
+        secondaryField.setDisable(true);
+
+        // Add a listener to the primary field's text property
+        primaryField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Enable the secondary field only if the primary field is not empty
+            secondaryField.setDisable(newValue == null || newValue.trim().isEmpty());
+        });
     }
 
     private void setupDateComboBoxes(ComboBox<String> monthCombo, ComboBox<Integer> yearCombo, ComboBox<Integer> dayCombo) {
@@ -264,8 +283,8 @@ public class UserApplicationFormController {
         try {
             // Create model objects from form data
             UserInfo userInfo = createUserInfo();
-            UserContact userContact = createUserContact();
-            UserWork userWork = createUserWork();
+            List<UserContact> userContacts = createUserContacts();
+            List<UserWork> userWorks = createUserWorks();
             UserForeignPassport foreignPassport = createForeignPassport();
             UserSpouse spouse = createSpouse();
             UserParents parents = createParents();
@@ -285,7 +304,7 @@ public class UserApplicationFormController {
             // Submit application using the service
             // ApplicationService applicationService = new ApplicationService(); // Already instantiated above
             boolean success = applicationService.submitCompleteApplication(
-                userInfo, userContact, userWork, foreignPassport, 
+                userInfo, userContacts, userWorks, foreignPassport, 
                 spouse, parents, philippinePassport, minorInfo, images
             );
             
@@ -432,40 +451,92 @@ public class UserApplicationFormController {
         return info;
     }
 
-    private UserContact createUserContact() {
-        UserContact contact = new UserContact();
-        
-        // Set mobile number
-        if (lblMobileNumber1.getText() != null && !lblMobileNumber1.getText().isEmpty()) {
-            contact.setMobileNumber(lblMobileNumber1.getText());
+    private List<UserContact> createUserContacts() {
+        List<UserContact> contacts = new ArrayList<>();
+
+        // Create first contact object if any fields are filled
+        UserContact contact1 = new UserContact();
+        boolean contact1HasData = false;
+        if (lblMobileNumber1.getText() != null && !lblMobileNumber1.getText().trim().isEmpty()) {
+            contact1.setMobileNumber(lblMobileNumber1.getText());
+            contact1HasData = true;
         }
-        
-        // Set telephone numbers
-        if (lblTelephoneNumber1.getText() != null && !lblTelephoneNumber1.getText().isEmpty()) {
-            contact.setTelephoneNumber(lblTelephoneNumber1.getText());
+        if (lblTelephoneNumber1.getText() != null && !lblTelephoneNumber1.getText().trim().isEmpty()) {
+            contact1.setTelephoneNumber(lblTelephoneNumber1.getText());
+            contact1HasData = true;
         }
-        
-        // Set email
-        contact.setEmailAddress(lblEmailAddress1.getText());
-        
-        return contact;
+        if (lblEmailAddress1.getText() != null && !lblEmailAddress1.getText().trim().isEmpty()) {
+            contact1.setEmailAddress(lblEmailAddress1.getText());
+            contact1HasData = true;
+        }
+        if (contact1HasData) {
+            contacts.add(contact1);
+        }
+
+        // Create second contact object if any fields are filled
+        UserContact contact2 = new UserContact();
+        boolean contact2HasData = false;
+        if (lblMobileNumber2.getText() != null && !lblMobileNumber2.getText().trim().isEmpty()) {
+            contact2.setMobileNumber(lblMobileNumber2.getText());
+            contact2HasData = true;
+        }
+        if (lblTelephoneNumber2.getText() != null && !lblTelephoneNumber2.getText().trim().isEmpty()) {
+            contact2.setTelephoneNumber(lblTelephoneNumber2.getText());
+            contact2HasData = true;
+        }
+        if (lblEmailAddress2.getText() != null && !lblEmailAddress2.getText().trim().isEmpty()) {
+            contact2.setEmailAddress(lblEmailAddress2.getText());
+            contact2HasData = true;
+        }
+        if (contact2HasData) {
+            contacts.add(contact2);
+        }
+
+        return contacts;
     }
 
-    private UserWork createUserWork() {
-        UserWork work = new UserWork();
-        
-        // Set occupation
-        work.setOccupation(lblOccupation1.getText());
-        
-        // Set work address
-        work.setWorkAddress(lblWorkAddress1.getText());
-        
-        // Set work telephone
-        if (lblWorkTelephone1.getText() != null && !lblWorkTelephone1.getText().isEmpty()) {
-            work.setWorkTelephoneNumber(lblWorkTelephone1.getText());
+    private List<UserWork> createUserWorks() {
+        List<UserWork> works = new ArrayList<>();
+
+        // Create first work object if any fields are filled
+        UserWork work1 = new UserWork();
+        boolean work1HasData = false;
+        if (lblOccupation1.getText() != null && !lblOccupation1.getText().trim().isEmpty()) {
+            work1.setOccupation(lblOccupation1.getText());
+            work1HasData = true;
+        }
+        if (lblWorkAddress1.getText() != null && !lblWorkAddress1.getText().trim().isEmpty()) {
+            work1.setWorkAddress(lblWorkAddress1.getText());
+            work1HasData = true;
+        }
+        if (lblWorkTelephone1.getText() != null && !lblWorkTelephone1.getText().trim().isEmpty()) {
+            work1.setWorkTelephoneNumber(lblWorkTelephone1.getText());
+            work1HasData = true;
+        }
+        if (work1HasData) {
+            works.add(work1);
+        }
+
+        // Create second work object if any fields are filled
+        UserWork work2 = new UserWork();
+        boolean work2HasData = false;
+        if (lblOccupation2.getText() != null && !lblOccupation2.getText().trim().isEmpty()) {
+            work2.setOccupation(lblOccupation2.getText());
+            work2HasData = true;
+        }
+        if (lblWorkAddress2.getText() != null && !lblWorkAddress2.getText().trim().isEmpty()) {
+            work2.setWorkAddress(lblWorkAddress2.getText());
+            work2HasData = true;
+        }
+        if (lblWorkTelephone2.getText() != null && !lblWorkTelephone2.getText().trim().isEmpty()) {
+            work2.setWorkTelephoneNumber(lblWorkTelephone2.getText());
+            work2HasData = true;
+        }
+        if (work2HasData) {
+            works.add(work2);
         }
         
-        return work;
+        return works;
     }
 
     private UserForeignPassport createForeignPassport() {

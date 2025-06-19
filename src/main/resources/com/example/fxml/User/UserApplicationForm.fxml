@@ -16,7 +16,7 @@
       
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="570.0" prefWidth="700.0" style="-fx-background-color: transparent;">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1040.0" prefWidth="670.0" style="-fx-background-color: transparent;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1180.0" prefWidth="670.0" style="-fx-background-color: transparent;">
                <fx:define>
                   <ToggleGroup fx:id="civilStatusGroup" />
                   <ToggleGroup fx:id="citizenshipGroup" />
@@ -25,7 +25,7 @@
                   <ToggleGroup fx:id="minorGroup" />
                </fx:define>
                
-               <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Form">
+               <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Form Form">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
@@ -96,7 +96,7 @@
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbAnnulled" layoutX="419.0" layoutY="194.0" mnemonicParsing="false" text="Annulled" toggleGroup="$civilStatusGroup">
+               <RadioButton fx:id="rbAnnulled" layoutX="430.0" layoutY="195.0" mnemonicParsing="false" text="Annuled" toggleGroup="$civilStatusGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -119,72 +119,72 @@
                   </font>
                </Label>
                <TextField fx:id="lblTelephoneNumber1" layoutX="463.0" layoutY="228.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="272.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Email Address:">
+               <Label layoutX="18.0" layoutY="306.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Email Address:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblEmailAddress1" layoutX="118.0" layoutY="266.0" prefHeight="27.0" prefWidth="551.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="310.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Occupation:">
+               <TextField fx:id="lblEmailAddress1" layoutX="118.0" layoutY="300.0" prefHeight="27.0" prefWidth="551.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="382.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Occupation:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblOccupation1" layoutX="118.0" layoutY="304.0" prefHeight="27.0" prefWidth="242.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="370.0" layoutY="310.0" prefHeight="16.0" prefWidth="109.0" style="-fx-text-fill: #696868;" text="Work Tel. Number:">
+               <TextField fx:id="lblOccupation1" layoutX="118.0" layoutY="376.0" prefHeight="27.0" prefWidth="242.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="370.0" layoutY="382.0" prefHeight="16.0" prefWidth="109.0" style="-fx-text-fill: #696868;" text="Work Tel. Number:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblWorkTelephone1" layoutX="489.0" layoutY="304.0" prefHeight="27.0" prefWidth="181.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="348.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Work Address:">
+               <TextField fx:id="lblWorkTelephone1" layoutX="489.0" layoutY="376.0" prefHeight="27.0" prefWidth="181.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="453.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Work Address:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblWorkAddress1" layoutX="118.0" layoutY="342.0" prefHeight="27.0" prefWidth="552.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="387.0" prefHeight="16.0" prefWidth="136.0" style="-fx-text-fill: #696868;" text="Name of Wife/Husband:">
+               <TextField fx:id="lblWorkAddress1" layoutX="118.0" layoutY="447.0" prefHeight="27.0" prefWidth="552.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="527.0" prefHeight="16.0" prefWidth="136.0" style="-fx-text-fill: #696868;" text="Name of Wife/Husband:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblSpouseName" layoutX="165.0" layoutY="381.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="401.0" layoutY="387.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+               <TextField fx:id="lblSpouseName" layoutX="165.0" layoutY="521.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="401.0" layoutY="527.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblSpouseCitizenship" layoutX="483.0" layoutY="381.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="427.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Name of Father:">
+               <TextField fx:id="lblSpouseCitizenship" layoutX="483.0" layoutY="521.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="567.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Name of Father:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblFatherName" layoutX="165.0" layoutY="421.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="467.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Maiden Name of Mother:">
+               <TextField fx:id="lblFatherName" layoutX="165.0" layoutY="561.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="607.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Maiden Name of Mother:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblMotherName" layoutX="165.0" layoutY="461.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="401.0" layoutY="427.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+               <TextField fx:id="lblMotherName" layoutX="165.0" layoutY="601.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="401.0" layoutY="567.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblFatherCitizenship" layoutX="483.0" layoutY="421.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="401.0" layoutY="467.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+               <TextField fx:id="lblFatherCitizenship" layoutX="483.0" layoutY="561.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="401.0" layoutY="607.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblMotherCitizenship" layoutX="483.0" layoutY="461.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="507.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Citizenship Acquired by:">
+               <TextField fx:id="lblMotherCitizenship" layoutX="483.0" layoutY="601.0" prefHeight="27.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="647.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Citizenship Acquired by:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <RadioButton fx:id="rbCitizenBirth" layoutX="163.0" layoutY="509.0" mnemonicParsing="false" text="Birth">
+               <RadioButton fx:id="rbCitizenBirth" layoutX="163.0" layoutY="649.0" mnemonicParsing="false" text="Birth">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -192,38 +192,38 @@
                      <ToggleGroup fx:id="citizenshipGroup" />
                   </toggleGroup>
                </RadioButton>
-               <RadioButton fx:id="rbCitizenElection" layoutX="211.0" layoutY="509.0" mnemonicParsing="false" text="Election" toggleGroup="$citizenshipGroup">
+               <RadioButton fx:id="rbCitizenElection" layoutX="211.0" layoutY="649.0" mnemonicParsing="false" text="Election" toggleGroup="$citizenshipGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbCitizenMarriage" layoutX="275.0" layoutY="509.0" mnemonicParsing="false" text="Marriage" toggleGroup="$citizenshipGroup">
+               <RadioButton fx:id="rbCitizenMarriage" layoutX="275.0" layoutY="649.0" mnemonicParsing="false" text="Marriage" toggleGroup="$citizenshipGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbCitizenNaturalization" layoutX="345.0" layoutY="510.0" mnemonicParsing="false" text="Naturalization" toggleGroup="$citizenshipGroup">
+               <RadioButton fx:id="rbCitizenNaturalization" layoutX="345.0" layoutY="650.0" mnemonicParsing="false" text="Naturalization" toggleGroup="$citizenshipGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbCitizenRA9225" layoutX="439.0" layoutY="510.0" mnemonicParsing="false" text="R.A. 9225" toggleGroup="$citizenshipGroup">
+               <RadioButton fx:id="rbCitizenRA9225" layoutX="439.0" layoutY="650.0" mnemonicParsing="false" text="R.A. 9225" toggleGroup="$citizenshipGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbCitizenOthers" layoutX="515.0" layoutY="509.0" mnemonicParsing="false" text="Others:" toggleGroup="$citizenshipGroup">
+               <RadioButton fx:id="rbCitizenOthers" layoutX="515.0" layoutY="649.0" mnemonicParsing="false" text="Others:" toggleGroup="$citizenshipGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <TextField fx:id="txtCitizenOthers" layoutX="578.0" layoutY="502.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="548.0" prefHeight="16.0" prefWidth="206.0" style="-fx-text-fill: #696868;" text="Are you a foreign passport holder?">
+               <TextField fx:id="txtCitizenOthers" layoutX="578.0" layoutY="642.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="688.0" prefHeight="16.0" prefWidth="206.0" style="-fx-text-fill: #696868;" text="Are you a foreign passport holder?">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <RadioButton fx:id="rbForeignPassportYes" layoutX="223.0" layoutY="550.0" mnemonicParsing="false" text="YES">
+               <RadioButton fx:id="rbForeignPassportYes" layoutX="223.0" layoutY="690.0" mnemonicParsing="false" text="YES">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -231,17 +231,17 @@
                      <ToggleGroup fx:id="foreignPassportGroup" />
                   </toggleGroup>
                </RadioButton>
-               <RadioButton fx:id="rbForeignPassportNo" layoutX="271.0" layoutY="550.0" mnemonicParsing="false" text="NO" toggleGroup="$foreignPassportGroup">
+               <RadioButton fx:id="rbForeignPassportNo" layoutX="271.0" layoutY="690.0" mnemonicParsing="false" text="NO" toggleGroup="$foreignPassportGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <Label layoutX="18.0" layoutY="588.0" prefHeight="16.0" prefWidth="290.0" style="-fx-text-fill: #696868;" text="Have you ever been issued a Philippine Passport? ">
+               <Label layoutX="18.0" layoutY="728.0" prefHeight="16.0" prefWidth="290.0" style="-fx-text-fill: #696868;" text="Have you ever been issued a Philippine Passport? ">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <RadioButton fx:id="rbPhilippinePassportYes" layoutX="310.0" layoutY="589.0" mnemonicParsing="false" text="YES">
+               <RadioButton fx:id="rbPhilippinePassportYes" layoutX="310.0" layoutY="729.0" mnemonicParsing="false" text="YES">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -249,31 +249,31 @@
                      <ToggleGroup fx:id="philippinePassportGroup" />
                   </toggleGroup>
                </RadioButton>
-               <RadioButton fx:id="rbPhilippinePassportNo" layoutX="359.0" layoutY="589.0" mnemonicParsing="false" text="NO" toggleGroup="$philippinePassportGroup">
+               <RadioButton fx:id="rbPhilippinePassportNo" layoutX="359.0" layoutY="729.0" mnemonicParsing="false" text="NO" toggleGroup="$philippinePassportGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <Label layoutX="18.0" layoutY="628.0" prefHeight="16.0" prefWidth="66.0" style="-fx-text-fill: #696868;" text="Issue Date:">
+               <Label layoutX="18.0" layoutY="768.0" prefHeight="16.0" prefWidth="66.0" style="-fx-text-fill: #696868;" text="Issue Date:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <ComboBox fx:id="lblIssueMonth" layoutX="89.0" layoutY="622.0" prefHeight="27.0" prefWidth="122.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
-               <ComboBox fx:id="lblIssueDay" layoutX="220.0" layoutY="622.0" prefHeight="27.0" prefWidth="62.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
-               <ComboBox fx:id="lblIssueYear" layoutX="291.0" layoutY="622.0" prefHeight="26.0" prefWidth="80.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
-               <Label layoutX="384.0" layoutY="623.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Issue:">
+               <ComboBox fx:id="lblIssueMonth" layoutX="89.0" layoutY="762.0" prefHeight="27.0" prefWidth="122.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
+               <ComboBox fx:id="lblIssueDay" layoutX="220.0" layoutY="762.0" prefHeight="27.0" prefWidth="62.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
+               <ComboBox fx:id="lblIssueYear" layoutX="291.0" layoutY="762.0" prefHeight="26.0" prefWidth="80.0" style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #40659C; -fx-border-radius: 5;" />
+               <Label layoutX="384.0" layoutY="763.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Issue:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblPlaceOfIssue" layoutX="477.0" layoutY="622.0" prefHeight="27.0" prefWidth="193.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="668.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Are you 18 years old below?">
+               <TextField fx:id="lblPlaceOfIssue" layoutX="477.0" layoutY="762.0" prefHeight="27.0" prefWidth="193.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="808.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Are you 18 years old below?">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <RadioButton fx:id="rbMinorYes" layoutX="192.0" layoutY="670.0" mnemonicParsing="false" text="YES">
+               <RadioButton fx:id="rbMinorYes" layoutX="192.0" layoutY="810.0" mnemonicParsing="false" text="YES">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -281,41 +281,41 @@
                      <ToggleGroup fx:id="minorGroup" />
                   </toggleGroup>
                </RadioButton>
-               <RadioButton fx:id="rbMinorNo" layoutX="245.0" layoutY="670.0" mnemonicParsing="false" text="NO" toggleGroup="$minorGroup">
+               <RadioButton fx:id="rbMinorNo" layoutX="245.0" layoutY="810.0" mnemonicParsing="false" text="NO" toggleGroup="$minorGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <Label layoutX="318.0" layoutY="664.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
+               <Label layoutX="318.0" layoutY="804.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblTravelingCompanion" layoutX="497.0" layoutY="662.0" prefHeight="27.0" prefWidth="173.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="708.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
+               <TextField fx:id="lblTravelingCompanion" layoutX="497.0" layoutY="802.0" prefHeight="27.0" prefWidth="173.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="848.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblCompanionRelationship" layoutX="182.0" layoutY="702.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="419.0" layoutY="708.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Contact Number:">
+               <TextField fx:id="lblCompanionRelationship" layoutX="182.0" layoutY="842.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="419.0" layoutY="848.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Contact Number:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblContactNumber" layoutX="524.0" layoutY="703.0" prefHeight="27.0" prefWidth="145.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="18.0" layoutY="758.0" style="-fx-text-fill: #696868;" text="For Verification">
+               <TextField fx:id="lblContactNumber" layoutX="524.0" layoutY="843.0" prefHeight="27.0" prefWidth="145.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="18.0" layoutY="908.0" style="-fx-text-fill: #696868;" text="For Verification">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
                </Label>
                <!-- Valid ID Upload Section -->
-               <Label layoutX="18.0" layoutY="799.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
+               <Label layoutX="18.0" layoutY="949.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Upload any Valid ID:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="18.0" layoutY="822.0" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="972.0" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadValidID" mnemonicParsing="false" onAction="#uploadValidIDBtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblValidIdFilename" alignment="CENTER" layoutY="18.0" prefHeight="18.0" prefWidth="651.0" style="-fx-text-fill: white;" text="No file selected" />
@@ -323,41 +323,47 @@
                </AnchorPane>
                
                <!-- PSA Birth Certificate Upload Section -->
-               <Label layoutX="18.0" layoutY="900.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
+               <Label layoutX="18.0" layoutY="1050.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Upload your PSA Birth Certificate:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <AnchorPane layoutX="18.0" layoutY="925.0" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;">
+               <AnchorPane layoutX="18.0" layoutY="1075.0" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;">
                   <children>
                      <Button fx:id="btnUploadPSA" mnemonicParsing="false" onAction="#uploadPSABtn" prefHeight="54.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
                      <Label fx:id="lblPSAFilename" alignment="CENTER" layoutY="18.0" prefHeight="18.0" prefWidth="650.0" style="-fx-text-fill: white;" text="No file selected" textAlignment="CENTER" />
                   </children>
                </AnchorPane>
                
-               <Button layoutX="503.0" layoutY="994.0" mnemonicParsing="false" onAction="#applyBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Apply" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="13.0" />
-               </font>
+                                 <Button layoutX="503.0" layoutY="1140.0" mnemonicParsing="false" onAction="#applyBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Apply" textFill="WHITE">
+                  <font>
+                     <Font name="Arial Bold" size="13.0" />
+                  </font>
                </Button>
-               <Label layoutX="317.0" layoutY="548.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
+               <Label layoutX="317.0" layoutY="688.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblCountry" layoutX="373.0" layoutY="542.0" prefHeight="27.0" prefWidth="94.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="475.0" layoutY="548.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
+               <TextField fx:id="lblCountry" layoutX="373.0" layoutY="682.0" prefHeight="27.0" prefWidth="94.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="475.0" layoutY="688.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblForeignPassportNo" layoutX="558.0" layoutY="542.0" prefHeight="27.0" prefWidth="111.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
-               <Label layoutX="407.0" layoutY="588.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
+               <TextField fx:id="lblForeignPassportNo" layoutX="558.0" layoutY="682.0" prefHeight="27.0" prefWidth="111.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="407.0" layoutY="728.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
                   <font>
                      <Font name="Arial Bold" size="12.0" />
                   </font>
                </Label>
-               <TextField fx:id="lblPhilippinePassportNo" layoutX="492.0" layoutY="582.0" prefHeight="27.0" prefWidth="177.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblPhilippinePassportNo" layoutX="492.0" layoutY="722.0" prefHeight="27.0" prefWidth="177.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblMobileNumber2" layoutX="118.0" layoutY="263.0" prefHeight="27.0" prefWidth="215.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblTelephoneNumber2" layoutX="464.0" layoutY="263.0" prefHeight="27.0" prefWidth="205.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblEmailAddress2" layoutX="118.0" layoutY="336.0" prefHeight="27.0" prefWidth="551.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblWorkAddress2" layoutX="118.0" layoutY="483.0" prefHeight="27.0" prefWidth="552.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblOccupation2" layoutX="118.0" layoutY="411.0" prefHeight="27.0" prefWidth="242.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <TextField fx:id="lblWorkTelephone2" layoutX="490.0" layoutY="411.0" prefHeight="27.0" prefWidth="180.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
             </AnchorPane>
          </content>
       </ScrollPane>

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="67.0" prefWidth="647.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.components.UserPassportCardController">
+<AnchorPane prefHeight="67.0" prefWidth="678.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #40659C; -fx-background-radius: 15; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.components.UserPassportCardController">
    <children>
       <Label layoutX="14.0" layoutY="12.0" style="-fx-text-fill: #40659C;" text="Name">
          <font>

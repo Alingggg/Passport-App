@@ -3,8 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -15,213 +13,208 @@
 
         <ScrollPane hbarPolicy="NEVER" layoutX="250.0" layoutY="86.0" prefHeight="540.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
             <content>
-                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1025.0" prefWidth="686.0">
+                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1040.0" prefWidth="670.0">
                     <children>
-                        <Label fx:id="lblAppDetails" layoutX="16.0" layoutY="22.0" style="-fx-text-fill: #696868;" text="Application Details">
+                        <Label fx:id="lblAppDetails" layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Details">
                             <font>
                                 <Font name="Arial Bold" size="21.0" />
                             </font>
                         </Label>
                         
-                        <Label layoutX="18.0" layoutY="74.0" prefHeight="26.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Last Name:">
+                        <Label layoutX="18.0" layoutY="69.0" prefHeight="26.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Last Name:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblLastName" layoutX="91.0" layoutY="73.0" prefHeight="27.0" prefWidth="122.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblLastName" layoutX="91.0" layoutY="68.0" prefHeight="27.0" prefWidth="122.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="225.0" layoutY="74.0" prefHeight="26.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="First Name:">
+                        <Label layoutX="225.0" layoutY="69.0" prefHeight="26.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="First Name:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblFirstName" layoutX="296.0" layoutY="73.0" prefHeight="27.0" prefWidth="141.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblFirstName" layoutX="296.0" layoutY="68.0" prefHeight="27.0" prefWidth="141.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="449.0" layoutY="74.0" prefHeight="26.0" prefWidth="80.0" style="-fx-text-fill: #696868;" text="Middle Name:">
+                        <Label layoutX="449.0" layoutY="69.0" prefHeight="26.0" prefWidth="80.0" style="-fx-text-fill: #696868;" text="Middle Name:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblMiddleName" layoutX="535.0" layoutY="73.0" prefHeight="27.0" prefWidth="122.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblMiddleName" layoutX="535.0" layoutY="68.0" prefHeight="27.0" prefWidth="136.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="113.0" prefHeight="26.0" prefWidth="61.0" style="-fx-text-fill: #696868;" text="Birthdate:">
+                        <Label layoutX="18.0" layoutY="108.0" prefHeight="26.0" prefWidth="61.0" style="-fx-text-fill: #696868;" text="Birthdate:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblBirthDate" layoutX="91.0" layoutY="113.0" prefHeight="27.0" prefWidth="283.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblBirthDate" layoutX="91.0" layoutY="108.0" prefHeight="27.0" prefWidth="283.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="392.0" layoutY="113.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Birth:">
+                        <Label layoutX="392.0" layoutY="108.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Birth:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblPlaceOfBirth" layoutX="480.0" layoutY="113.0" prefHeight="27.0" prefWidth="177.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblPlaceOfBirth" layoutX="480.0" layoutY="108.0" prefHeight="27.0" prefWidth="189.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="153.0" prefHeight="26.0" prefWidth="114.0" style="-fx-text-fill: #696868;" text="Complete Address:">
+                        <Label layoutX="18.0" layoutY="148.0" prefHeight="26.0" prefWidth="114.0" style="-fx-text-fill: #696868;" text="Complete Address:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblCompleteAddress" layoutX="155.0" layoutY="152.0" prefHeight="27.0" prefWidth="504.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblCompleteAddress" layoutX="138.0" layoutY="147.0" prefHeight="27.0" prefWidth="531.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="198.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Civil Status:">
+                        <Label layoutX="18.0" layoutY="193.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Civil Status:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblCivilStatus" layoutX="110.0" layoutY="192.0" prefHeight="27.0" prefWidth="380.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblCivilStatus" layoutX="95.0" layoutY="187.0" prefHeight="27.0" prefWidth="384.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="510.0" layoutY="198.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Gender:">
+                        <Label layoutX="510.0" layoutY="193.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Gender:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblGender" layoutX="572.0" layoutY="192.0" prefHeight="27.0" prefWidth="88.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblGender" layoutX="571.0" layoutY="187.0" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="238.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Mobile Number:">
+                        <Label layoutX="18.0" layoutY="233.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Mobile Number:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblMobileNumber1" layoutX="118.0" layoutY="233.0" prefHeight="27.0" prefWidth="158.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblMobileNumber1" layoutX="118.0" layoutY="228.0" prefHeight="27.0" prefWidth="215.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="365.0" layoutY="239.0" prefHeight="16.0" prefWidth="114.0" style="-fx-text-fill: #696868;" text="Telephone Number:">
+                        <Label layoutX="344.0" layoutY="234.0" prefHeight="16.0" prefWidth="114.0" style="-fx-text-fill: #696868;" text="Telephone Number:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblTelephoneNumber1" layoutX="489.0" layoutY="233.0" prefHeight="27.0" prefWidth="169.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblTelephoneNumber1" layoutX="463.0" layoutY="228.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="277.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Email Address:">
+                        <Label layoutX="18.0" layoutY="272.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Email Address:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblEmailAddress" layoutX="118.0" layoutY="271.0" prefHeight="27.0" prefWidth="536.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblEmailAddress" layoutX="118.0" layoutY="266.0" prefHeight="27.0" prefWidth="551.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="315.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Occupation:">
+                        <Label layoutX="18.0" layoutY="310.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Occupation:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblOccupation" layoutX="111.0" layoutY="309.0" prefHeight="27.0" prefWidth="234.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblOccupation" layoutX="118.0" layoutY="304.0" prefHeight="27.0" prefWidth="242.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="370.0" layoutY="315.0" prefHeight="16.0" prefWidth="109.0" style="-fx-text-fill: #696868;" text="Work Tel. Number:">
+                        <Label layoutX="370.0" layoutY="310.0" prefHeight="16.0" prefWidth="109.0" style="-fx-text-fill: #696868;" text="Work Tel. Number:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblWorkTelephone" layoutX="489.0" layoutY="309.0" prefHeight="27.0" prefWidth="165.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblWorkTelephone" layoutX="489.0" layoutY="304.0" prefHeight="27.0" prefWidth="181.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="353.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Work Address:">
+                        <Label layoutX="18.0" layoutY="348.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Work Address:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblWorkAddress" layoutX="111.0" layoutY="347.0" prefHeight="27.0" prefWidth="545.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblWorkAddress" layoutX="118.0" layoutY="342.0" prefHeight="27.0" prefWidth="552.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="391.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Name of Wife/Husband:">
+                        <Label layoutX="18.0" layoutY="387.0" prefHeight="16.0" prefWidth="136.0" style="-fx-text-fill: #696868;" text="Name of Wife/Husband:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblSpouseName" layoutX="165.0" layoutY="385.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblSpouseName" layoutX="165.0" layoutY="381.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="407.0" layoutY="391.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+                        <Label layoutX="401.0" layoutY="387.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblSpouseCitizenship" layoutX="489.0" layoutY="385.0" prefHeight="27.0" prefWidth="168.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblSpouseCitizenship" layoutX="483.0" layoutY="381.0" prefHeight="27.0" prefWidth="186.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="431.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Name of Father:">
+                        <Label layoutX="18.0" layoutY="427.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Name of Father:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblFatherName" layoutX="165.0" layoutY="425.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblFatherName" layoutX="165.0" layoutY="421.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="471.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Maiden Name of Mother:">
+                        <Label layoutX="18.0" layoutY="467.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Maiden Name of Mother:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblMotherName" layoutX="165.0" layoutY="465.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblMotherName" layoutX="165.0" layoutY="461.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="407.0" layoutY="431.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+                        <Label layoutX="401.0" layoutY="427.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblFatherCitizenship" layoutX="489.0" layoutY="425.0" prefHeight="27.0" prefWidth="168.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblFatherCitizenship" layoutX="483.0" layoutY="421.0" prefHeight="27.0" prefWidth="186.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="407.0" layoutY="471.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
+                        <Label layoutX="401.0" layoutY="467.0" prefHeight="16.0" prefWidth="71.0" style="-fx-text-fill: #696868;" text="Citizenship:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblMotherCitizenship" layoutX="489.0" layoutY="465.0" prefHeight="27.0" prefWidth="168.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblMotherCitizenship" layoutX="483.0" layoutY="461.0" prefHeight="27.0" prefWidth="186.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="511.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Citizenship Acquired by:">
+                        <Label layoutX="18.0" layoutY="507.0" prefHeight="16.0" prefWidth="146.0" style="-fx-text-fill: #696868;" text="Citizenship Acquired by:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblCitizenshipAcquiredBy" layoutX="167.0" layoutY="505.0" prefHeight="27.0" prefWidth="488.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblCitizenshipAcquiredBy" layoutX="163.0" layoutY="502.0" prefHeight="27.0" prefWidth="506.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="551.0" prefHeight="16.0" prefWidth="208.0" style="-fx-text-fill: #696868;" text="Are you a foreign passport holder?">
+                        <Label layoutX="18.0" layoutY="548.0" prefHeight="16.0" prefWidth="206.0" style="-fx-text-fill: #696868;" text="Are you a foreign passport holder?">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblForeignPassportHolder" layoutX="225.0" layoutY="545.0" prefHeight="27.0" prefWidth="70.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblForeignPassportHolder" layoutX="223.0" layoutY="542.0" prefHeight="27.0" prefWidth="88.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="316.0" layoutY="551.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
+                        <Label layoutX="317.0" layoutY="548.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblCountry" layoutX="370.0" layoutY="545.0" prefHeight="27.0" prefWidth="100.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblCountry" layoutX="373.0" layoutY="542.0" prefHeight="27.0" prefWidth="94.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="478.0" layoutY="551.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
+                        <Label layoutX="475.0" layoutY="548.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblForeignPassportNo" layoutX="563.0" layoutY="545.0" prefHeight="27.0" prefWidth="94.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblForeignPassportNo" layoutX="558.0" layoutY="542.0" prefHeight="27.0" prefWidth="111.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="591.0" prefHeight="16.0" prefWidth="300.0" style="-fx-text-fill: #696868;" text="Have you ever been issued a Philippine Passport? ">
+                        <Label layoutX="18.0" layoutY="588.0" prefHeight="16.0" prefWidth="290.0" style="-fx-text-fill: #696868;" text="Have you ever been issued a Philippine Passport? ">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblPhilippinePassportHolder" layoutX="310.0" layoutY="585.0" prefHeight="27.0" prefWidth="70.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblPhilippinePassportHolder" layoutX="310.0" layoutY="582.0" prefHeight="27.0" prefWidth="89.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="407.0" layoutY="591.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
+                        <Label layoutX="407.0" layoutY="588.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblPhilippinePassportNo" layoutX="492.0" layoutY="585.0" prefHeight="27.0" prefWidth="94.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblPhilippinePassportNo" layoutX="492.0" layoutY="582.0" prefHeight="27.0" prefWidth="177.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="631.0" prefHeight="16.0" prefWidth="66.0" style="-fx-text-fill: #696868;" text="Issue Date:">
+                        <Label layoutX="18.0" layoutY="628.0" prefHeight="16.0" prefWidth="66.0" style="-fx-text-fill: #696868;" text="Issue Date:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblIssueDate" layoutX="89.0" layoutY="625.0" prefHeight="27.0" prefWidth="282.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblIssueDate" layoutX="89.0" layoutY="622.0" prefHeight="27.0" prefWidth="282.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="384.0" layoutY="626.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Issue:">
+                        <Label layoutX="384.0" layoutY="623.0" prefHeight="26.0" prefWidth="88.0" style="-fx-text-fill: #696868;" text="Place of Issue:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblPlaceOfIssue" layoutX="477.0" layoutY="625.0" prefHeight="27.0" prefWidth="181.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblPlaceOfIssue" layoutX="477.0" layoutY="622.0" prefHeight="27.0" prefWidth="193.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="671.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Are you 18 years old below?">
+                        <Label layoutX="18.0" layoutY="668.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Are you 18 years old below?">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblIsMinor" layoutX="192.0" layoutY="665.0" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblIsMinor" layoutX="192.0" layoutY="662.0" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="318.0" layoutY="667.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
+                        <Label layoutX="318.0" layoutY="664.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblTravelingCompanion" layoutX="497.0" layoutY="665.0" prefHeight="27.0" prefWidth="162.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblTravelingCompanion" layoutX="497.0" layoutY="662.0" prefHeight="27.0" prefWidth="173.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="711.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
+                        <Label layoutX="18.0" layoutY="708.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblCompanionRelationship" layoutX="182.0" layoutY="705.0" prefHeight="27.0" prefWidth="134.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblCompanionRelationship" layoutX="182.0" layoutY="702.0" prefHeight="27.0" prefWidth="134.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="419.0" layoutY="711.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Contact Number:">
+                        <Label layoutX="419.0" layoutY="708.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Contact Number:">
                             <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
-                        <Label fx:id="lblMinorContactNumber" layoutX="524.0" layoutY="705.0" prefHeight="27.0" prefWidth="134.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                        <Label fx:id="lblMinorContactNumber" layoutX="524.0" layoutY="703.0" prefHeight="27.0" prefWidth="145.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                         
-                        <Label layoutX="18.0" layoutY="807.0" style="-fx-text-fill: #696868;" text="For Verification">
-                            <font><Font name="Arial Bold" size="21.0" /></font>
-                        </Label>
-                        
-                        <!-- Documents Section copied from AdminUserDetails.fxml -->
-                        <Label layoutX="18.0" layoutY="747.0" style="-fx-text-fill: #696868;" text="Documents">
+                        <Label layoutX="18.0" layoutY="758.0" style="-fx-text-fill: #696868;" text="Documents">
                            <font>
                               <Font name="Arial Bold" size="21.0" />
                            </font>
                         </Label>
                         
-                        <Label layoutX="18.0" layoutY="788.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Valid Image:">
+                        <Label layoutX="18.0" layoutY="799.0" prefHeight="16.0" prefWidth="122.0" style="-fx-text-fill: #696868;" text="Valid ID:">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnViewValidID" layoutX="18.0" layoutY="811.0" mnemonicParsing="false" onAction="#viewValidIDImage" prefHeight="54.0" prefWidth="639.0" style="-fx-background-color: #5981BC;" text="View Valid ID" textFill="WHITE">
+                        <Button fx:id="btnViewValidID" layoutX="18.0" layoutY="822.0" mnemonicParsing="false" onAction="#viewValidIDImage" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;" text="View Image" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Button>
                         
-                        <Label layoutX="18.0" layoutY="889.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Birth Certificate:">
+                        <Label layoutX="18.0" layoutY="900.0" prefHeight="16.0" prefWidth="199.0" style="-fx-text-fill: #696868;" text="Birth Certificate:">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnViewPSA" layoutX="18.0" layoutY="914.0" mnemonicParsing="false" onAction="#viewPSAImage" prefHeight="54.0" prefWidth="639.0" style="-fx-background-color: #5981BC;" text="View Image" textFill="WHITE">
+                        <Button fx:id="btnViewPSA" layoutX="18.0" layoutY="925.0" mnemonicParsing="false" onAction="#viewPSAImage" prefHeight="54.0" prefWidth="651.0" style="-fx-background-color: #5981BC;" text="View Image" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Button>
                         
-                        <Button fx:id="btnAcceptApplication" layoutX="290.0" layoutY="985.0" mnemonicParsing="false" onAction="#acceptApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #06C012; -fx-background-radius: 15;" text="Accept Application" textFill="WHITE">
+                        <Button fx:id="btnAcceptApplication" layoutX="290.0" layoutY="994.0" mnemonicParsing="false" onAction="#acceptApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #06C012; -fx-background-radius: 15;" text="Accept Application" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnDenyApplication" layoutX="480.0" layoutY="985.0" mnemonicParsing="false" onAction="#denyApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #F20707; -fx-background-radius: 15;" text="Deny Application" textFill="WHITE">
+                        <Button fx:id="btnDenyApplication" layoutX="486.0" layoutY="994.0" mnemonicParsing="false" onAction="#denyApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #F20707; -fx-background-radius: 15;" text="Deny Application" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>

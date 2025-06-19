@@ -416,7 +416,7 @@ public class UserApplicationFormController {
             String citizenshipType = selectedCitizenship.getText();
             
             // If "Others" is selected, get the value from the text field
-            if (citizenshipType.equals("Others") && txtCitizenOthers.getText() != null && !txtCitizenOthers.getText().isEmpty()) {
+            if (citizenshipType.equals("Others:") && txtCitizenOthers.getText() != null && !txtCitizenOthers.getText().isEmpty()) {
                 citizenshipType = txtCitizenOthers.getText();
             }
             

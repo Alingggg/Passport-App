@@ -116,5 +116,6 @@ CREATE TABLE images (
     file_type VARCHAR(20) CHECK (file_type IN ('Valid ID', 'Birth Certificate')) NOT NULL,
     supabase_url TEXT NOT NULL,
     uploaded_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE,
+    UNIQUE (user_id, file_type)
 );

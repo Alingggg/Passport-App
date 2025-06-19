@@ -47,12 +47,12 @@ public class UserApplicationFormController {
     @FXML private TextField lblCompleteAddress;
     @FXML private TextField lblMobileNumber1;
     @FXML private TextField lblTelephoneNumber1;
-    @FXML private TextField lblEmailAddress;
-    @FXML private TextField lblOccupation;
+    @FXML private TextField lblEmailAddress1;
+    @FXML private TextField lblOccupation1;
     @FXML private TextField lblCountry;
     @FXML private TextField lblForeignPassportNo;
-    @FXML private TextField lblWorkAddress;
-    @FXML private TextField lblWorkTelephone;
+    @FXML private TextField lblWorkAddress1;
+    @FXML private TextField lblWorkTelephone1;
     @FXML private TextField lblSpouseName;
     @FXML private TextField lblSpouseCitizenship;
     @FXML private TextField lblFatherName;
@@ -440,7 +440,7 @@ public class UserApplicationFormController {
         }
         
         // Set email
-        contact.setEmailAddress(lblEmailAddress.getText());
+        contact.setEmailAddress(lblEmailAddress1.getText());
         
         return contact;
     }
@@ -449,14 +449,14 @@ public class UserApplicationFormController {
         UserWork work = new UserWork();
         
         // Set occupation
-        work.setOccupation(lblOccupation.getText());
+        work.setOccupation(lblOccupation1.getText());
         
         // Set work address
-        work.setWorkAddress(lblWorkAddress.getText());
+        work.setWorkAddress(lblWorkAddress1.getText());
         
         // Set work telephone
-        if (lblWorkTelephone.getText() != null && !lblWorkTelephone.getText().isEmpty()) {
-            work.setWorkTelephoneNumber(lblWorkTelephone.getText());
+        if (lblWorkTelephone1.getText() != null && !lblWorkTelephone1.getText().isEmpty()) {
+            work.setWorkTelephoneNumber(lblWorkTelephone1.getText());
         }
         
         return work;

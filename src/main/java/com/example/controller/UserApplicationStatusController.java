@@ -45,7 +45,7 @@ public class UserApplicationStatusController {
         Integer userId = userSession.getUserId();
         if (userId == null) {
             lblStatus.setText("User not logged in.");
-            lblStatus.setStyle("-fx-text-fill: #F20707;"); // Red for error
+            lblStatus.setStyle("-fx-text-fill: #F20707;");
             lblFeedback.setVisible(false);
             if (btnView != null) btnView.setVisible(false);
             return;
@@ -61,22 +61,22 @@ public class UserApplicationStatusController {
             // Ensure status strings in case statements match what the model provides (e.g., uppercase)
             switch (status != null ? status.toUpperCase() : "") { // Convert to uppercase for reliable matching
                 case "PENDING":
-                    lblStatus.setStyle("-fx-text-fill: #cc9d05;"); // Light yellow/orange
+                    lblStatus.setStyle("-fx-text-fill: #cc9d05;");
                     lblFeedback.setVisible(false); // Hide feedback for PENDING
                     break;
                 case "ACCEPTED":
-                    lblStatus.setStyle("-fx-text-fill: #06C012;"); // Green
+                    lblStatus.setStyle("-fx-text-fill: #06C012;");
                     lblFeedback.setVisible(false); // Hide feedback for ACCEPTED
                     break;
                 case "DENIED":
-                    lblStatus.setStyle("-fx-text-fill: #F20707;"); // Red
+                    lblStatus.setStyle("-fx-text-fill: #F20707;");
                     String feedbackText = currentUserApplication.getFeedback();
                     lblFeedback.setText("Feedback: " + (feedbackText != null && !feedbackText.trim().isEmpty() ? feedbackText : "No specific feedback provided."));
                     lblFeedback.setVisible(true); // Show feedback for DENIED
                     break;
                 default:
                     lblStatus.setStyle("-fx-text-fill: #696868;"); // Default color
-                    lblFeedback.setText("Unknown application status."); // Or hide it
+                    lblFeedback.setText("Unknown application status.");
                     lblFeedback.setVisible(false); // Hide feedback for unknown status
                     break;
             }

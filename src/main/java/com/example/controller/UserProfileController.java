@@ -25,7 +25,6 @@ public class UserProfileController {
     @FXML
     void applyBtn(ActionEvent event) {
         try {
-            // Check if the user has an existing application
             if (applicationService.hasExistingApplication()) {
                 System.out.println("User has an existing application. Navigating to UserApplicationStatus from UserProfile...");
                 Main.setRoot("UserApplicationStatus");

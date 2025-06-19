@@ -1,54 +1,39 @@
 package com.example.controller;
 
-import com.example.Main;
 import com.example.controller.components.UserPassportCardController;
 import com.example.dao.PassportApplicationDAO;
 import com.example.dao.UserInfoDAO;
-import com.example.dao.UserPhilippinePassportDAO; // Added
+import com.example.dao.UserPhilippinePassportDAO;
 import com.example.model.PassportApplication;
 import com.example.model.UserInfo;
-import com.example.model.UserPhilippinePassport; // Added
+import com.example.model.UserPhilippinePassport;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.time.format.DateTimeFormatter; // Added
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AdminUsersController {
 
-    @FXML
-    private SidebarController sidebarController;
+    @FXML private SidebarController sidebarController;
 
-    @FXML
-    private Label lblAppAdminID; // This seems to be from an older version or a different context, ensure it's used if needed.
-    @FXML
-    private Label lblApplications; // Similarly, ensure this label is used if intended.
-
-    @FXML
-    private VBox usersVBox; // This VBox will hold the user cards.
+    @FXML private VBox usersVBox;
 
     private PassportApplicationDAO applicationDAO = new PassportApplicationDAO();
     private UserInfoDAO userInfoDAO = new UserInfoDAO();
-    private UserPhilippinePassportDAO philippinePassportDAO = new UserPhilippinePassportDAO(); // Added
+    private UserPhilippinePassportDAO philippinePassportDAO = new UserPhilippinePassportDAO();
 
     @FXML
     public void initialize() {
         if (sidebarController != null) {
-            sidebarController.setActiveTab("users"); // Assuming "users" is the correct tab name
+            sidebarController.setActiveTab("users");
         }
-        // If lblAppAdminID or lblApplications need to be populated, do it here.
-        // For example, if lblApplications is a title:
-        if (lblApplications != null) {
-            lblApplications.setText("Accepted Users");
-        }
-        loadAcceptedUsers(); // Renamed for clarity based on previous requests
+
+        loadAcceptedUsers();
     }
 
-    // Renamed from loadUsers to reflect that it loads users with accepted applications
     private void loadAcceptedUsers() {
         if (usersVBox == null) {
             System.err.println("applicationsVBox is null. Check FXML fx:id in AdminUsers.fxml.");
@@ -70,11 +55,9 @@ public class AdminUsersController {
                     System.out.println("No user info found for userId: " + app.getUserId() + " with accepted application.");
                     continue;
                 }
-                // Philippine passport details are crucial for the UserPassportCard
+
                 if (philippinePassport == null || !philippinePassport.getHasPhilippinePassport()) {
                     System.out.println("No valid Philippine passport details found for userId: " + app.getUserId());
-                    // Depending on requirements, you might still want to show a card with N/A for passport details
-                    // or skip this user. For now, we'll proceed and show N/A if details are missing.
                 }
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fxml/components/UserPassportCard.fxml"));

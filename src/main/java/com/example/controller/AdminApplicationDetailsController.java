@@ -26,7 +26,6 @@ public class AdminApplicationDetailsController {
 
     @FXML private SidebarController sidebarController;
 
-    // --- All your @FXML Label and Button fields here (as in your file) ---
     @FXML private Label lblLastName;
     @FXML private Label lblFirstName;
     @FXML private Label lblMiddleName;
@@ -265,12 +264,8 @@ public class AdminApplicationDetailsController {
 
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been ACCEPTED.");
-            // Optionally, disable buttons or navigate away
             btnAcceptApplication.setDisable(true);
             btnDenyApplication.setDisable(true);
-            // Refresh the view or navigate back
-            // loadApplicationDetails(); // To see updated status if staying on page
-            // Or navigate back:
             try { Main.setRoot("AdminApplications"); } catch (IOException e) { e.printStackTrace(); }
         } else {
             showAlert(Alert.AlertType.ERROR, "Failed", "Could not update application status to ACCEPTED.");
@@ -303,12 +298,8 @@ public class AdminApplicationDetailsController {
             boolean success = applicationService.processApplicationDenial(currentApplication.getUserId(), selectedReason);
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been DENIED. Reason: " + selectedReason);
-                // Optionally, disable buttons or navigate away
                 btnAcceptApplication.setDisable(true);
                 btnDenyApplication.setDisable(true);
-                // Refresh the view or navigate back
-                // loadApplicationDetails(); // To see updated status if staying on page
-                // Or navigate back:
                 try { Main.setRoot("AdminApplications"); } catch (IOException e) { e.printStackTrace(); }
             } else {
                 showAlert(Alert.AlertType.ERROR, "Failed", "Could not update application status to DENIED.");

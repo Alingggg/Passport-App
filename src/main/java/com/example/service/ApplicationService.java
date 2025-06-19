@@ -25,9 +25,7 @@ public class ApplicationService {
     private PassportApplicationDAO applicationDAO = new PassportApplicationDAO();
     private ImageDAO imageDAO = new ImageDAO();
     
-    /**
-     * Submit complete passport application with all user data
-     */
+    // Submit complete passport application with all user data
     public boolean submitCompleteApplication(
             UserInfo userInfo,
             UserContact userContact,
@@ -114,25 +112,19 @@ public class ApplicationService {
         }
     }
     
-    /**
-     * Check if user has already submitted an application
-     */
+    // Check if user has already submitted an application
     public boolean hasExistingApplication() {
         Integer userId = UserSession.getInstance().getUserId();
         return userId != null && applicationDAO.applicationExists(userId);
     }
     
-    /**
-     * Get user's application status
-     */
+    // Get user's application status
     public PassportApplication getUserApplication() {
         Integer userId = UserSession.getInstance().getUserId();
         return userId != null ? applicationDAO.findByUserId(userId) : null;
     }
     
-    /**
-     * Get complete user profile data
-     */
+    // Get complete user profile data
     public UserProfile getCompleteUserProfile() {
         Integer userId = UserSession.getInstance().getUserId();
         if (userId == null) return null;
@@ -223,12 +215,9 @@ public class ApplicationService {
         if (!passportSaved) {
             System.err.println("Failed to save/update Philippine passport details for user_id: " + userId + " after application acceptance.");
             // Consider if the overall operation should fail if passport details can't be saved.
-            // For now, returning true if status was updated, but logging this serious issue.
-            // A more robust solution might involve a transaction across both updates.
         }
         
-        return true; // Primary success is application status update.
-                     // Consider returning statusUpdated && passportSaved for stricter success.
+        return true;
     }
 
     public boolean processApplicationDenial(int userId, String feedback) {
@@ -264,7 +253,6 @@ public class ApplicationService {
             boolean userInfoDeleted = userInfoDAO.deleteByUserId(userId);
             boolean applicationDeleted = applicationDAO.deleteByUserId(userId);
 
-            // You may want to check all deletes, but usually if the row doesn't exist, it's not an error
             conn.commit();
             return true;
         } catch (SQLException e) {

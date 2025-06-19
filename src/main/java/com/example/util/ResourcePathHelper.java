@@ -5,16 +5,12 @@ import java.net.URL;
 
 public class ResourcePathHelper {
 
-    /**
-     * Gets the correct URL for a resource given its path
-     */
+    // Gets the correct URL for a resource given its path
     public static URL getResourceURL(String path) {
         return Main.class.getResource(path);
     }
     
-    /**
-     * Gets the correct path for an FXML file based on its name
-     */
+    // Gets the correct path for an FXML file based on its name
     public static String getFXMLPath(String name) {
         if (name.contains("/")) {
             return "fxml/" + name + ".fxml";

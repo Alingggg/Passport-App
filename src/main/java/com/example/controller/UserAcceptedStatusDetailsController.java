@@ -31,11 +31,6 @@ public class UserAcceptedStatusDetailsController {
 
     private void loadApplicationDetails() {
         Integer userId = userSession.getUserId();
-        if (userId == null) {
-            // Handle case where user is not logged in, though typically this page wouldn't be accessible
-            lblReferenceNumber.setText("N/A - User not logged in");
-            return;
-        }
 
         PassportApplication application = applicationDAO.findByUserId(userId);
 
@@ -45,8 +40,6 @@ public class UserAcceptedStatusDetailsController {
             } else {
                 lblReferenceNumber.setText("N/A - Reference ID not found");
             }
-            // You can also display other details from the 'application' object if needed
-            // For example, if you add more labels for status, submitted_at, etc.
         } else {
             lblReferenceNumber.setText("N/A - Application not found");
         }

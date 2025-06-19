@@ -12,15 +12,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image; // For potential image display later
-import javafx.scene.image.ImageView; // For potential image display later
-import javafx.stage.Stage; // For potential image display later
-import javafx.scene.Scene; // For potential image display later
-import javafx.scene.layout.StackPane; // For potential image display later
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -84,13 +82,9 @@ public class UserPassportInfoController {
     @FXML private Button btnViewValidID;
     @FXML private Button btnViewPSA;
 
-    // Navigation Buttons
-    @FXML private Button btnBack;
-    @FXML private Button arrowBtn; // Assuming this also acts as a back button
-
     private ApplicationService applicationService;
     private UserSession userSession;
-    private UserProfile currentUserProfile; // To store fetched profile for image viewing
+    private UserProfile currentUserProfile;
 
     public UserPassportInfoController() {
         this.applicationService = new ApplicationService();
@@ -126,7 +120,6 @@ public class UserPassportInfoController {
             configureImageViewButtons(currentUserProfile.getImages());
         } else {
             showAlert(Alert.AlertType.WARNING, "No Data", "No application details found for the current user.");
-            // Optionally disable all fields or show a message
         }
     }
 
@@ -281,14 +274,12 @@ public class UserPassportInfoController {
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
             try {
-                // For simplicity, opening in default browser.
-                // new ProcessBuilder("cmd", "/c", "start", imageUrl).start(); 
-                // Or, display in a new JavaFX window:
+                // Display image in a new JavaFX window:
                 Stage imageStage = new Stage();
                 ImageView imageView = new ImageView(new javafx.scene.image.Image(imageUrl, true)); // true for background loading
                 imageView.setPreserveRatio(true);
-                imageView.setFitWidth(800); // Adjust as needed
-                imageView.setFitHeight(600); // Adjust as needed
+                imageView.setFitWidth(800);
+                imageView.setFitHeight(600);
 
                 StackPane pane = new StackPane(imageView);
                 Scene scene = new Scene(pane);
@@ -310,7 +301,6 @@ public class UserPassportInfoController {
     @FXML
     void backBtn(ActionEvent event) {
         try {
-            // Navigate back to the application status page or another appropriate page
             Main.setRoot("UserApplicationStatus");
         } catch (IOException e) {
             System.err.println("Error navigating back: " + e.getMessage());

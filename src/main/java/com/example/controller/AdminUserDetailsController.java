@@ -21,7 +21,6 @@ public class AdminUserDetailsController {
 
     @FXML private SidebarController sidebarController;
 
-    // --- All your @FXML Label and Button fields here (as in your file) ---
     @FXML private Label lblLastName;
     @FXML private Label lblFirstName;
     @FXML private Label lblMiddleName;

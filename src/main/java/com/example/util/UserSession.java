@@ -69,9 +69,7 @@ public class UserSession {
     public boolean isUser() { return "user".equals(role); }
     public boolean isAdmin() { return "admin".equals(role); }
     
-    /**
-     * Get admin ID (only for admin users)
-     */
+    // Get admin ID (only for admin users)
     public String getAdminId() {
         if (!isAdmin() || userId == null) {
             return null;
@@ -95,9 +93,7 @@ public class UserSession {
         return null;
     }
     
-    /**
-     * Set admin ID for the current session
-     */
+    // Set admin ID for the current session
     public void setAdminId(String adminId) {
         this.adminId = adminId;
     }
@@ -135,9 +131,7 @@ public class UserSession {
         }
     }
     
-    /**
-     * Clear cached admin info (call when admin info is updated)
-     */
+    // Clear cached admin info (call when admin info is updated)
     public void clearAdminCache() {
         this.adminInfo = null;
         this.adminId = null;

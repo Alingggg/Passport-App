@@ -16,8 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Region;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -89,7 +87,7 @@ public class UserViewDetailsController {
     private ApplicationService applicationService;
     private UserSession userSession;
     private UserProfile currentUserProfile;
-    private String currentStatus; // Track status for button logic
+    private String currentStatus;
 
     public UserViewDetailsController() {
         this.applicationService = new ApplicationService();
@@ -161,7 +159,7 @@ public class UserViewDetailsController {
             });
         } else {
             btnNavigate.setText("Back");
-            btnNavigate.setStyle(""); // Default style
+            btnNavigate.setStyle("");
             btnNavigate.setOnAction(event -> {
                 try {
                     Main.setRoot("UserApplicationStatus");

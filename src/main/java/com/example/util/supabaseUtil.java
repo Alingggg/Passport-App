@@ -9,9 +9,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.util.UUID;
 
-/**
- * Utility for interacting with Supabase Storage
- */
+// Utility for interacting with Supabase Storage
 public class supabaseUtil {
     // Get Supabase connection details from configuration
     private static String getSupabaseUrl() {

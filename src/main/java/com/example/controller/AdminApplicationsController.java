@@ -15,16 +15,11 @@ import java.util.List;
 
 public class AdminApplicationsController {
 
-    @FXML
-    private SidebarController sidebarController;
+    @FXML private SidebarController sidebarController;
+    @FXML private Label lblAppAdminID;
 
-    @FXML
-    private Label lblAppAdminID;
-    @FXML
-    private Label lblApplications;
-
-    @FXML
-    private VBox applicationsVBox;
+    @FXML private Label lblApplications;
+    @FXML private VBox applicationsVBox;
 
     private PassportApplicationDAO applicationDAO = new PassportApplicationDAO();
     private UserInfoDAO userInfoDAO = new UserInfoDAO();

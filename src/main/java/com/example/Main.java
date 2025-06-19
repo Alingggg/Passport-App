@@ -12,9 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * JavaFX App
- */
+// JavaFX App
 public class Main extends Application {
 
     private static Scene scene;

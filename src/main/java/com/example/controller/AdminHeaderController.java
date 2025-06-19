@@ -16,13 +16,11 @@ public class AdminHeaderController {
     
     @FXML
     public void initialize() {
-        // Populate admin information from UserSession
+
         updateAdminInfo();
     }
     
-    /**
-     * Update the admin ID and name with information from UserSession
-     */
+    // Update the admin ID and name with information from UserSession
     public void updateAdminInfo() {
         if (userSession.isAuthenticated() && userSession.isAdmin()) {
             // Update admin ID
@@ -47,18 +45,16 @@ public class AdminHeaderController {
         }
     }
     
-    /**
-     * Set custom text for the admin ID label
-     */
+    
+    // Set custom text for the admin ID label
     public void setAdminId(String id) {
         if (lblAdminID != null) {
             lblAdminID.setText(id);
         }
     }
     
-    /**
-     * Set custom text for the admin name label
-     */
+    
+    // Set custom text for the admin name label
     public void setAdminName(String name) {
         if (lblAdminName != null) {
             lblAdminName.setText(name);

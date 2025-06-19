@@ -5,10 +5,8 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 public class PasswordUtil {
-    
-    /**
-     * Hash a password using SHA-256 with salt
-     */
+
+    // Hash a password using SHA-256 with salt
     public static String hashPassword(String password) {
         try {
             // Generate a random salt
@@ -35,10 +33,8 @@ public class PasswordUtil {
             throw new RuntimeException("Error hashing password", e);
         }
     }
-    
-    /**
-     * Verify a password against a stored hash
-     */
+
+    // Verify a password against a stored hash
     public static boolean verifyPassword(String password, String storedHash) {
         try {
             // Decode the stored hash

@@ -73,7 +73,7 @@ public class UserLoginController {
             clearForm();
 
             // Check user's application status and route accordingly
-            routeUserBasedOnApplicationStatus(account.getUserId()); // Changed method name for clarity
+            routeUserBasedOnApplicationStatus(account.getUserId());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,9 +116,6 @@ public class UserLoginController {
     // Renamed and updated logic
     private void routeUserBasedOnApplicationStatus(Integer userId) {
         try {
-            // UserSession is already set, so ApplicationService can use it if its methods rely on the session.
-            // Or, if ApplicationService methods need userId explicitly, ensure they are called correctly.
-            // Assuming applicationService.getUserApplication() correctly fetches for the logged-in user (via UserSession)
             PassportApplication application = applicationService.getUserApplication(); 
             
             if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {

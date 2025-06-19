@@ -15,11 +15,8 @@ public class ApplicantCardController {
     @FXML
     private Label lblMiddleName;
 
-    @FXML
-    private Label btnViewApplication; // Though it's a Label, it acts as a button
-
     private Runnable onViewApplicationAction;
-    private Object dataContext; // To store associated data like application ID
+    private Object dataContext;
 
     public void setData(String lastName, String firstName, String middleName, Object context) {
         lblLastName.setText(lastName != null ? lastName : "N/A");

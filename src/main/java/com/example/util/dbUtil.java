@@ -18,9 +18,7 @@ public class dbUtil {
         return ConfigLoader.get("DB_PASSWORD", "postgres");
     }
     
-    /**
-     * Get a new database connection
-     */
+    // Get a new database connection
     public static Connection getConnection() throws SQLException {
         // Always return a new connection
         return DriverManager.getConnection(getUrl(), getUser(), getPassword());

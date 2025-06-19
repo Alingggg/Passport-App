@@ -18,11 +18,8 @@ public class UserPassportCardController {
     @FXML
     private Label lblExpiryDate;
 
-    @FXML
-    private Label btnViewDetails; // Though it's a Label, it acts as a button
-
     private Runnable onViewDetailsAction;
-    private Object dataContext; // To store associated data like user ID or passport ID
+    private Object dataContext;
 
     public void setData(String name, String passportId, String issueDate, String expiryDate, Object context) {
         lblName.setText(name != null ? name : "N/A");

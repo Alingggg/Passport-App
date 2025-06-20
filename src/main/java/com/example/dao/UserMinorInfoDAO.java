@@ -8,18 +8,12 @@ import java.sql.*;
 public class UserMinorInfoDAO {
     
     public boolean saveMinorInfo(UserMinorInfo minorInfo) {
-        String sql = "INSERT INTO user_minor_info (user_id, is_minor, companion_full_name, companion_relationship, companion_contact_number) " +
-                    "VALUES (?, ?, ?, ?, ?) " +
-                    "ON CONFLICT (user_id) DO UPDATE SET " +
-                    "is_minor = EXCLUDED.is_minor, " +
-                    "companion_full_name = EXCLUDED.companion_full_name, " +
-                    "companion_relationship = EXCLUDED.companion_relationship, " +
-                    "companion_contact_number = EXCLUDED.companion_contact_number";
-        
+        String sql = "INSERT INTO user_minor_info (application_id, is_minor, companion_full_name, companion_relationship, companion_contact_number) VALUES (?, ?, ?, ?, ?) ";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, minorInfo.getUserId());
+            pstmt.setInt(1, minorInfo.getApplicationId());
             pstmt.setBoolean(2, minorInfo.getIsMinor());
             pstmt.setString(3, minorInfo.getCompanionFullName());
             pstmt.setString(4, minorInfo.getCompanionRelationship());
@@ -31,19 +25,19 @@ public class UserMinorInfoDAO {
             return false;
         }
     }
-    
-    public UserMinorInfo findByUserId(Integer userId) {
-        String sql = "SELECT * FROM user_minor_info WHERE user_id = ?";
-        
+
+    public UserMinorInfo findByApplicationId(Integer applicationId) {
+        String sql = "SELECT * FROM user_minor_info WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 UserMinorInfo minorInfo = new UserMinorInfo();
-                minorInfo.setUserId(rs.getInt("user_id"));
+                minorInfo.setApplicationId(rs.getInt("application_id"));
                 minorInfo.setIsMinor(rs.getBoolean("is_minor"));
                 minorInfo.setCompanionFullName(rs.getString("companion_full_name"));
                 minorInfo.setCompanionRelationship(rs.getString("companion_relationship"));
@@ -55,14 +49,14 @@ public class UserMinorInfoDAO {
         }
         return null;
     }
-    
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_minor_info WHERE user_id = ?";
-        
+
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_minor_info WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

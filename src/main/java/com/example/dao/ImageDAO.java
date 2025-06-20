@@ -2,7 +2,6 @@ package com.example.dao;
 
 import com.example.model.Image;
 import com.example.util.dbUtil;
-import com.example.util.UserSession;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,25 +15,14 @@ public class ImageDAO {
      * @param image The image object to save, containing filename, fileType, and supabaseUrl.
      * @return true if successful, false otherwise.
      */
-    public boolean saveImage(Image image) {
-        String sql = "INSERT INTO images (user_id, filename, file_type, supabase_url, uploaded_at) " +
-                     "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) " +
-                     "ON CONFLICT (user_id, file_type) DO UPDATE SET " +
-                     "filename = EXCLUDED.filename, " +
-                     "supabase_url = EXCLUDED.supabase_url, " +
-                     "uploaded_at = CURRENT_TIMESTAMP";
+    public boolean saveImage(Integer applicationId, Image image) {
+        String sql = "INSERT INTO images (application_id, filename, file_type, supabase_url, uploaded_at) " +
+                     "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) ";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            // Use the current user's ID from session
-            Integer userId = UserSession.getInstance().getUserId();
-            if (userId == null) {
-                System.err.println("saveImage failed: No user in session.");
-                return false;
-            }
-            
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             pstmt.setString(2, image.getFilename());
             pstmt.setString(3, image.getFileType());
             pstmt.setString(4, image.getSupabaseUrl());
@@ -52,7 +40,7 @@ public class ImageDAO {
      */
     public List<Image> getAllImages() {
         List<Image> images = new ArrayList<>();
-        String query = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images ORDER BY uploaded_at DESC";
+        String query = "SELECT id, application_id, filename, file_type, supabase_url, uploaded_at FROM images ORDER BY uploaded_at DESC";
         
         try (Connection conn = dbUtil.getConnection();
              Statement stmt = conn.createStatement();
@@ -61,7 +49,7 @@ public class ImageDAO {
             while (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
-                image.setUserId(rs.getInt("user_id"));
+                image.setApplicationId(rs.getInt("application_id"));
                 image.setFilename(rs.getString("filename"));
                 image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
@@ -82,7 +70,7 @@ public class ImageDAO {
      * @return Image object or null if not found
      */
     public Image getImageById(int id) {
-        String query = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE id = ?";
+        String query = "SELECT id, application_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE id = ?";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -93,7 +81,7 @@ public class ImageDAO {
             if (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
-                image.setUserId(rs.getInt("user_id"));
+                image.setApplicationId(rs.getInt("application_id"));
                 image.setFilename(rs.getString("filename"));
                 image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
@@ -112,14 +100,14 @@ public class ImageDAO {
      * @param id The image ID to delete
      * @return true if successful, false otherwise
      */
-    public boolean deleteImage(Integer imageId, Integer userId) {
-        String sql = "DELETE FROM images WHERE id = ? AND user_id = ?";
+    public boolean deleteImage(Integer imageId, Integer applicationId) {
+        String sql = "DELETE FROM images WHERE id = ? AND application_id = ?";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, imageId);
-            pstmt.setInt(2, userId);
+            pstmt.setInt(2, applicationId);
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -129,24 +117,24 @@ public class ImageDAO {
     }
     
     /**
-     * Find images by user ID
-     * @param userId The user ID
-     * @return List of images for the user
+     * Find images by application ID
+     * @param applicationId The application ID
+     * @return List of images for the application
      */
-    public List<Image> findByUserId(Integer userId) {
-        String sql = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE user_id = ?";
+    public List<Image> findByApplicationId(Integer applicationId) {
+        String sql = "SELECT id, application_id, filename, file_type, supabase_url, uploaded_at FROM images WHERE application_id = ?";
         List<Image> images = new ArrayList<>();
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
-                image.setUserId(rs.getInt("user_id"));
+                image.setApplicationId(rs.getInt("application_id"));
                 image.setFilename(rs.getString("filename"));
                 image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
@@ -160,27 +148,27 @@ public class ImageDAO {
     }
     
     /**
-     * Find images by file type for a user
-     * @param userId The user ID
+     * Find images by file type for an application
+     * @param applicationId The application ID
      * @param fileType The file type
      * @return List of images matching the file type
      */
-    public List<Image> findByFileType(Integer userId, String fileType) {
-        String sql = "SELECT id, user_id, filename, file_type, supabase_url, uploaded_at " +
-                    "FROM images WHERE user_id = ? AND file_type = ?";
+    public List<Image> findByFileType(Integer applicationId, String fileType) {
+        String sql = "SELECT id, application_id, filename, file_type, supabase_url, uploaded_at " +
+                    "FROM images WHERE application_id = ? AND file_type = ?";
         List<Image> images = new ArrayList<>();
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             pstmt.setString(2, fileType);
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
                 Image image = new Image();
                 image.setId(rs.getInt("id"));
-                image.setUserId(rs.getInt("user_id"));
+                image.setApplicationId(rs.getInt("application_id"));
                 image.setFilename(rs.getString("filename"));
                 image.setFileType(rs.getString("file_type"));
                 image.setSupabaseUrl(rs.getString("supabase_url"));
@@ -193,11 +181,11 @@ public class ImageDAO {
         return images;
     }
 
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM images WHERE user_id = ?";
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM images WHERE application_id = ?";
         try (Connection conn = dbUtil.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {

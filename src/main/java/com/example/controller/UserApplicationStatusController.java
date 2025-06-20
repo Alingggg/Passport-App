@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.Main;
 import com.example.model.PassportApplication;
 import com.example.service.ApplicationService;
-import com.example.util.UserSession;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,12 +24,10 @@ public class UserApplicationStatusController {
     private Label lblFeedback;
 
     private ApplicationService applicationService;
-    private UserSession userSession;
     private PassportApplication currentUserApplication;
 
     public UserApplicationStatusController() {
         this.applicationService = new ApplicationService();
-        this.userSession = UserSession.getInstance();
     }
 
     @FXML
@@ -42,16 +39,8 @@ public class UserApplicationStatusController {
     }
 
     private void loadApplicationStatus() {
-        Integer userId = userSession.getUserId();
-        if (userId == null) {
-            lblStatus.setText("User not logged in.");
-            lblStatus.setStyle("-fx-text-fill: #F20707;");
-            lblFeedback.setVisible(false);
-            if (btnView != null) btnView.setVisible(false);
-            return;
-        }
-
-        currentUserApplication = applicationService.getUserApplication();
+        // Fetch the LATEST application, regardless of status
+        currentUserApplication = applicationService.getLatestApplication();
 
         if (currentUserApplication != null) {
             String status = currentUserApplication.getStatus();

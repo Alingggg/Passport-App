@@ -1,7 +1,7 @@
 package com.example.model;
 
 public class UserForeignPassport {
-    private Integer userId;
+    private Integer applicationId;
     private Boolean hasForeignPassport;
     private String issuingCountry;
     private String foreignPassportNumber;
@@ -9,15 +9,15 @@ public class UserForeignPassport {
     // Constructors
     public UserForeignPassport() {}
     
-    public UserForeignPassport(Integer userId) {
-        this.userId = userId;
+    public UserForeignPassport(Integer applicationId) {
+        this.applicationId = applicationId;
         this.hasForeignPassport = false;
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public Boolean getHasForeignPassport() { return hasForeignPassport; }
     public void setHasForeignPassport(Boolean hasForeignPassport) { this.hasForeignPassport = hasForeignPassport; }
     

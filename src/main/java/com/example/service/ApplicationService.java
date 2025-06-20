@@ -38,64 +38,55 @@ public class ApplicationService {
             List<Image> images) {
         
         Integer userId = UserSession.getInstance().getUserId();
-        if (userId == null) {
-            return false;
-        }
+        if (userId == null) return false;
         
         Connection conn = null;
         try {
             conn = dbUtil.getConnection();
             conn.setAutoCommit(false); // Start transaction
+
+            // 1. Create a new application record first to get an application_id
+            PassportApplication application = new PassportApplication(userId);
+            int applicationId = applicationDAO.saveApplication(application);
+            if (applicationId == -1) {
+                conn.rollback();
+                return false;
+            }
+
+            // 2. Set the new application_id on all child objects
+            userInfo.setApplicationId(applicationId); // Assuming you add this setter
+            foreignPassport.setApplicationId(applicationId);
+            spouse.setApplicationId(applicationId);
+            parents.setApplicationId(applicationId);
+            philippinePassport.setApplicationId(applicationId);
+            minorInfo.setApplicationId(applicationId);
             
-            // Set user IDs for all objects
-            userInfo.setUserId(userId);
-            foreignPassport.setUserId(userId);
-            spouse.setUserId(userId);
-            parents.setUserId(userId);
-            philippinePassport.setUserId(userId);
-            minorInfo.setUserId(userId);
-            
-            // Save all user data
+            // 3. Save all child records, which are now simple INSERTS
             if (!userInfoDAO.saveUserInfo(userInfo) ||
-                !userContactDAO.saveUserContacts(userId, userContacts) ||
-                !userWorkDAO.saveUserWorks(userId, userWorks) ||
+                !userContactDAO.saveUserContacts(applicationId, userContacts) ||
+                !userWorkDAO.saveUserWorks(applicationId, userWorks) ||
                 !foreignPassportDAO.saveForeignPassport(foreignPassport) ||
                 !spouseDAO.saveSpouse(spouse) ||
                 !parentsDAO.saveParents(parents) ||
                 !philippinePassportDAO.savePhilippinePassport(philippinePassport) ||
                 !minorInfoDAO.saveMinorInfo(minorInfo)) {
-                
                 conn.rollback();
                 return false;
             }
             
             // Save images
             for (Image image : images) {
-                image.setUserId(userId);
-                if (!imageDAO.saveImage(image)) {
+                image.setApplicationId(applicationId); // Set application ID for images
+                if (!imageDAO.saveImage(applicationId, image)) {
                     conn.rollback();
                     return false;
                 }
-            }
-            
-            // Create passport application
-            PassportApplication application = new PassportApplication(userId);
-            if (!applicationDAO.saveApplication(application)) {
-                conn.rollback();
-                return false;
             }
             
             conn.commit(); // Complete transaction
             return true;
             
         } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
             e.printStackTrace();
             return false;
         } finally {
@@ -110,36 +101,49 @@ public class ApplicationService {
         }
     }
     
-    // Check if user has already submitted an application
-    public boolean hasExistingApplication() {
+    /**
+     * Checks if the current user has an application with 'Pending' status.
+     */
+    public boolean hasPendingApplication() {
         Integer userId = UserSession.getInstance().getUserId();
-        return userId != null && applicationDAO.applicationExists(userId);
+        return userId != null && applicationDAO.hasPendingApplication(userId);
     }
     
-    // Get user's application status
-    public PassportApplication getUserApplication() {
+    /**
+     * Gets the most recent application for the current user, regardless of status.
+     * This is useful for checking the status of the latest submission.
+     */
+    public PassportApplication getLatestApplication() {
         Integer userId = UserSession.getInstance().getUserId();
-        return userId != null ? applicationDAO.findByUserId(userId) : null;
+        if (userId == null) return null;
+        return applicationDAO.findLatestApplicationByUserId(userId);
     }
     
-    // Get complete user profile data
-    public UserProfile getCompleteUserProfile() {
+    /**
+     * Gets the complete profile for the user's latest ONGOING application (e.g., Pending, Denied).
+     */
+    public UserProfile getLatestOngoingApplicationProfile() {
         Integer userId = UserSession.getInstance().getUserId();
         if (userId == null) return null;
         
-        UserProfile profile = new UserProfile();
-        profile.setUserInfo(userInfoDAO.findByUserId(userId));
-        profile.setUserContacts(userContactDAO.findByUserId(userId));
-        profile.setUserWorks(userWorkDAO.findByUserId(userId));
-        profile.setForeignPassport(foreignPassportDAO.findByUserId(userId));
-        profile.setSpouse(spouseDAO.findByUserId(userId));
-        profile.setParents(parentsDAO.findByUserId(userId));
-        profile.setPhilippinePassport(philippinePassportDAO.findByUserId(userId));
-        profile.setMinorInfo(minorInfoDAO.findByUserId(userId));
-        profile.setImages(imageDAO.findByUserId(userId));
-        profile.setApplication(applicationDAO.findByUserId(userId));
-        
-        return profile;
+        Integer latestAppId = applicationDAO.findLatestApplicationIdByUserId(userId);
+        if (latestAppId == null) return null;
+
+        return getCompleteUserProfile(latestAppId);
+    }
+
+    /**
+     * Gets the complete profile for the user's latest ACCEPTED application.
+     * This represents their current, official passport information.
+     */
+    public UserProfile getLatestAcceptedUserProfile() {
+        Integer userId = UserSession.getInstance().getUserId();
+        if (userId == null) return null;
+
+        Integer acceptedAppId = applicationDAO.findLatestAcceptedApplicationIdByUserId(userId);
+        if (acceptedAppId == null) return null;
+
+        return getCompleteUserProfile(acceptedAppId);
     }
 
     public boolean updateCompleteUserProfile(UserProfile profile) {
@@ -150,7 +154,7 @@ public class ApplicationService {
 
         // 1. Update UserInfo
         UserInfo userInfo = profile.getUserInfo();
-        userInfo.setUserId(userId);
+        userInfo.setApplicationId(userId);
         userInfoDAO.saveUserInfo(userInfo);
 
         // Save contacts
@@ -162,35 +166,35 @@ public class ApplicationService {
         // Save foreign passport info
         UserForeignPassport foreignPassport = profile.getForeignPassport();
         if (foreignPassport != null) {
-            foreignPassport.setUserId(userId);
+            foreignPassport.setApplicationId(userId);
             foreignPassportDAO.saveForeignPassport(foreignPassport);
         }
 
         // Save spouse info
         UserSpouse spouse = profile.getSpouse();
         if (spouse != null) {
-            spouse.setUserId(userId);
+            spouse.setApplicationId(userId);
             spouseDAO.saveSpouse(spouse);
         }
 
         // Save parents info
         UserParents parents = profile.getParents();
         if (parents != null) {
-            parents.setUserId(userId);
+            parents.setApplicationId(userId);
             parentsDAO.saveParents(parents);
         }
 
         // Save Philippine passport info
         UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
         if (philippinePassport != null) {
-            philippinePassport.setUserId(userId);
+            philippinePassport.setApplicationId(userId);
             philippinePassportDAO.savePhilippinePassport(philippinePassport);
         }
 
         // Save minor info
         UserMinorInfo minorInfo = profile.getMinorInfo();
         if (minorInfo != null) {
-            minorInfo.setUserId(userId);
+            minorInfo.setApplicationId(userId);
             minorInfoDAO.saveMinorInfo(minorInfo);
         }
 
@@ -198,42 +202,42 @@ public class ApplicationService {
         List<Image> images = profile.getImages();
         if (images != null) {
             // Delete old images if any
-            imageDAO.deleteByUserId(userId);
+            imageDAO.deleteByApplicationId(userId);
             // Save new images
             for (Image image : images) {
-                image.setUserId(userId);
-                imageDAO.saveImage(image);
+                image.setApplicationId(userId);
+                imageDAO.saveImage(userId, image);
             }
         }
 
         return true;
     }
 
-    public UserProfile getCompleteUserProfile(int userId) {
+    public UserProfile getCompleteUserProfile(int applicationId) {
         UserProfile profile = new UserProfile();
-        profile.setUserInfo(userInfoDAO.findByUserId(userId));
-        profile.setUserContacts(userContactDAO.findByUserId(userId));
-        profile.setUserWorks(userWorkDAO.findByUserId(userId));
-        profile.setForeignPassport(foreignPassportDAO.findByUserId(userId));
-        profile.setSpouse(spouseDAO.findByUserId(userId));
-        profile.setParents(parentsDAO.findByUserId(userId));
-        profile.setPhilippinePassport(philippinePassportDAO.findByUserId(userId));
-        profile.setMinorInfo(minorInfoDAO.findByUserId(userId));
-        profile.setImages(imageDAO.findByUserId(userId));
-        profile.setApplication(applicationDAO.findByUserId(userId));
+        profile.setUserInfo(userInfoDAO.findByApplicationId(applicationId));
+        profile.setUserContacts(userContactDAO.findByApplicationId(applicationId));
+        profile.setUserWorks(userWorkDAO.findByApplicationId(applicationId));
+        profile.setForeignPassport(foreignPassportDAO.findByApplicationId(applicationId));
+        profile.setSpouse(spouseDAO.findByApplicationId(applicationId));
+        profile.setParents(parentsDAO.findByApplicationId(applicationId));
+        profile.setPhilippinePassport(philippinePassportDAO.findByApplicationId(applicationId));
+        profile.setMinorInfo(minorInfoDAO.findByApplicationId(applicationId));
+        profile.setImages(imageDAO.findByApplicationId(applicationId));
+        profile.setApplication(applicationDAO.findByApplicationId(applicationId));
         return profile;
     }
 
-    public boolean processApplicationAcceptance(int userId) {
+    public boolean processApplicationAcceptance(int applicationId) {
         // 1. Update application status to "Accepted" and reviewed_at
-        boolean statusUpdated = applicationDAO.updateStatus(userId, "Accepted", null);
+        boolean statusUpdated = applicationDAO.updateStatus(applicationId, "Accepted", null);
         if (!statusUpdated) {
-            System.err.println("Failed to update application status to Accepted for user_id: " + userId);
+            System.err.println("Failed to update application status to Accepted for application_id: " + applicationId);
             return false;
         }
 
         // 2. Fetch UserInfo to determine age for expiry calculation
-        UserInfo userInfo = userInfoDAO.findByUserId(userId);
+        UserInfo userInfo = userInfoDAO.findByApplicationId(applicationId);
         // It's crucial that userInfo and birthDate are available.
         // If not, the age calculation and thus expiry date might be incorrect.
         // For this example, we'll proceed, but in a real app, this might warrant stricter error handling
@@ -241,7 +245,7 @@ public class ApplicationService {
 
         // 3. Prepare UserPhilippinePassport details
         UserPhilippinePassport passportDetails = new UserPhilippinePassport();
-        passportDetails.setUserId(userId);
+        passportDetails.setApplicationId(applicationId);
         passportDetails.setHasPhilippinePassport(true); // Mark as having a Philippine passport
 
         // 4. Generate passport number: "P" + 7 random digits
@@ -266,7 +270,7 @@ public class ApplicationService {
         } else {
             // Fallback if age cannot be determined (e.g., default to 10 years)
             // This scenario should ideally be prevented by ensuring complete user data.
-            System.err.println("User birth date not found for user_id: " + userId + ". Defaulting passport expiry to 10 years from issue.");
+            System.err.println("User birth date not found for user_id: " + applicationId + ". Defaulting passport expiry to 10 years from issue.");
             expiryDate = issueDate.plusYears(10);
         }
         passportDetails.setExpiryDate(expiryDate);
@@ -278,7 +282,7 @@ public class ApplicationService {
         // The savePhilippinePassport DAO method should handle INSERT or UPDATE (ON CONFLICT)
         boolean passportSaved = philippinePassportDAO.savePhilippinePassport(passportDetails);
         if (!passportSaved) {
-            System.err.println("Failed to save/update Philippine passport details for user_id: " + userId + " after application acceptance.");
+            System.err.println("Failed to save/update Philippine passport details for user_id: " + applicationId + " after application acceptance.");
             // Consider if the overall operation should fail if passport details can't be saved.
         }
         
@@ -300,23 +304,23 @@ public class ApplicationService {
      * Delete all user application data for a given userId.
      * This removes all related records from all user-related tables.
      */
-    public boolean deleteCompleteApplication(int userId) {
+    public boolean deleteCompleteApplication(int applicationId) {
         Connection conn = null;
         try {
             conn = dbUtil.getConnection();
             conn.setAutoCommit(false);
 
             // Delete in order: child tables first, then parent (application)
-            boolean imagesDeleted = imageDAO.deleteByUserId(userId);
-            boolean minorInfoDeleted = minorInfoDAO.deleteByUserId(userId);
-            boolean philippinePassportDeleted = philippinePassportDAO.deleteByUserId(userId);
-            boolean parentsDeleted = parentsDAO.deleteByUserId(userId);
-            boolean spouseDeleted = spouseDAO.deleteByUserId(userId);
-            boolean foreignPassportDeleted = foreignPassportDAO.deleteByUserId(userId);
-            boolean userWorkDeleted = userWorkDAO.deleteByUserId(userId);
-            boolean userContactDeleted = userContactDAO.deleteByUserId(userId);
-            boolean userInfoDeleted = userInfoDAO.deleteByUserId(userId);
-            boolean applicationDeleted = applicationDAO.deleteByUserId(userId);
+            boolean imagesDeleted = imageDAO.deleteByApplicationId(applicationId);
+            boolean minorInfoDeleted = minorInfoDAO.deleteByApplicationId(applicationId);
+            boolean philippinePassportDeleted = philippinePassportDAO.deleteByApplicationId(applicationId);
+            boolean parentsDeleted = parentsDAO.deleteByApplicationId(applicationId);
+            boolean spouseDeleted = spouseDAO.deleteByApplicationId(applicationId);
+            boolean foreignPassportDeleted = foreignPassportDAO.deleteByApplicationId(applicationId);
+            boolean userWorkDeleted = userWorkDAO.deleteByApplicationId(applicationId);
+            boolean userContactDeleted = userContactDAO.deleteByApplicationId(applicationId);
+            boolean userInfoDeleted = userInfoDAO.deleteByApplicationId(applicationId);
+            boolean applicationDeleted = applicationDAO.deleteByApplicationId(applicationId);
 
             conn.commit();
             return true;

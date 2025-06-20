@@ -2,7 +2,7 @@ package com.example.model;
 
 public class UserWork {
     private Integer workId;
-    private Integer userId;
+    private Integer applicationId;
     private String occupation;
     private String workAddress;
     private String workTelephoneNumber;
@@ -13,16 +13,16 @@ public class UserWork {
     // Constructors
     public UserWork() {}
 
-    public UserWork(Integer userId) {
-        this.userId = userId;
+    public UserWork(Integer applicationId) {
+        this.applicationId = applicationId;
     }
 
     // Getters and Setters
     public Integer getWorkId() { return workId; }
     public void setWorkId(Integer workId) { this.workId = workId; }
 
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
 
     public String getOccupation() { return occupation; }
     public void setOccupation(String occupation) { this.occupation = occupation; }

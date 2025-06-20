@@ -121,7 +121,7 @@ public class UserViewDetailsController {
             return;
         }
 
-        currentUserProfile = applicationService.getCompleteUserProfile();
+        currentUserProfile = applicationService.getLatestOngoingApplicationProfile();
         PassportApplication application = currentUserProfile != null ? currentUserProfile.getApplication() : null;
         currentStatus = (application != null && application.getStatus() != null) ? application.getStatus().toUpperCase() : "";
 
@@ -151,16 +151,21 @@ public class UserViewDetailsController {
             btnNavigate.setText("Cancel Application");
             btnNavigate.setStyle("-fx-background-color: #F20707; -fx-text-fill: white; -fx-background-radius: 15;"); // Red button
             btnNavigate.setOnAction(event -> {
-                boolean deleted = applicationService.deleteCompleteApplication(userSession.getUserId());
-                if (deleted) {
-                    showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been cancelled.");
-                    try {
-                        Main.setRoot("UserNotPassportHolder");
-                    } catch (IOException e) {
-                        showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go to application start.");
+                if (currentUserProfile != null && currentUserProfile.getApplication() != null) {
+                    Integer applicationId = currentUserProfile.getApplication().getApplicationId();
+                    boolean deleted = applicationService.deleteCompleteApplication(applicationId);
+                    if (deleted) {
+                        showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been cancelled.");
+                        try {
+                            Main.setRoot("UserNotPassportHolder");
+                        } catch (IOException e) {
+                            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go to application start.");
+                        }
+                    } else {
+                        showAlert(Alert.AlertType.ERROR, "Error", "Failed to cancel your application. Please try again.");
                     }
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to cancel your application. Please try again.");
+                    showAlert(Alert.AlertType.ERROR, "Error", "Could not find application details to cancel.");
                 }
             });
         } else {

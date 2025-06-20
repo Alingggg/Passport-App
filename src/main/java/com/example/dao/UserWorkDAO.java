@@ -9,22 +9,16 @@ import java.util.List;
 
 public class UserWorkDAO {
     
-    public boolean saveUserWorks(Integer userId, List<UserWork> works) {
-        String deleteSql = "DELETE FROM user_work WHERE user_id = ?";
-        String insertSql = "INSERT INTO user_work (user_id, occupation, work_address, work_telephone_number) VALUES (?, ?, ?, ?)";
+    public boolean saveUserWorks(Integer applicationId, List<UserWork> works) {
+        String insertSql = "INSERT INTO user_work (application_id, occupation, work_address, work_telephone_number) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = dbUtil.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
-                deleteStmt.setInt(1, userId);
-                deleteStmt.executeUpdate();
-            }
-
             if (works != null && !works.isEmpty()) {
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                     for (UserWork work : works) {
-                        insertStmt.setInt(1, userId);
+                        insertStmt.setInt(1, applicationId);
                         insertStmt.setString(2, work.getOccupation());
                         insertStmt.setString(3, work.getWorkAddress());
                         insertStmt.setString(4, work.getWorkTelephoneNumber());
@@ -42,21 +36,21 @@ public class UserWorkDAO {
             return false;
         }
     }
-    
-    public List<UserWork> findByUserId(Integer userId) {
+
+    public List<UserWork> findByApplicationId(Integer applicationId) {
         List<UserWork> works = new ArrayList<>();
-        String sql = "SELECT * FROM user_work WHERE user_id = ?";
-        
+        String sql = "SELECT * FROM user_work WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
                 UserWork userWork = new UserWork();
                 userWork.setWorkId(rs.getInt("work_id"));
-                userWork.setUserId(rs.getInt("user_id"));
+                userWork.setApplicationId(rs.getInt("application_id"));
                 userWork.setOccupation(rs.getString("occupation"));
                 userWork.setWorkAddress(rs.getString("work_address"));
                 userWork.setWorkTelephoneNumber(rs.getString("work_telephone_number"));
@@ -68,13 +62,13 @@ public class UserWorkDAO {
         return works;
     }
 
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_work WHERE user_id = ?";
-        
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_work WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

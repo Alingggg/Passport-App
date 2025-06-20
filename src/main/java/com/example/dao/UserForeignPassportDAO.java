@@ -8,17 +8,12 @@ import java.sql.*;
 public class UserForeignPassportDAO {
     
     public boolean saveForeignPassport(UserForeignPassport foreignPassport) {
-        String sql = "INSERT INTO user_foreign_passport (user_id, has_foreign_passport, issuing_country, foreign_passport_number) " +
-                    "VALUES (?, ?, ?, ?) " +
-                    "ON CONFLICT (user_id) DO UPDATE SET " +
-                    "has_foreign_passport = EXCLUDED.has_foreign_passport, " +
-                    "issuing_country = EXCLUDED.issuing_country, " +
-                    "foreign_passport_number = EXCLUDED.foreign_passport_number";
+        String sql = "INSERT INTO user_foreign_passport (application_id, has_foreign_passport, issuing_country, foreign_passport_number) ";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, foreignPassport.getUserId());
+            pstmt.setInt(1, foreignPassport.getApplicationId());
             pstmt.setBoolean(2, foreignPassport.getHasForeignPassport());
             pstmt.setString(3, foreignPassport.getIssuingCountry());
             pstmt.setString(4, foreignPassport.getForeignPassportNumber());
@@ -29,19 +24,19 @@ public class UserForeignPassportDAO {
             return false;
         }
     }
-    
-    public UserForeignPassport findByUserId(Integer userId) {
-        String sql = "SELECT * FROM user_foreign_passport WHERE user_id = ?";
-        
+
+    public UserForeignPassport findByApplicationId(Integer applicationId) {
+        String sql = "SELECT * FROM user_foreign_passport WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 UserForeignPassport foreignPassport = new UserForeignPassport();
-                foreignPassport.setUserId(rs.getInt("user_id"));
+                foreignPassport.setApplicationId(rs.getInt("application_id"));
                 foreignPassport.setHasForeignPassport(rs.getBoolean("has_foreign_passport"));
                 foreignPassport.setIssuingCountry(rs.getString("issuing_country"));
                 foreignPassport.setForeignPassportNumber(rs.getString("foreign_passport_number"));
@@ -52,14 +47,14 @@ public class UserForeignPassportDAO {
         }
         return null;
     }
-    
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_foreign_passport WHERE user_id = ?";
-        
+
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_foreign_passport WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

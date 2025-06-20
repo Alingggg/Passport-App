@@ -1,9 +1,8 @@
 package com.example.controller;
 
 import com.example.Main;
-import com.example.dao.UserPhilippinePassportDAO;
 import com.example.model.PassportApplication;
-import com.example.model.UserPhilippinePassport;
+import com.example.model.UserProfile;
 import com.example.service.ApplicationService;
 import com.example.util.UserSession;
 
@@ -31,7 +30,6 @@ public class SidebarController {
     private Button btnLogout;
     
     private final UserSession userSession = UserSession.getInstance();
-    private final UserPhilippinePassportDAO philippinePassportDAO = new UserPhilippinePassportDAO();
     private final ApplicationService applicationService = new ApplicationService();
     
     @FXML
@@ -87,13 +85,7 @@ public class SidebarController {
     @FXML
     void profileBtn(ActionEvent event) {
         try {
-            Integer userId = userSession.getUserId();
-            if (userId == null) {
-                Main.setRoot("UserLogin");
-                return;
-            }
-
-            PassportApplication application = applicationService.getUserApplication();
+            PassportApplication application = applicationService.getLatestApplication();
 
             if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
                 System.out.println("User has an accepted application. Navigating to UserPassportInfo...");
@@ -111,29 +103,24 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
-            Integer userId = userSession.getUserId();
-            if (userId == null) { 
-                Main.setRoot("UserLogin");
-                return;
-            }
-
-            // Check if an application already exists using ApplicationService
-            if (applicationService.hasExistingApplication()) {
-                System.out.println("User has an existing application. Navigating to UserApplicationStatus...");
+            // 1. Check if user has a PENDING application
+            if (applicationService.hasPendingApplication()) {
+                System.out.println("User has a pending application. Navigating to UserApplicationStatus...");
                 Main.setRoot("UserApplicationStatus");
             } else {
-                // No existing application, logic based on passport ownership
-                UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(userId);
-                if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
-                    System.out.println("User has passport but no current application. Navigating to UserAlreadyPassportHolder...");
+                // 2. If not, check if they have an accepted passport to determine re-application flow
+                UserProfile acceptedProfile = applicationService.getLatestAcceptedUserProfile();
+                if (acceptedProfile != null) {
+                    System.out.println("User has an accepted passport. Navigating to UserAlreadyPassportHolder for reapplication...");
                     Main.setRoot("UserAlreadyPassportHolder");
                 } else {
-                    System.out.println("User doesn't have passport and no current application. Navigating to UserNotPassportHolder...");
+                    // 3. No pending and no accepted application, so it's a fresh application
+                    System.out.println("User has no application. Navigating to UserNotPassportHolder...");
                     Main.setRoot("UserNotPassportHolder");
                 }
             }
         } catch (IOException e) {
-            System.err.println("Navigation error in applicationBtn: " + e.getMessage());
+            System.err.println("Error loading FXML from SidebarController applicationBtn: " + e.getMessage());
             e.printStackTrace();
         }
     }

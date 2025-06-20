@@ -80,8 +80,8 @@ public class AdminUserDetailsController {
             showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
             return;
         }
-        int userId = currentApplication.getUserId();
-        currentUserProfile = applicationService.getCompleteUserProfile(userId);
+        int applicationId = currentApplication.getApplicationId();
+        currentUserProfile = applicationService.getCompleteUserProfile(applicationId);
 
         if (currentUserProfile != null) {
             populateFields(currentUserProfile);

@@ -2,7 +2,7 @@ package com.example.model;
 
 public class UserContact {
     private Integer contactId;
-    private Integer userId;
+    private Integer applicationId;
     private String mobileNumber;
     private String telephoneNumber;
     private String emailAddress;
@@ -13,17 +13,17 @@ public class UserContact {
     // Constructors
     public UserContact() {}
     
-    public UserContact(Integer userId) {
-        this.userId = userId;
+    public UserContact(Integer applicationId) {
+        this.applicationId = applicationId;
     }
     
     // Getters and Setters
     public Integer getContactId() { return contactId; }
     public void setContactId(Integer contactId) { this.contactId = contactId; }
     
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public String getMobileNumber() { return mobileNumber; }
     public void setMobileNumber(String mobileNumber) { this.mobileNumber = mobileNumber; }
     

@@ -73,7 +73,7 @@ public class UserLoginController {
             clearForm();
 
             // Check user's application status and route accordingly
-            routeUserBasedOnApplicationStatus(account.getUserId());
+            routeUserBasedOnApplicationStatus();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,9 +114,9 @@ public class UserLoginController {
     }
 
     // Renamed and updated logic
-    private void routeUserBasedOnApplicationStatus(Integer userId) {
+    private void routeUserBasedOnApplicationStatus() {
         try {
-            PassportApplication application = applicationService.getUserApplication(); 
+            PassportApplication application = applicationService.getLatestApplication(); 
             
             if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
                 // User has an accepted application - go to UserPassportInfo

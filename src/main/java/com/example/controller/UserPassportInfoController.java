@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.Main;
 import com.example.model.*;
 import com.example.service.ApplicationService;
-import com.example.util.UserSession;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -89,12 +88,10 @@ public class UserPassportInfoController {
     @FXML private Button btnViewPSA;
 
     private ApplicationService applicationService;
-    private UserSession userSession;
     private UserProfile currentUserProfile;
 
     public UserPassportInfoController() {
         this.applicationService = new ApplicationService();
-        this.userSession = UserSession.getInstance();
     }
 
     @FXML
@@ -107,25 +104,15 @@ public class UserPassportInfoController {
     }
 
     private void loadApplicationDetails() {
-        Integer userId = userSession.getUserId();
-        if (userId == null) {
-            showAlert(Alert.AlertType.ERROR, "Error", "User not logged in. Cannot display details.");
-            try {
-                Main.setRoot("UserLogin");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return;
-        }
-
-        currentUserProfile = applicationService.getCompleteUserProfile();
+        // Fetch the latest ACCEPTED user profile, which represents the official passport.
+        currentUserProfile = applicationService.getLatestAcceptedUserProfile();
 
         if (currentUserProfile != null) {
             populateFields(currentUserProfile);
             // Enable/disable view image buttons based on image availability
             configureImageViewButtons(currentUserProfile.getImages());
         } else {
-            showAlert(Alert.AlertType.WARNING, "No Data", "No application details found for the current user.");
+            showAlert(Alert.AlertType.WARNING, "No Data", "No accepted passport information found.");
         }
     }
 

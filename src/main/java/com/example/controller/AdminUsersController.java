@@ -48,16 +48,16 @@ public class AdminUsersController {
 
         for (PassportApplication app : acceptedApplications) {
             try {
-                UserInfo userInfo = userInfoDAO.findByUserId(app.getUserId());
-                UserPhilippinePassport philippinePassport = philippinePassportDAO.findByUserId(app.getUserId());
+                UserInfo userInfo = userInfoDAO.findByApplicationId(app.getApplicationId());
+                UserPhilippinePassport philippinePassport = philippinePassportDAO.findByApplicationId(app.getApplicationId());
 
                 if (userInfo == null) {
-                    System.out.println("No user info found for userId: " + app.getUserId() + " with accepted application.");
+                    System.out.println("No user info found for applicationId: " + app.getApplicationId() + " with accepted application.");
                     continue;
                 }
 
                 if (philippinePassport == null || !philippinePassport.getHasPhilippinePassport()) {
-                    System.out.println("No valid Philippine passport details found for userId: " + app.getUserId());
+                    System.out.println("No valid Philippine passport details found for applicationId: " + app.getApplicationId());
                 }
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fxml/components/UserPassportCard.fxml"));

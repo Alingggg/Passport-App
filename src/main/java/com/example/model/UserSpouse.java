@@ -1,21 +1,21 @@
 package com.example.model;
 
 public class UserSpouse {
-    private Integer userId;
+    private Integer applicationId;
     private String spouseFullName;
     private String spouseCitizenship;
     
     // Constructors
     public UserSpouse() {}
     
-    public UserSpouse(Integer userId) {
-        this.userId = userId;
+    public UserSpouse(Integer applicationId) {
+        this.applicationId = applicationId;
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public String getSpouseFullName() { return spouseFullName; }
     public void setSpouseFullName(String spouseFullName) { this.spouseFullName = spouseFullName; }
     

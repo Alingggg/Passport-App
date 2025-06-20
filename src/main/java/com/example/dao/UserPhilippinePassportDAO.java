@@ -8,19 +8,12 @@ import java.sql.*;
 public class UserPhilippinePassportDAO {
     
     public boolean savePhilippinePassport(UserPhilippinePassport philippinePassport) {
-        String sql = "INSERT INTO user_philippine_passport (user_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place, expiry_date) " +
-                    "VALUES (?, ?, ?, ?, ?, ?) " +
-                    "ON CONFLICT (user_id) DO UPDATE SET " +
-                    "has_philippine_passport = EXCLUDED.has_philippine_passport, " +
-                    "philippine_passport_number = EXCLUDED.philippine_passport_number, " +
-                    "issue_date = EXCLUDED.issue_date, " +
-                    "issue_place = EXCLUDED.issue_place, " +
-                    "expiry_date = EXCLUDED.expiry_date";
+        String sql = "INSERT INTO user_philippine_passport (application_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place, expiry_date) VALUES (?, ?, ?, ?, ?, ?) ";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, philippinePassport.getUserId());
+            pstmt.setInt(1, philippinePassport.getApplicationId());
             pstmt.setBoolean(2, philippinePassport.getHasPhilippinePassport());
             pstmt.setString(3, philippinePassport.getPhilippinePassportNumber());
             
@@ -44,19 +37,19 @@ public class UserPhilippinePassportDAO {
             return false;
         }
     }
-    
-    public UserPhilippinePassport findByUserId(Integer userId) {
-        String sql = "SELECT * FROM user_philippine_passport WHERE user_id = ?";
-        
+
+    public UserPhilippinePassport findByApplicationId(Integer applicationId) {
+        String sql = "SELECT * FROM user_philippine_passport WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 UserPhilippinePassport philippinePassport = new UserPhilippinePassport();
-                philippinePassport.setUserId(rs.getInt("user_id"));
+                philippinePassport.setApplicationId(rs.getInt("application_id"));
                 philippinePassport.setHasPhilippinePassport(rs.getBoolean("has_philippine_passport"));
                 philippinePassport.setPhilippinePassportNumber(rs.getString("philippine_passport_number"));
                 
@@ -79,14 +72,14 @@ public class UserPhilippinePassportDAO {
         }
         return null;
     }
-    
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_philippine_passport WHERE user_id = ?";
-        
+
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_philippine_passport WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

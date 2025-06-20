@@ -2,9 +2,7 @@ package com.example.model;
 
 import java.util.List;
 
-/**
- * Wrapper class to hold all user-related data for easy handling
- */
+// Wrapper class to hold all user-related data for easy handling
 public class UserProfile {
     private UserInfo userInfo;
     private List<UserContact> userContacts;
@@ -51,9 +49,7 @@ public class UserProfile {
     public PassportApplication getApplication() { return application; }
     public void setApplication(PassportApplication application) { this.application = application; }
     
-    /**
-     * Check if profile is complete for submission
-     */
+    // Check if profile is complete for submission
     public boolean isComplete() {
         return userInfo != null && 
                userContacts != null && !userContacts.isEmpty() && 
@@ -66,9 +62,7 @@ public class UserProfile {
                images != null && !images.isEmpty();
     }
     
-    /**
-     * Get application status or "Not Submitted" if no application exists
-     */
+    // Get application status or "Not Submitted" if no application exists
     public String getApplicationStatus() {
         return application != null ? application.getStatus() : "Not Submitted";
     }

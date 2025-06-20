@@ -8,20 +8,14 @@ import java.sql.*;
 public class UserInfoDAO {
     
     public boolean saveUserInfo(UserInfo userInfo) {
-        String sql = "INSERT INTO user_info (user_id, last_name, first_name, middle_name, birth_place, " +
+        String sql = "INSERT INTO user_info (application_id, last_name, first_name, middle_name, birth_place, " +
                     "birth_date, gender, civil_status, current_address, acquired_citizenship) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
-                    "ON CONFLICT (user_id) DO UPDATE SET " +
-                    "last_name = EXCLUDED.last_name, first_name = EXCLUDED.first_name, " +
-                    "middle_name = EXCLUDED.middle_name, birth_place = EXCLUDED.birth_place, " +
-                    "birth_date = EXCLUDED.birth_date, gender = EXCLUDED.gender, " +
-                    "civil_status = EXCLUDED.civil_status, current_address = EXCLUDED.current_address, " +
-                    "acquired_citizenship = EXCLUDED.acquired_citizenship";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, userInfo.getUserId());
+            pstmt.setInt(1, userInfo.getApplicationId());
             pstmt.setString(2, userInfo.getLastName());
             pstmt.setString(3, userInfo.getFirstName());
             pstmt.setString(4, userInfo.getMiddleName());
@@ -38,19 +32,19 @@ public class UserInfoDAO {
             return false;
         }
     }
-    
-    public UserInfo findByUserId(Integer userId) {
-        String sql = "SELECT * FROM user_info WHERE user_id = ?";
-        
+
+    public UserInfo findByApplicationId(Integer applicationId) {
+        String sql = "SELECT * FROM user_info WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 UserInfo userInfo = new UserInfo();
-                userInfo.setUserId(rs.getInt("user_id"));
+                userInfo.setApplicationId(rs.getInt("application_id"));
                 userInfo.setLastName(rs.getString("last_name"));
                 userInfo.setFirstName(rs.getString("first_name"));
                 userInfo.setMiddleName(rs.getString("middle_name"));
@@ -67,14 +61,14 @@ public class UserInfoDAO {
         }
         return null;
     }
-    
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_info WHERE user_id = ?";
-        
+
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_info WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

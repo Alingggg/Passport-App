@@ -3,7 +3,7 @@ package com.example.model;
 import java.time.LocalDate;
 
 public class UserInfo {
-    private Integer userId;
+    private Integer applicationId;
     private String lastName;
     private String firstName;
     private String middleName;
@@ -17,14 +17,14 @@ public class UserInfo {
     // Constructors
     public UserInfo() {}
     
-    public UserInfo(Integer userId) {
-        this.userId = userId;
+    public UserInfo(Integer applicationId) {
+        this.applicationId = applicationId;
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     

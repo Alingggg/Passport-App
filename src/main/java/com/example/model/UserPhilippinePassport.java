@@ -3,7 +3,7 @@ package com.example.model;
 import java.time.LocalDate;
 
 public class UserPhilippinePassport {
-    private Integer userId;
+    private Integer applicationId;
     private Boolean hasPhilippinePassport;
     private String philippinePassportNumber;
     private LocalDate issueDate;
@@ -13,14 +13,14 @@ public class UserPhilippinePassport {
     // Constructors
     public UserPhilippinePassport() {}
 
-    public UserPhilippinePassport(Integer userId) {
-        this.userId = userId;
+    public UserPhilippinePassport(Integer applicationId) {
+        this.applicationId = applicationId;
         this.hasPhilippinePassport = false;
     }
 
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
 
     public Boolean getHasPhilippinePassport() { return hasPhilippinePassport; }
     public void setHasPhilippinePassport(Boolean hasPhilippinePassport) { this.hasPhilippinePassport = hasPhilippinePassport; }

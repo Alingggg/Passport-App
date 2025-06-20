@@ -1,7 +1,7 @@
 package com.example.model;
 
 public class UserParents {
-    private Integer userId;
+    private Integer applicationId;
     private String fatherFullName;
     private String fatherCitizenship;
     private String motherMaidenName;
@@ -10,14 +10,14 @@ public class UserParents {
     // Constructors
     public UserParents() {}
     
-    public UserParents(Integer userId) {
-        this.userId = userId;
+    public UserParents(Integer applicationId) {
+        this.applicationId = applicationId;
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public String getFatherFullName() { return fatherFullName; }
     public void setFatherFullName(String fatherFullName) { this.fatherFullName = fatherFullName; }
     

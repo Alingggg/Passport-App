@@ -39,9 +39,9 @@ public class AdminApplicationsController {
 
         for (PassportApplication app : pendingApps) {
             try {
-                UserInfo userInfo = userInfoDAO.findByUserId(app.getUserId());
+                UserInfo userInfo = userInfoDAO.findByApplicationId(app.getApplicationId());
                 if (userInfo == null) {
-                    System.out.println("No user info found for userId: " + app.getUserId());
+                    System.out.println("No user info found for applicationId: " + app.getApplicationId());
                     continue;
                 }
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fxml/components/ApplicantCard.fxml"));

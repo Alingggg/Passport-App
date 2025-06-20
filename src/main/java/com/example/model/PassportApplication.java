@@ -3,7 +3,7 @@ package com.example.model;
 import java.time.LocalDateTime;
 
 public class PassportApplication {
-    private Integer userId;
+    private Integer applicationId;
     private String status;
     private String feedback;
     private String referenceId;
@@ -13,15 +13,15 @@ public class PassportApplication {
     // Constructors
     public PassportApplication() {}
     
-    public PassportApplication(Integer userId) {
-        this.userId = userId;
+    public PassportApplication(Integer applicationId) {
+        this.applicationId = applicationId;
         this.status = "Pending";
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     

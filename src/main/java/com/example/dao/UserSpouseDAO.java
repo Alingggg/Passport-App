@@ -8,16 +8,12 @@ import java.sql.*;
 public class UserSpouseDAO {
     
     public boolean saveSpouse(UserSpouse spouse) {
-        String sql = "INSERT INTO user_spouse (user_id, spouse_full_name, spouse_citizenship) " +
-                    "VALUES (?, ?, ?) " +
-                    "ON CONFLICT (user_id) DO UPDATE SET " +
-                    "spouse_full_name = EXCLUDED.spouse_full_name, " +
-                    "spouse_citizenship = EXCLUDED.spouse_citizenship";
+        String sql = "INSERT INTO user_spouse (application_id, spouse_full_name, spouse_citizenship) VALUES (?, ?, ?)";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, spouse.getUserId());
+            pstmt.setInt(1, spouse.getApplicationId());
             pstmt.setString(2, spouse.getSpouseFullName());
             pstmt.setString(3, spouse.getSpouseCitizenship());
             
@@ -27,19 +23,19 @@ public class UserSpouseDAO {
             return false;
         }
     }
-    
-    public UserSpouse findByUserId(Integer userId) {
-        String sql = "SELECT * FROM user_spouse WHERE user_id = ?";
-        
+
+    public UserSpouse findByApplicationId(Integer applicationId) {
+        String sql = "SELECT * FROM user_spouse WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 UserSpouse spouse = new UserSpouse();
-                spouse.setUserId(rs.getInt("user_id"));
+                spouse.setApplicationId(rs.getInt("application_id"));
                 spouse.setSpouseFullName(rs.getString("spouse_full_name"));
                 spouse.setSpouseCitizenship(rs.getString("spouse_citizenship"));
                 return spouse;
@@ -49,14 +45,14 @@ public class UserSpouseDAO {
         }
         return null;
     }
-    
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM user_spouse WHERE user_id = ?";
-        
+
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM user_spouse WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
+
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

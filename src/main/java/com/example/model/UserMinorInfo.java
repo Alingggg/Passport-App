@@ -1,7 +1,7 @@
 package com.example.model;
 
 public class UserMinorInfo {
-    private Integer userId;
+    private Integer applicationId;
     private Boolean isMinor;
     private String companionFullName;
     private String companionRelationship;
@@ -10,15 +10,15 @@ public class UserMinorInfo {
     // Constructors
     public UserMinorInfo() {}
     
-    public UserMinorInfo(Integer userId) {
-        this.userId = userId;
+    public UserMinorInfo(Integer applicationId) {
+        this.applicationId = applicationId;
         this.isMinor = false;
     }
     
     // Getters and Setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
     public Boolean getIsMinor() { return isMinor; }
     public void setIsMinor(Boolean isMinor) { this.isMinor = isMinor; }
     

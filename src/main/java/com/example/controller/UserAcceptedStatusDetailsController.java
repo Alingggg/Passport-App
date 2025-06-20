@@ -32,7 +32,7 @@ public class UserAcceptedStatusDetailsController {
     private void loadApplicationDetails() {
         Integer userId = userSession.getUserId();
 
-        PassportApplication application = applicationDAO.findByUserId(userId);
+        PassportApplication application = applicationDAO.findLatestApplicationByUserId(userId);
 
         if (application != null) {
             if (application.getReferenceId() != null && !application.getReferenceId().isEmpty()) {

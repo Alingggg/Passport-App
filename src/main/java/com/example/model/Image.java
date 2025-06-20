@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Image {
     private Integer id;
-    private Integer userId;
+    private Integer applicationId;
     private String filename;
     private String fileType;
     private String supabaseUrl;
@@ -18,8 +18,8 @@ public class Image {
         this.filename = filename;
     }
     
-    public Image(Integer userId, String filename, String fileType, String supabaseUrl) {
-        this.userId = userId;
+    public Image(Integer applicationId, String filename, String fileType, String supabaseUrl) {
+        this.applicationId = applicationId;
         this.filename = filename;
         this.fileType = fileType;
         this.supabaseUrl = supabaseUrl;
@@ -29,8 +29,8 @@ public class Image {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
+    public Integer getApplicationId() { return applicationId; }
+    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
     
     public String getFilename() { return filename; }
     public void setFilename(String filename) { this.filename = filename; }

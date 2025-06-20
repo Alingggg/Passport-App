@@ -246,7 +246,7 @@ public class UserApplicationFormController {
         ApplicationService applicationService = new ApplicationService(); // Instantiate ApplicationService for the check
 
         // Check if the user already has an application before proceeding
-        PassportApplication existingApplication = applicationService.getUserApplication();
+        PassportApplication existingApplication = applicationService.getLatestApplication();
 
         if (existingApplication != null) {
             String status = existingApplication.getStatus();

@@ -85,8 +85,8 @@ public class AdminApplicationDetailsController {
             showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
             return;
         }
-        int userId = currentApplication.getUserId();
-        currentUserProfile = applicationService.getCompleteUserProfile(userId);
+        int applicationId = currentApplication.getApplicationId();
+        currentUserProfile = applicationService.getCompleteUserProfile(applicationId);
 
         if (currentUserProfile != null) {
             populateFields(currentUserProfile);
@@ -284,7 +284,7 @@ public class AdminApplicationDetailsController {
             return;
         }
 
-        boolean success = applicationService.processApplicationAcceptance(currentApplication.getUserId());
+        boolean success = applicationService.processApplicationAcceptance(currentApplication.getApplicationId());
 
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been ACCEPTED.");
@@ -319,7 +319,7 @@ public class AdminApplicationDetailsController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(selectedReason -> {
-            boolean success = applicationService.processApplicationDenial(currentApplication.getUserId(), selectedReason);
+            boolean success = applicationService.processApplicationDenial(currentApplication.getApplicationId(), selectedReason);
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Application has been DENIED. Reason: " + selectedReason);
                 btnAcceptApplication.setDisable(true);

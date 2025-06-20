@@ -25,11 +25,11 @@ public class UserProfileController {
     @FXML
     void applyBtn(ActionEvent event) {
         try {
-            if (applicationService.hasExistingApplication()) {
-                System.out.println("User has an existing application. Navigating to UserApplicationStatus from UserProfile...");
+            if (applicationService.hasPendingApplication()) {
+                System.out.println("User has a pending application. Navigating to UserApplicationStatus from UserProfile...");
                 Main.setRoot("UserApplicationStatus");
             } else {
-                System.out.println("User does not have an existing application. Navigating to UserNotPassportHolder from UserProfile...");
+                System.out.println("User does not have a pending application. Navigating to UserNotPassportHolder from UserProfile...");
                 Main.setRoot("UserNotPassportHolder");
             }
         } catch (IOException e) {

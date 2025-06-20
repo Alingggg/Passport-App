@@ -11,52 +11,49 @@ import java.util.UUID;
 public class PassportApplicationDAO {
     
     /**
-     * Saves an application for a user.
-     * If an application for the user already exists, it overrides the existing entry,
-     * effectively resetting it for a new submission (e.g., after being denied).
-     * It generates a new reference_id and resets status, feedback, and timestamps.
-     * @param application The application object, containing at least the user_id.
-     * @return true if the operation was successful, false otherwise.
+     * Saves a new application for a user and returns the new application_id.
+     * @param application The application object, containing the user_id.
+     * @return The generated application_id, or -1 on failure.
      */
-    public boolean saveApplication(PassportApplication application) {
-        String sql = "INSERT INTO passport_application (user_id, reference_id, status, feedback, submitted_at, reviewed_at) " +
-                     "VALUES (?, ?, 'Pending', NULL, CURRENT_TIMESTAMP, NULL) " +
-                     "ON CONFLICT (user_id) DO UPDATE SET " +
-                     "reference_id = EXCLUDED.reference_id, " +
-                     "status = 'Pending', " +
-                     "feedback = NULL, " +
-                     "submitted_at = CURRENT_TIMESTAMP, " +
-                     "reviewed_at = NULL";
+    public int saveApplication(PassportApplication application) {
+        String sql = "INSERT INTO passport_application (application_id, reference_id, status, feedback, submitted_at, reviewed_at) VALUES (?, ?, 'Pending', NULL, CURRENT_TIMESTAMP, NULL)";
         
         try (Connection conn = dbUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-            // Generate a new unique reference ID for both insert and update cases
             String referenceId = "PA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             
-            pstmt.setInt(1, application.getUserId());
+            pstmt.setInt(1, application.getApplicationId());
             pstmt.setString(2, referenceId);
             
-            return pstmt.executeUpdate() > 0;
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1); // Return the new application_id
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return -1; // Indicate failure
     }
-    
-    public PassportApplication findByUserId(Integer userId) {
-        String sql = "SELECT user_id, status, feedback, reference_id, submitted_at, reviewed_at " +
-                    "FROM passport_application WHERE user_id = ?";
+
+    public PassportApplication findByApplicationId(Integer applicationId) {
+        String sql = "SELECT application_id, status, feedback, reference_id, submitted_at, reviewed_at " +
+                    "FROM passport_application WHERE application_id = ?";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 PassportApplication app = new PassportApplication();
-                app.setUserId(rs.getInt("user_id"));
+                app.setApplicationId(rs.getInt("application_id"));
                 app.setStatus(rs.getString("status"));
                 app.setFeedback(rs.getString("feedback"));
                 app.setReferenceId(rs.getString("reference_id"));
@@ -74,17 +71,69 @@ public class PassportApplicationDAO {
         }
         return null;
     }
-    
-    public boolean updateStatus(Integer userId, String status, String feedback) {
-        String sql = "UPDATE passport_application SET status = ?, feedback = ?, reviewed_at = CURRENT_TIMESTAMP WHERE user_id = ?";
-        
+
+    public Integer findLatestApplicationIdByUserId(int userId) {
+        String sql = "SELECT application_id FROM passport_application WHERE user_id = ? ORDER BY submitted_at DESC LIMIT 1";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("application_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Integer findLatestAcceptedApplicationIdByUserId(int userId) {
+        String sql = "SELECT application_id FROM passport_application WHERE user_id = ? AND status = 'Accepted' ORDER BY submitted_at DESC LIMIT 1";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("application_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public PassportApplication findLatestApplicationByUserId(int userId) {
+        Integer latestAppId = findLatestApplicationIdByUserId(userId);
+        if (latestAppId != null) {
+            return findByApplicationId(latestAppId);
+        }
+        return null;
+    }
+
+    public boolean hasPendingApplication(int userId) {
+        String sql = "SELECT 1 FROM passport_application WHERE user_id = ? AND status = 'Pending' LIMIT 1";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateStatus(Integer applicationId, String status, String feedback) {
+        String sql = "UPDATE passport_application SET status = ?, feedback = ?, reviewed_at = CURRENT_TIMESTAMP WHERE application_id = ?";
+
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, status);
             pstmt.setString(2, feedback);
-            pstmt.setInt(3, userId);
-            
+            pstmt.setInt(3, applicationId);
+
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,7 +142,7 @@ public class PassportApplicationDAO {
     }
     
     public List<PassportApplication> getAllApplications() {
-        String sql = "SELECT user_id, status, feedback, reference_id, submitted_at, reviewed_at " +
+        String sql = "SELECT application_id, status, feedback, reference_id, submitted_at, reviewed_at " +
                     "FROM passport_application ORDER BY submitted_at DESC";
         List<PassportApplication> applications = new ArrayList<>();
         
@@ -103,7 +152,7 @@ public class PassportApplicationDAO {
             
             while (rs.next()) {
                 PassportApplication app = new PassportApplication();
-                app.setUserId(rs.getInt("user_id"));
+                app.setApplicationId(rs.getInt("application_id"));
                 app.setStatus(rs.getString("status"));
                 app.setFeedback(rs.getString("feedback"));
                 app.setReferenceId(rs.getString("reference_id"));
@@ -121,9 +170,9 @@ public class PassportApplicationDAO {
         }
         return applications;
     }
-    
-    public boolean applicationExists(Integer userId) {
-        return findByUserId(userId) != null;
+
+    public boolean applicationExists(Integer applicationId) {
+        return findByApplicationId(applicationId) != null;
     }
     
     public List<PassportApplication> getApplicationsByStatus(String status) {
@@ -135,7 +184,7 @@ public class PassportApplicationDAO {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 PassportApplication app = new PassportApplication();
-                app.setUserId(rs.getInt("user_id"));
+                app.setApplicationId(rs.getInt("application_id"));
                 applications.add(app);
             }
         } catch (SQLException e) {
@@ -149,11 +198,11 @@ public class PassportApplicationDAO {
      * @param userId The user ID whose application should be deleted.
      * @return true if a row was deleted, false otherwise.
      */
-    public boolean deleteByUserId(Integer userId) {
-        String sql = "DELETE FROM passport_application WHERE user_id = ?";
+    public boolean deleteByApplicationId(Integer applicationId) {
+        String sql = "DELETE FROM passport_application WHERE application_id = ?";
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -25,7 +25,7 @@
                   <ToggleGroup fx:id="minorGroup" />
                </fx:define>
                
-               <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Form">
+               <Label layoutX="17.0" layoutY="-2.0" style="-fx-text-fill: #696868;" text="Application Form">
                   <font>
                      <Font name="Arial Bold" size="21.0" />
                   </font>
@@ -91,12 +91,12 @@
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbSeparated" layoutX="301.0" layoutY="194.0" mnemonicParsing="false" text="Legally Separated" toggleGroup="$civilStatusGroup">
+               <RadioButton fx:id="rbSeparated" layoutX="290.0" layoutY="194.0" mnemonicParsing="false" text="Legally Separated" toggleGroup="$civilStatusGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbAnnulled" layoutX="421.0" layoutY="194.0" mnemonicParsing="false" text="Annulled" toggleGroup="$civilStatusGroup">
+               <RadioButton fx:id="rbAnnulled" layoutX="410.0" layoutY="194.0" mnemonicParsing="false" text="Annulled" toggleGroup="$civilStatusGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>
@@ -364,6 +364,11 @@
                <TextField fx:id="lblWorkAddress2" layoutX="118.0" layoutY="483.0" prefHeight="27.0" prefWidth="552.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
                <TextField fx:id="lblOccupation2" layoutX="118.0" layoutY="411.0" prefHeight="27.0" prefWidth="242.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
                <TextField fx:id="lblWorkTelephone2" layoutX="490.0" layoutY="411.0" prefHeight="27.0" prefWidth="180.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #40659C;" />
+               <Label layoutX="17.0" layoutY="29.0" prefHeight="16.0" prefWidth="268.0" style="-fx-text-fill: #696868;" text="Leave no field blank. Enter &quot;N/A&quot; if not applicable.">
+                  <font>
+                     <Font name="Arial Italic" size="12.0" />
+                  </font>
+               </Label>
             </AnchorPane>
          </content>
       </ScrollPane>

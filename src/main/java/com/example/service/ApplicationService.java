@@ -86,7 +86,7 @@ public class ApplicationService {
             conn.commit(); // Complete transaction
             return true;
             
-        } catch (SQLException e) {
+        } catch (Exception e) { // Changed from SQLException to Exception to catch all errors
             if (conn != null) {
                 try {
                     System.err.println("Transaction is being rolled back due to an error.");

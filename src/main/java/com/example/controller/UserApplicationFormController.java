@@ -19,13 +19,14 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.Main;
 import com.example.model.*;
 import com.example.service.ApplicationService;
+import com.example.util.ApplicationFormMapper;
+import com.example.util.FormValidator;
 
 public class UserApplicationFormController {
 
@@ -136,19 +137,70 @@ public class UserApplicationFormController {
         setupDependentField(lblMobileNumber1, lblMobileNumber2);
         setupDependentField(lblTelephoneNumber1, lblTelephoneNumber2);
         setupDependentField(lblEmailAddress1, lblEmailAddress2);
-        setupDependentField(lblOccupation1, lblOccupation2);
-        setupDependentField(lblWorkAddress1, lblWorkAddress2);
-        setupDependentField(lblWorkTelephone1, lblWorkTelephone2);
+        
+        // Occupation 1 -> Occupation 2, Work Address 1, Work Telephone 1
+        setupDependentField(lblOccupation1, lblOccupation2, lblWorkAddress1, lblWorkTelephone1);
+        // Occupation 2 -> Work Address 2, Work Telephone 2
+        setupDependentField(lblOccupation2, lblWorkAddress2, lblWorkTelephone2);
+
+        // Listener for Acquired Citizenship
+        txtCitizenOthers.setDisable(true);
+        citizenshipGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            if (newToggle != null) {
+                RadioButton selected = (RadioButton) newToggle;
+                txtCitizenOthers.setDisable(!selected.getText().equals("Others:"));
+            }
+        });
+
+        // Listener for Foreign Passport
+        lblCountry.setDisable(true);
+        lblForeignPassportNo.setDisable(true);
+        foreignPassportGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            boolean isEnabled = newToggle != null && ((RadioButton) newToggle).getText().equals("YES");
+            lblCountry.setDisable(!isEnabled);
+            lblForeignPassportNo.setDisable(!isEnabled);
+        });
+
+        // Listener for Philippine Passport
+        lblPhilippinePassportNo.setDisable(true);
+        lblPlaceOfIssue.setDisable(true);
+        lblIssueDay.setDisable(true);
+        lblIssueMonth.setDisable(true);
+        lblIssueYear.setDisable(true);
+        philippinePassportGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            boolean isEnabled = newToggle != null && ((RadioButton) newToggle).getText().equals("YES");
+            lblPhilippinePassportNo.setDisable(!isEnabled);
+            lblPlaceOfIssue.setDisable(!isEnabled);
+            lblIssueDay.setDisable(!isEnabled);
+            lblIssueMonth.setDisable(!isEnabled);
+            lblIssueYear.setDisable(!isEnabled);
+        });
+
+        // Listener for Minor/Companion fields
+        lblTravelingCompanion.setDisable(true);
+        lblCompanionRelationship.setDisable(true);
+        lblContactNumber.setDisable(true);
+        minorGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            boolean isEnabled = newToggle != null && ((RadioButton) newToggle).getText().equals("YES");
+            lblTravelingCompanion.setDisable(!isEnabled);
+            lblCompanionRelationship.setDisable(!isEnabled);
+            lblContactNumber.setDisable(!isEnabled);
+        });
     }
 
-    private void setupDependentField(TextField primaryField, TextField secondaryField) {
-        // Initially disable the secondary field
-        secondaryField.setDisable(true);
+    private void setupDependentField(TextField primaryField, Control... dependentFields) {
+        // Initially disable all dependent fields
+        for (Control field : dependentFields) {
+            field.setDisable(true);
+        }
 
         // Add a listener to the primary field's text property
         primaryField.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Enable the secondary field only if the primary field is not empty
-            secondaryField.setDisable(newValue == null || newValue.trim().isEmpty());
+            // Enable the dependent fields only if the primary field is not empty
+            boolean isDisabled = newValue == null || newValue.trim().isEmpty();
+            for (Control field : dependentFields) {
+                field.setDisable(isDisabled);
+            }
         });
     }
 
@@ -243,7 +295,7 @@ public class UserApplicationFormController {
     void applyBtn(ActionEvent event) {
         System.out.println("Apply button clicked - starting application submission");
         
-        ApplicationService applicationService = new ApplicationService(); // Instantiate ApplicationService for the check
+        ApplicationService applicationService = new ApplicationService();
 
         // Check if the user already has an application before proceeding
         PassportApplication existingApplication = applicationService.getLatestApplication();
@@ -253,54 +305,36 @@ public class UserApplicationFormController {
             
             // Prevent new application if one is still "Pending"
             if ("Pending".equalsIgnoreCase(status)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Application In Progress");
-                alert.setHeaderText("Existing Application Found");
-                alert.setContentText("You already have a pending application. You cannot submit a new one at this time.");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.WARNING, "Application In Progress", "You already have a pending application. You cannot submit a new one at this time.");
                 return; // Stop further processing
             }
 
             // Prevent new application if one is "Accepted" but the card has not yet been received.
             if ("Accepted".equalsIgnoreCase(status) && !existingApplication.isCardReceived()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Application In Progress");
-                alert.setHeaderText("Existing Application Found");
-                alert.setContentText("Your application has been accepted, but the process is not yet complete. You cannot submit a new application until you receive your card.");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.WARNING, "Application In Progress", "Your application has been accepted, but the process is not yet complete. You cannot submit a new application until you receive your card.");
                 return; // Stop further processing
             }
-            // If the status is "Denied", or "Accepted" with card received, the method will continue, allowing re-application.
         }
         
-        // Validate required files
-        boolean hasValidId = (validIdFile != null);
-        boolean hasPsaBirthCertificate = (psaFile != null);
-        
-        if (!hasValidId || !hasPsaBirthCertificate) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Missing Documents");
-            alert.setHeaderText("Required Documents Missing");
-            
-            StringBuilder message = new StringBuilder("Please attach the following required documents:\n");
-            if (!hasValidId) message.append("- Valid ID\n");
-            if (!hasPsaBirthCertificate) message.append("- PSA Birth Certificate");
-            
-            alert.setContentText(message.toString());
-            alert.showAndWait();
-            return;
+        // --- START OF NEW VALIDATION LOGIC ---
+        if (!isFormValid()) {
+            return; // Stop if form is not valid
         }
+        // --- END OF NEW VALIDATION LOGIC ---
         
         try {
-            // Create model objects from form data
-            UserInfo userInfo = createUserInfo();
-            List<UserContact> userContacts = createUserContacts();
-            List<UserWork> userWorks = createUserWorks();
-            UserForeignPassport foreignPassport = createForeignPassport();
-            UserSpouse spouse = createSpouse();
-            UserParents parents = createParents();
-            UserPhilippinePassport philippinePassport = createPhilippinePassport();
-            UserMinorInfo minorInfo = createMinorInfo();
+            // Instantiate the mapper to handle data conversion
+            ApplicationFormMapper mapper = new ApplicationFormMapper(months);
+
+            // Create model objects using the mapper
+            UserInfo userInfo = mapper.createUserInfo(lblLastName, lblFirstName, lblMiddleName, lblPlaceOfBirth, lblBirthYear, lblBirthMonth, lblBirthDay, lblGender, civilStatusGroup, lblCompleteAddress, citizenshipGroup, txtCitizenOthers);
+            List<UserContact> userContacts = mapper.createUserContacts(lblMobileNumber1, lblTelephoneNumber1, lblEmailAddress1, lblMobileNumber2, lblTelephoneNumber2, lblEmailAddress2);
+            List<UserWork> userWorks = mapper.createUserWorks(lblOccupation1, lblWorkAddress1, lblWorkTelephone1, lblOccupation2, lblWorkAddress2, lblWorkTelephone2);
+            UserForeignPassport foreignPassport = mapper.createForeignPassport(foreignPassportGroup, lblCountry, lblForeignPassportNo);
+            UserSpouse spouse = mapper.createSpouse(lblSpouseName, lblSpouseCitizenship);
+            UserParents parents = mapper.createParents(lblFatherName, lblFatherCitizenship, lblMotherName, lblMotherCitizenship);
+            UserPhilippinePassport philippinePassport = mapper.createPhilippinePassport(philippinePassportGroup, lblIssueDay, lblIssueMonth, lblIssueYear, lblPlaceOfIssue, lblPhilippinePassportNo);
+            UserMinorInfo minorInfo = mapper.createMinorInfo(minorGroup, lblTravelingCompanion, lblCompanionRelationship, lblContactNumber);
             
             // Upload images to Supabase and create image records
             List<Image> images = createImages();
@@ -308,25 +342,17 @@ public class UserApplicationFormController {
             // Check if image upload was successful
             if (images.isEmpty() && (validIdFile != null || psaFile != null)) { 
                 System.err.println("Image upload failed or was canceled, but files were selected.");
-                // Alert for image upload failure is typically handled within createImages()
                 return;
             }
             
             // Submit application using the service
-            // ApplicationService applicationService = new ApplicationService(); // Already instantiated above
             boolean success = applicationService.submitCompleteApplication(
                 userInfo, userContacts, userWorks, foreignPassport, 
                 spouse, parents, philippinePassport, minorInfo, images
             );
             
             if (success) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Application Submitted");
-                alert.setHeaderText("Your application was submitted successfully!");
-                alert.setContentText("Your passport application is now being processed.");
-                alert.showAndWait();
-                
-                // Navigate to the status page
+                showAlert(Alert.AlertType.INFORMATION, "Application Submitted", "Your application was submitted successfully! Your passport application is now being processed.");
                 try {
                     Main.setRoot("UserApplicationStatus");
                 } catch (IOException e) {
@@ -334,20 +360,104 @@ public class UserApplicationFormController {
                     e.printStackTrace();
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Submission Failed");
-                alert.setHeaderText("Application could not be submitted");
-                alert.setContentText("There was an error processing your application. Please try again later.");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.ERROR, "Submission Failed", "There was an error processing your application. Please try again later.");
             }
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Form Error");
-            alert.setHeaderText("Error in application form");
-            alert.setContentText("Please check that all required fields are filled in correctly.\n" + e.getMessage());
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Form Error", "Please check that all required fields are filled in correctly.\n" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private boolean isFormValid() {
+        FormValidator validator = new FormValidator();
+
+        // Personal Info
+        validator.validateRequiredTextField(lblLastName, "Last Name");
+        validator.validateRequiredTextField(lblFirstName, "First Name");
+        validator.validateRequiredTextField(lblMiddleName, "Middle Name");
+        validator.validateRequiredTextField(lblPlaceOfBirth, "Place of Birth");
+        validator.validateRequiredTextField(lblCompleteAddress, "Complete Address");
+        validator.validateRequiredComboBox(lblBirthDay, "Birth Day");
+        validator.validateRequiredComboBox(lblBirthMonth, "Birth Month");
+        validator.validateRequiredComboBox(lblBirthYear, "Birth Year");
+        validator.validateRequiredComboBox(lblGender, "Gender");
+        validator.validateRequiredToggleGroup(civilStatusGroup, "Civil Status");
+        validator.validateRequiredToggleGroup(citizenshipGroup, "Acquired Citizenship");
+
+        if (citizenshipGroup.getSelectedToggle() != null && ((RadioButton)citizenshipGroup.getSelectedToggle()).getText().equals("Others:")) {
+            validator.validateRequiredTextField(txtCitizenOthers, "Other Citizenship");
+        }
+
+        // Contact Info
+        validator.validateNumericTextField(lblMobileNumber1, "Mobile Number 1");
+        validator.validateEmailField(lblEmailAddress1, "Email Address 1");
+        validator.validateNumericTextField(lblTelephoneNumber1, "Telephone Number 1");
+
+        // Work Info
+        validator.validateRequiredTextField(lblOccupation1, "Occupation 1");
+        validator.validateRequiredTextField(lblWorkAddress1, "Work Address 1");
+        validator.validateNumericTextField(lblWorkTelephone1, "Work Telephone 1");
+
+        // Spouse Info
+        if (civilStatusGroup.getSelectedToggle() != null && ((RadioButton)civilStatusGroup.getSelectedToggle()).getText().equals("Married")) {
+            validator.validateRequiredTextField(lblSpouseName, "Spouse's Full Name");
+            validator.validateRequiredTextField(lblSpouseCitizenship, "Spouse's Citizenship");
+        }
+
+        // Parents Info
+        validator.validateRequiredTextField(lblFatherName, "Father's Full Name");
+        validator.validateRequiredTextField(lblFatherCitizenship, "Father's Citizenship");
+        validator.validateRequiredTextField(lblMotherName, "Mother's Maiden Name");
+        validator.validateRequiredTextField(lblMotherCitizenship, "Mother's Citizenship");
+
+        // Foreign Passport
+        validator.validateRequiredToggleGroup(foreignPassportGroup, "Foreign Passport Holder");
+        if (foreignPassportGroup.getSelectedToggle() != null && ((RadioButton)foreignPassportGroup.getSelectedToggle()).getText().equals("YES")) {
+            validator.validateRequiredTextField(lblCountry, "Issuing Country");
+            validator.validateRequiredTextField(lblForeignPassportNo, "Foreign Passport Number");
+        }
+
+        // Philippine Passport
+        validator.validateRequiredToggleGroup(philippinePassportGroup, "Philippine Passport Holder");
+        if (philippinePassportGroup.getSelectedToggle() != null && ((RadioButton)philippinePassportGroup.getSelectedToggle()).getText().equals("YES")) {
+            validator.validateRequiredTextField(lblPhilippinePassportNo, "Philippine Passport Number");
+            validator.validateRequiredTextField(lblPlaceOfIssue, "Place of Issue");
+            validator.validateRequiredComboBox(lblIssueDay, "Issue Day");
+            validator.validateRequiredComboBox(lblIssueMonth, "Issue Month");
+            validator.validateRequiredComboBox(lblIssueYear, "Issue Year");
+        }
+
+        // Minor Info
+        validator.validateRequiredToggleGroup(minorGroup, "Accompanied by a minor");
+        if (minorGroup.getSelectedToggle() != null && ((RadioButton)minorGroup.getSelectedToggle()).getText().equals("YES")) {
+            validator.validateRequiredTextField(lblTravelingCompanion, "Traveling Companion's Name");
+            validator.validateRequiredTextField(lblCompanionRelationship, "Companion's Relationship");
+            validator.validateNumericTextField(lblContactNumber, "Companion's Contact Number");
+        }
+
+        // File Uploads
+        if (validIdFile == null) validator.getErrors().add("A Valid ID image is required.");
+        if (psaFile == null) validator.getErrors().add("A PSA Birth Certificate image is required.");
+
+        List<String> errors = validator.getErrors();
+        if (!errors.isEmpty()) {
+            StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n\n");
+            for (String error : errors) {
+                errorMessage.append("- ").append(error).append("\n");
+            }
+            showAlert(Alert.AlertType.ERROR, "Validation Error", errorMessage.toString());
+            return false;
+        }
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.getDialogPane().setPrefWidth(400);
+        alert.showAndWait();
     }
 
     private void updateDays(ComboBox<String> monthCombo, ComboBox<Integer> yearCombo, ComboBox<Integer> dayCombo) {
@@ -414,271 +524,6 @@ public class UserApplicationFormController {
             years.add(y);
         }
         return years;
-    }
-
-    // Helper methods to create model objects from form fields
-    private UserInfo createUserInfo() {
-        UserInfo info = new UserInfo();
-        info.setLastName(lblLastName.getText());
-        info.setFirstName(lblFirstName.getText());
-        info.setMiddleName(lblMiddleName.getText());
-        
-        // Set place of birth
-        info.setBirthPlace(lblPlaceOfBirth.getText());
-
-        // Set birth date
-        LocalDate birthDate = LocalDate.of(
-            lblBirthYear.getValue(),
-            getMonthNumber(lblBirthMonth.getValue()),
-            lblBirthDay.getValue()
-        );
-        info.setBirthDate(birthDate);
-        
-        // Set gender
-        info.setGender(lblGender.getValue());
-        
-        // Set civil status from radio group
-        RadioButton selectedCivilStatus = (RadioButton) civilStatusGroup.getSelectedToggle();
-        if (selectedCivilStatus != null) {
-            info.setCivilStatus(selectedCivilStatus.getText());
-        }
-
-        // Set address
-        info.setCurrentAddress(lblCompleteAddress.getText());
-        
-        // Set citizenship acquisition type
-        RadioButton selectedCitizenship = (RadioButton) citizenshipGroup.getSelectedToggle();
-        if (selectedCitizenship != null) {
-            String citizenshipType = selectedCitizenship.getText();
-            
-            // If "Others" is selected, get the value from the text field
-            if (citizenshipType.equals("Others:") && txtCitizenOthers.getText() != null && !txtCitizenOthers.getText().isEmpty()) {
-                citizenshipType = txtCitizenOthers.getText();
-            }
-            
-            info.setAcquiredCitizenship(citizenshipType);
-        }
-        
-        return info;
-    }
-
-    private List<UserContact> createUserContacts() {
-        List<UserContact> contacts = new ArrayList<>();
-
-        // Create first contact object if any fields are filled
-        UserContact contact1 = new UserContact();
-        boolean contact1HasData = false;
-        if (lblMobileNumber1.getText() != null && !lblMobileNumber1.getText().trim().isEmpty()) {
-            contact1.setMobileNumber(lblMobileNumber1.getText());
-            contact1HasData = true;
-        }
-        if (lblTelephoneNumber1.getText() != null && !lblTelephoneNumber1.getText().trim().isEmpty()) {
-            contact1.setTelephoneNumber(lblTelephoneNumber1.getText());
-            contact1HasData = true;
-        }
-        if (lblEmailAddress1.getText() != null && !lblEmailAddress1.getText().trim().isEmpty()) {
-            contact1.setEmailAddress(lblEmailAddress1.getText());
-            contact1HasData = true;
-        }
-        if (contact1HasData) {
-            contacts.add(contact1);
-        }
-
-        // Create second contact object if any fields are filled
-        UserContact contact2 = new UserContact();
-        boolean contact2HasData = false;
-        if (lblMobileNumber2.getText() != null && !lblMobileNumber2.getText().trim().isEmpty()) {
-            contact2.setMobileNumber(lblMobileNumber2.getText());
-            contact2HasData = true;
-        }
-        if (lblTelephoneNumber2.getText() != null && !lblTelephoneNumber2.getText().trim().isEmpty()) {
-            contact2.setTelephoneNumber(lblTelephoneNumber2.getText());
-            contact2HasData = true;
-        }
-        if (lblEmailAddress2.getText() != null && !lblEmailAddress2.getText().trim().isEmpty()) {
-            contact2.setEmailAddress(lblEmailAddress2.getText());
-            contact2HasData = true;
-        }
-        if (contact2HasData) {
-            contacts.add(contact2);
-        }
-
-        return contacts;
-    }
-
-    private List<UserWork> createUserWorks() {
-        List<UserWork> works = new ArrayList<>();
-
-        // Create first work object if any fields are filled
-        UserWork work1 = new UserWork();
-        boolean work1HasData = false;
-        if (lblOccupation1.getText() != null && !lblOccupation1.getText().trim().isEmpty()) {
-            work1.setOccupation(lblOccupation1.getText());
-            work1HasData = true;
-        }
-        if (lblWorkAddress1.getText() != null && !lblWorkAddress1.getText().trim().isEmpty()) {
-            work1.setWorkAddress(lblWorkAddress1.getText());
-            work1HasData = true;
-        }
-        if (lblWorkTelephone1.getText() != null && !lblWorkTelephone1.getText().trim().isEmpty()) {
-            work1.setWorkTelephoneNumber(lblWorkTelephone1.getText());
-            work1HasData = true;
-        }
-        if (work1HasData) {
-            works.add(work1);
-        }
-
-        // Create second work object if any fields are filled
-        UserWork work2 = new UserWork();
-        boolean work2HasData = false;
-        if (lblOccupation2.getText() != null && !lblOccupation2.getText().trim().isEmpty()) {
-            work2.setOccupation(lblOccupation2.getText());
-            work2HasData = true;
-        }
-        if (lblWorkAddress2.getText() != null && !lblWorkAddress2.getText().trim().isEmpty()) {
-            work2.setWorkAddress(lblWorkAddress2.getText());
-            work2HasData = true;
-        }
-        if (lblWorkTelephone2.getText() != null && !lblWorkTelephone2.getText().trim().isEmpty()) {
-            work2.setWorkTelephoneNumber(lblWorkTelephone2.getText());
-            work2HasData = true;
-        }
-        if (work2HasData) {
-            works.add(work2);
-        }
-        
-        return works;
-    }
-
-    private UserForeignPassport createForeignPassport() {
-        UserForeignPassport foreignPassport = new UserForeignPassport();
-        
-        // Set has foreign passport flag based on radio selection
-        RadioButton selectedOption = (RadioButton) foreignPassportGroup.getSelectedToggle();
-        if (selectedOption != null) {
-            foreignPassport.setHasForeignPassport(selectedOption.getText().equals("YES"));
-        }
-
-        if (lblCountry.getText() != null && !lblCountry.getText().isEmpty()) {
-            foreignPassport.setIssuingCountry(lblCountry.getText());
-        }
-
-        if (lblForeignPassportNo.getText() != null && !lblForeignPassportNo.getText().isEmpty()) {
-            foreignPassport.setForeignPassportNumber(lblForeignPassportNo.getText());
-        }
-        
-        return foreignPassport;
-    }
-
-    private UserSpouse createSpouse() {
-        UserSpouse spouse = new UserSpouse();
-        
-        // Set spouse name
-        if (lblSpouseName.getText() != null && !lblSpouseName.getText().isEmpty()) {
-            spouse.setSpouseFullName(lblSpouseName.getText());
-        }
-        
-        // Set spouse citizenship
-        if (lblSpouseCitizenship.getText() != null && !lblSpouseCitizenship.getText().isEmpty()) {
-            spouse.setSpouseCitizenship(lblSpouseCitizenship.getText());
-        }
-        
-        return spouse;
-    }
-
-    private UserParents createParents() {
-        UserParents parents = new UserParents();
-        
-        // Set father's name
-        if (lblFatherName.getText() != null && !lblFatherName.getText().isEmpty()) {
-            parents.setFatherFullName(lblFatherName.getText());
-        }
-        
-        // Set father's citizenship
-        if (lblFatherCitizenship.getText() != null && !lblFatherCitizenship.getText().isEmpty()) {
-            parents.setFatherCitizenship(lblFatherCitizenship.getText());
-        }
-        
-        // Set mother's maiden name
-        if (lblMotherName.getText() != null && !lblMotherName.getText().isEmpty()) {
-            parents.setMotherMaidenName(lblMotherName.getText());
-        }
-        
-        // Set mother's citizenship
-        if (lblMotherCitizenship.getText() != null && !lblMotherCitizenship.getText().isEmpty()) {
-            parents.setMotherCitizenship(lblMotherCitizenship.getText());
-        }
-        
-        return parents;
-    }
-
-    private UserPhilippinePassport createPhilippinePassport() {
-        UserPhilippinePassport philippinePassport = new UserPhilippinePassport();
-        
-        // Set has Philippine passport flag based on radio selection
-        RadioButton selectedOption = (RadioButton) philippinePassportGroup.getSelectedToggle();
-        if (selectedOption != null) {
-            boolean hasPassport = selectedOption.getText().equals("YES");
-            philippinePassport.setHasPhilippinePassport(hasPassport);
-            
-            // If user has a previous passport, collect the details
-            if (hasPassport) {
-                // Set issue date if all date components are selected
-                if (lblIssueDay.getValue() != null && 
-                    lblIssueMonth.getValue() != null && 
-                    lblIssueYear.getValue() != null) {
-                
-                    LocalDate issueDate = LocalDate.of(
-                        lblIssueYear.getValue(),
-                        getMonthNumber(lblIssueMonth.getValue()),
-                        lblIssueDay.getValue()
-                    );
-                    philippinePassport.setIssueDate(issueDate);
-                }
-                
-                // Set place of issue
-                if (lblPlaceOfIssue.getText() != null && !lblPlaceOfIssue.getText().isEmpty()) {
-                    philippinePassport.setIssuePlace(lblPlaceOfIssue.getText());
-                }
-
-                if (lblPhilippinePassportNo.getText() != null && !lblPhilippinePassportNo.getText().isEmpty()) {
-                    philippinePassport.setPhilippinePassportNumber(lblPhilippinePassportNo.getText());
-                }
-            }
-        }
-
-        return philippinePassport;
-    }
-
-    private UserMinorInfo createMinorInfo() {
-        UserMinorInfo minorInfo = new UserMinorInfo();
-        
-        // Set is minor flag based on radio selection
-        RadioButton selectedOption = (RadioButton) minorGroup.getSelectedToggle();
-        if (selectedOption != null) {
-            boolean isMinor = selectedOption.getText().equals("YES");
-            minorInfo.setIsMinor(isMinor);
-            
-            // If applicant is a minor, collect companion information
-            if (isMinor) {
-                // Set traveling companion name
-                if (lblTravelingCompanion.getText() != null && !lblTravelingCompanion.getText().isEmpty()) {
-                    minorInfo.setCompanionFullName(lblTravelingCompanion.getText());
-                }
-                
-                // Set companion relationship
-                if (lblCompanionRelationship.getText() != null && !lblCompanionRelationship.getText().isEmpty()) {
-                    minorInfo.setCompanionRelationship(lblCompanionRelationship.getText());
-                }
-                
-                // Set companion contact number
-                if (lblContactNumber.getText() != null && !lblContactNumber.getText().isEmpty()) {
-                    minorInfo.setCompanionContactNumber(lblContactNumber.getText());
-                }
-            }
-        }
-        
-        return minorInfo;
     }
 
     private List<Image> createImages() {
@@ -777,11 +622,6 @@ public class UserApplicationFormController {
         progressStage.showAndWait();
         
         return images; // This will be populated after showAndWait() if task is successful
-    }
-
-    // Helper method to convert month name to number
-    private int getMonthNumber(String month) {
-        return months.indexOf(month) + 1; // +1 because months are 1-based
     }
 }
 

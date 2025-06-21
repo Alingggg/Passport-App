@@ -87,6 +87,15 @@ public class ApplicationService {
             return true;
             
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    System.err.println("Transaction is being rolled back due to an error.");
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    System.err.println("Error during transaction rollback: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
             return false;
         } finally {
@@ -101,9 +110,7 @@ public class ApplicationService {
         }
     }
     
-    /**
-     * Checks if the current user has an application with 'Pending' status.
-     */
+    // Checks if the current user has an application with 'Pending' status.
     public boolean hasPendingApplication() {
         Integer userId = UserSession.getInstance().getUserId();
         return userId != null && applicationDAO.hasPendingApplication(userId);
@@ -128,9 +135,7 @@ public class ApplicationService {
         return applicationDAO.findLatestApplicationByUserId(userId);
     }
     
-    /**
-     * Gets the complete profile for the user's latest ONGOING application (e.g., Pending, Denied).
-     */
+    // Gets the complete profile for the user's latest ONGOING application (e.g., Pending, Denied).
     public UserProfile getLatestOngoingApplicationProfile() {
         Integer userId = UserSession.getInstance().getUserId();
         if (userId == null) return null;

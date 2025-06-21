@@ -40,9 +40,9 @@ public class AdminUsersController {
             return;
         }
         usersVBox.getChildren().clear();
-        // Fetch applications with "Accepted" status
-        List<PassportApplication> acceptedApplications = applicationDAO.getApplicationsByStatus("Accepted");
-        System.out.println("Accepted applications found: " + acceptedApplications.size());
+        // Fetch only the latest accepted application for each user
+        List<PassportApplication> acceptedApplications = applicationDAO.getLatestAcceptedApplicationForEachUser();
+        System.out.println("Latest accepted applications found: " + acceptedApplications.size());
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 

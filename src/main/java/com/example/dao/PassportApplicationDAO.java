@@ -174,6 +174,40 @@ public class PassportApplicationDAO {
         }
     }
     
+    public List<PassportApplication> getApplicationsByStatus(String status) {
+        List<PassportApplication> applications = new ArrayList<>();
+        // Order by oldest first to process them in the order they were received
+        String sql = "SELECT * FROM passport_application WHERE status = ? ORDER BY submitted_at ASC";
+
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, status);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                PassportApplication app = new PassportApplication();
+                app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
+                app.setStatus(rs.getString("status"));
+                app.setFeedback(rs.getString("feedback"));
+                app.setReferenceId(rs.getString("reference_id"));
+                app.setSubmittedAt(rs.getTimestamp("submitted_at").toLocalDateTime());
+                
+                Timestamp reviewedAt = rs.getTimestamp("reviewed_at");
+                if (reviewedAt != null) {
+                    app.setReviewedAt(reviewedAt.toLocalDateTime());
+                }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
+                
+                applications.add(app);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+
     public List<PassportApplication> getAllApplications() {
         String sql = "SELECT application_id, status, feedback, reference_id, submitted_at, reviewed_at " +
                     "FROM passport_application ORDER BY submitted_at DESC";
@@ -203,21 +237,37 @@ public class PassportApplicationDAO {
         }
         return applications;
     }
-
-    public boolean applicationExists(Integer applicationId) {
-        return findByApplicationId(applicationId) != null;
-    }
     
-    public List<PassportApplication> getApplicationsByStatus(String status) {
-        String sql = "SELECT * FROM passport_application WHERE status = ? ORDER BY submitted_at DESC";
+    public List<PassportApplication> getLatestAcceptedApplicationForEachUser() {
         List<PassportApplication> applications = new ArrayList<>();
+        String sql = "SELECT application_id, user_id, status, feedback, reference_id, submitted_at, reviewed_at, is_card_received " +
+                     "FROM ( " +
+                     "    SELECT *, " +
+                     "           ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY submitted_at DESC) as rn " +
+                     "    FROM passport_application " +
+                     "    WHERE status = 'Accepted' " +
+                     ") t " +
+                     "WHERE rn = 1 ORDER BY submitted_at DESC";
+
         try (Connection conn = dbUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, status);
-            ResultSet rs = pstmt.executeQuery();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 PassportApplication app = new PassportApplication();
                 app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
+                app.setStatus(rs.getString("status"));
+                app.setFeedback(rs.getString("feedback"));
+                app.setReferenceId(rs.getString("reference_id"));
+                app.setSubmittedAt(rs.getTimestamp("submitted_at").toLocalDateTime());
+                
+                Timestamp reviewedAt = rs.getTimestamp("reviewed_at");
+                if (reviewedAt != null) {
+                    app.setReviewedAt(reviewedAt.toLocalDateTime());
+                }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
+                
                 applications.add(app);
             }
         } catch (SQLException e) {

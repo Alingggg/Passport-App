@@ -13,7 +13,7 @@
 
         <ScrollPane hbarPolicy="NEVER" layoutX="250.0" layoutY="86.0" prefHeight="540.0" prefWidth="700.0" style="-fx-background-color: #F8F4F1; -fx-background-radius: 9;">
             <content>
-                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1180.0" prefWidth="670.0">
+                <AnchorPane fx:id="scrollableContent" minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="670.0">
                     <children>
                         <Label fx:id="lblAppDetails" layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Details">
                             <font>
@@ -215,12 +215,12 @@
                            </font>
                         </Button>
                         
-                        <Button fx:id="btnAcceptApplication" layoutX="290.0" layoutY="1140.0" mnemonicParsing="false" onAction="#acceptApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #06C012; -fx-background-radius: 15;" text="Accept Application" textFill="WHITE">
+                        <Button fx:id="btnAcceptApplication" layoutX="290.0" layoutY="1150.0" mnemonicParsing="false" onAction="#acceptApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #06C012; -fx-background-radius: 15;" text="Accept Application" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnDenyApplication" layoutX="486.0" layoutY="1140.0" mnemonicParsing="false" onAction="#denyApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #F20707; -fx-background-radius: 15;" text="Deny Application" textFill="WHITE">
+                        <Button fx:id="btnDenyApplication" layoutX="486.0" layoutY="1150.0" mnemonicParsing="false" onAction="#denyApplication" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #F20707; -fx-background-radius: 15;" text="Deny Application" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="12.0" />
                             </font>

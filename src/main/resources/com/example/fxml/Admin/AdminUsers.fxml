@@ -2,34 +2,45 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AdminUsersController">
    <children>
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
       
-      <fx:include fx:id="adminHeader" source="../components/AdminHeader.fxml" layoutX="251.0" />
+      <fx:include fx:id="adminHeader" layoutX="251.0" source="../components/AdminHeader.fxml" />
 
-      <Label fx:id="lblUsers" layoutX="275.0" layoutY="115.0" style="-fx-text-fill: #696868;" text="Users">
+      <Label fx:id="lblUsers" layoutX="261.0" layoutY="107.0" style="-fx-text-fill: #696868;" text="Users">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
 
-      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;" fitToWidth="true">
+      <ScrollPane fitToWidth="true" layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;">
          <content>
             <VBox fx:id="usersVBox" spacing="10.0">
                <!-- This VBox will be populated dynamically by AdminUsersController -->
             </VBox>
          </content>
       </ScrollPane>
+      <Label fx:id="btnAll" layoutX="270.0" layoutY="140.0" onMouseClicked="#handleAllFilter" style="-fx-text-fill: #696868;" text="All">
+         <font>
+            <Font name="Arial Bold" size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="btnExpired" layoutX="310.0" layoutY="140.0" onMouseClicked="#handleExpiredFilter" style="-fx-text-fill: #696868;" text="Expired">
+         <font>
+            <Font name="Arial Bold" size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="btnCardPending" layoutX="376.0" layoutY="140.0" onMouseClicked="#handleCardPendingFilter" style="-fx-text-fill: #696868;" text="Card Pending">
+         <font>
+            <Font name="Arial Bold" size="11.0" />
+         </font>
+      </Label>
    </children>
    <effect>
       <DropShadow height="0.0" radius="0.0" width="0.0" />

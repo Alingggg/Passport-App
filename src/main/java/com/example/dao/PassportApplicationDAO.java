@@ -276,6 +276,82 @@ public class PassportApplicationDAO {
         return applications;
     }
     
+    public List<PassportApplication> getLatestExpiredApplicationForEachUser() {
+        List<PassportApplication> applications = new ArrayList<>();
+        String sql = "SELECT pa.* " +
+                     "FROM ( " +
+                     "    SELECT *, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY submitted_at DESC) as rn " +
+                     "    FROM passport_application " +
+                     "    WHERE status = 'Accepted' " +
+                     ") pa " +
+                     "JOIN user_philippine_passport upp ON pa.application_id = upp.application_id " +
+                     "WHERE pa.rn = 1 AND upp.expiry_date < CURRENT_DATE " +
+                     "ORDER BY pa.submitted_at DESC";
+
+        try (Connection conn = dbUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                PassportApplication app = new PassportApplication();
+                app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
+                app.setStatus(rs.getString("status"));
+                app.setFeedback(rs.getString("feedback"));
+                app.setReferenceId(rs.getString("reference_id"));
+                app.setSubmittedAt(rs.getTimestamp("submitted_at").toLocalDateTime());
+                
+                Timestamp reviewedAt = rs.getTimestamp("reviewed_at");
+                if (reviewedAt != null) {
+                    app.setReviewedAt(reviewedAt.toLocalDateTime());
+                }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
+                
+                applications.add(app);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+
+    public List<PassportApplication> getLatestCardPendingApplicationForEachUser() {
+        List<PassportApplication> applications = new ArrayList<>();
+        String sql = "SELECT * " +
+                     "FROM ( " +
+                     "    SELECT *, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY submitted_at DESC) as rn " +
+                     "    FROM passport_application " +
+                     "    WHERE status = 'Accepted' AND is_card_received = false " +
+                     ") t " +
+                     "WHERE rn = 1 ORDER BY submitted_at DESC";
+
+        try (Connection conn = dbUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                PassportApplication app = new PassportApplication();
+                app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
+                app.setStatus(rs.getString("status"));
+                app.setFeedback(rs.getString("feedback"));
+                app.setReferenceId(rs.getString("reference_id"));
+                app.setSubmittedAt(rs.getTimestamp("submitted_at").toLocalDateTime());
+                
+                Timestamp reviewedAt = rs.getTimestamp("reviewed_at");
+                if (reviewedAt != null) {
+                    app.setReviewedAt(reviewedAt.toLocalDateTime());
+                }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
+                
+                applications.add(app);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+    
     /**
      * Delete a passport application for a user.
      * @param userId The user ID whose application should be deleted.
@@ -286,6 +362,19 @@ public class PassportApplicationDAO {
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, applicationId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateCardReceivedStatus(int applicationId, boolean isReceived) {
+        String sql = "UPDATE passport_application SET is_card_received = ? WHERE application_id = ?";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBoolean(1, isReceived);
+            pstmt.setInt(2, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

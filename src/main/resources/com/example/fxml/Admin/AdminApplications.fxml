@@ -2,12 +2,8 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="950.0" style="-fx-background-color: #F8F4F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AdminApplicationsController">
@@ -15,14 +11,14 @@
 
       <fx:include fx:id="sidebar" source="../components/Sidebar.fxml" />
 
-      <fx:include fx:id="adminHeader" source="../components/AdminHeader.fxml" layoutX="251.0" />
+      <fx:include fx:id="adminHeader" layoutX="251.0" source="../components/AdminHeader.fxml" />
 
-      <Label fx:id="lblApplications" layoutX="275.0" layoutY="115.0" style="-fx-text-fill: #696868;" text="Applications">
+      <Label fx:id="lblApplications" layoutX="261.0" layoutY="112.0" style="-fx-text-fill: #696868;" text="Applications">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;" fitToWidth="true">
+      <ScrollPane fitToWidth="true" layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;">
          <content>
             <VBox fx:id="applicationsVBox" spacing="10.0">
                <!-- This VBox will be populated dynamically by AdminApplicationsController -->

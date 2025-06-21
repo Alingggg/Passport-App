@@ -20,7 +20,7 @@
 
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="250.0" layoutY="50.0" prefHeight="570.0" prefWidth="700.0" style="-fx-background-color: transparent;">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1180.0" prefWidth="670.0" style="-fx-background-color: transparent;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="670.0" style="-fx-background-color: transparent;">
                <children>
                   <Label layoutX="17.0" layoutY="17.0" style="-fx-text-fill: #696868;" text="Application Details">
                      <font>
@@ -250,7 +250,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNavigate" layoutX="503.0" layoutY="1140.0" mnemonicParsing="false" onAction="#navigateBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Navigate" textFill="WHITE">
+                  <Button fx:id="btnNavigate" layoutX="503.0" layoutY="1150.0" mnemonicParsing="false" onAction="#navigateBtn" prefHeight="34.0" prefWidth="168.0" style="-fx-background-color: #40659C; -fx-background-radius: 15;" text="Navigate" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font>

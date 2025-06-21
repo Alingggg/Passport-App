@@ -21,7 +21,7 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="btnViewApplication" layoutX="519.0" layoutY="20.0" onMouseClicked="#handleViewApplicationClick" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15; -fx-cursor: hand;" text="       View Application" textAlignment="CENTER">
+      <Label fx:id="btnViewApplication" alignment="CENTER" layoutX="519.0" layoutY="20.0" onMouseClicked="#handleViewApplicationClick" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #40659C; -fx-text-fill: white; -fx-background-radius: 15; -fx-cursor: hand;" text="View Application" textAlignment="CENTER">
          <font>
             <Font name="Arial Bold" size="10.0" />
          </font>

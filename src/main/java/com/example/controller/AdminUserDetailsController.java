@@ -5,9 +5,13 @@ import com.example.service.ApplicationService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -61,6 +65,7 @@ public class AdminUserDetailsController {
     @FXML private Label lblMinorContactNumber;
     @FXML private Button btnViewValidID;
     @FXML private Button btnViewPSA;
+    @FXML private Button btnReceiveCard;
     @FXML private Button btnAcceptApplication;
     @FXML private Button btnDenyApplication;
 
@@ -80,6 +85,12 @@ public class AdminUserDetailsController {
             showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
             return;
         }
+
+        // Control button visibility based on the application's state
+        if (btnReceiveCard != null) {
+            btnReceiveCard.setVisible(!currentApplication.isCardReceived());
+        }
+
         int applicationId = currentApplication.getApplicationId();
         currentUserProfile = applicationService.getCompleteUserProfile(applicationId);
 
@@ -250,14 +261,14 @@ public class AdminUserDetailsController {
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
             try {
-                javafx.stage.Stage imageStage = new javafx.stage.Stage();
-                javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView(new javafx.scene.image.Image(imageUrl, true));
+                Stage imageStage = new Stage();
+                ImageView imageView = new ImageView(new javafx.scene.image.Image(imageUrl, true));
                 imageView.setPreserveRatio(true);
-                imageView.setFitWidth(800); // Adjust as needed
-                imageView.setFitHeight(600); // Adjust as needed
+                imageView.setFitWidth(800);
+                imageView.setFitHeight(600);
 
-                javafx.scene.layout.StackPane pane = new javafx.scene.layout.StackPane(imageView);
-                javafx.scene.Scene scene = new javafx.scene.Scene(pane);
+                StackPane pane = new StackPane(imageView);
+                Scene scene = new Scene(pane);
 
                 imageStage.setTitle(imageType.replace("_", " ").toUpperCase() + " Image");
                 imageStage.setScene(scene);
@@ -278,5 +289,25 @@ public class AdminUserDetailsController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void receiveCardBtn(ActionEvent event) {
+        // Your existing method body
+        if (currentApplication == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
+            return;
+        }
+
+        boolean success = applicationService.setCardReceived(currentApplication.getApplicationId());
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "The user's card status has been updated to 'Received'.");
+            if (btnReceiveCard != null) {
+                btnReceiveCard.setVisible(false); // Hide the button after successful update
+            }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Failed", "Could not update the card status.");
+        }
     }
 }

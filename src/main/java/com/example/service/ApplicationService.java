@@ -318,6 +318,10 @@ public class ApplicationService {
         return applicationDAO.updateStatusToCancelled(applicationId);
     }
 
+    public boolean setCardReceived(int applicationId) {
+        return applicationDAO.updateCardReceivedStatus(applicationId, true);
+    }
+
     /**
      * Delete all user application data for a given userId.
      * This removes all related records from all user-related tables.

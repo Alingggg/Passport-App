@@ -22,9 +22,9 @@
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;">
+      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;" fitToWidth="true">
          <content>
-            <VBox fx:id="applicationsVBox" prefHeight="452.0" prefWidth="653.0" spacing="10.0">
+            <VBox fx:id="applicationsVBox" spacing="10.0">
                <!-- This VBox will be populated dynamically by AdminApplicationsController -->
             </VBox>
          </content>

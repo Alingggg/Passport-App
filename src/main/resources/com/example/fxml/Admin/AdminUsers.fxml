@@ -23,9 +23,9 @@
          </font>
       </Label>
 
-      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;">
+      <ScrollPane layoutX="261.0" layoutY="162.0" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: white;" fitToWidth="true">
          <content>
-            <VBox fx:id="usersVBox" prefHeight="416.0" prefWidth="656.0" spacing="10.0">
+            <VBox fx:id="usersVBox" spacing="10.0">
                <!-- This VBox will be populated dynamically by AdminUsersController -->
             </VBox>
          </content>

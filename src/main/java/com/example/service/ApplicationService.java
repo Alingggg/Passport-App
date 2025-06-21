@@ -110,6 +110,15 @@ public class ApplicationService {
     }
     
     /**
+     * Checks if the current user has at least one application with 'Accepted' status.
+     * This is a lightweight check for routing purposes.
+     */
+    public boolean hasAcceptedApplication() {
+        Integer userId = UserSession.getInstance().getUserId();
+        return userId != null && applicationDAO.hasAcceptedApplication(userId);
+    }
+
+    /**
      * Gets the most recent application for the current user, regardless of status.
      * This is useful for checking the status of the latest submission.
      */
@@ -289,15 +298,19 @@ public class ApplicationService {
         return true;
     }
 
-    public boolean processApplicationDenial(int userId, String feedback) {
+    public boolean processApplicationDenial(int applicationId, String feedback) {
         // Update application status to "Denied", set feedback, and reviewed_at
-        boolean statusUpdated = applicationDAO.updateStatus(userId, "Denied", feedback);
+        boolean statusUpdated = applicationDAO.updateStatus(applicationId, "Denied", feedback);
         if (!statusUpdated) {
-            System.err.println("Failed to update application status to Denied for user_id: " + userId);
+            System.err.println("Failed to update application status to Denied for application_id: " + applicationId);
             return false;
         }
         
         return true; 
+    }
+
+    public boolean cancelApplication(int applicationId) {
+        return applicationDAO.updateStatusToCancelled(applicationId);
     }
 
     /**

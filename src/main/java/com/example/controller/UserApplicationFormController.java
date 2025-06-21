@@ -250,16 +250,27 @@ public class UserApplicationFormController {
 
         if (existingApplication != null) {
             String status = existingApplication.getStatus();
-            // Prevent new application only if status is Pending or Accepted
-            if ("Pending".equalsIgnoreCase(status) || "Accepted".equalsIgnoreCase(status)) {
+            
+            // Prevent new application if one is still "Pending"
+            if ("Pending".equalsIgnoreCase(status)) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Application In Progress");
                 alert.setHeaderText("Existing Application Found");
-                alert.setContentText("You already have an application with the status '" + status + "'. You cannot submit a new one at this time.");
+                alert.setContentText("You already have a pending application. You cannot submit a new one at this time.");
                 alert.showAndWait();
                 return; // Stop further processing
             }
-            // If the status is "Denied", the method will continue, allowing re-application.
+
+            // Prevent new application if one is "Accepted" but the card has not yet been received.
+            if ("Accepted".equalsIgnoreCase(status) && !existingApplication.isCardReceived()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Application In Progress");
+                alert.setHeaderText("Existing Application Found");
+                alert.setContentText("Your application has been accepted, but the process is not yet complete. You cannot submit a new application until you receive your card.");
+                alert.showAndWait();
+                return; // Stop further processing
+            }
+            // If the status is "Denied", or "Accepted" with card received, the method will continue, allowing re-application.
         }
         
         // Validate required files

@@ -86,7 +86,7 @@
                      <Font name="Arial" size="11.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="rbWidower" layoutX="225.0" layoutY="194.0" mnemonicParsing="false" text="Widow/er" toggleGroup="$civilStatusGroup">
+               <RadioButton fx:id="rbWidow" layoutX="225.0" layoutY="194.0" mnemonicParsing="false" text="Widow" toggleGroup="$civilStatusGroup">
                   <font>
                      <Font name="Arial" size="11.0" />
                   </font>

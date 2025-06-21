@@ -22,7 +22,7 @@ public class UserAlreadyPassportHolderController {
     @FXML
     void reapplyBtn(ActionEvent event) {
         try {
-            Main.setRoot("ApplicationForm");
+            Main.setRoot("UserApplicationForm");
         } catch (IOException e) {
             System.err.println("Error loading ApplicationForm.fxml: " + e.getMessage());
             e.printStackTrace();

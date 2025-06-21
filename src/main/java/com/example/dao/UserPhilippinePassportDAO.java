@@ -8,7 +8,14 @@ import java.sql.*;
 public class UserPhilippinePassportDAO {
     
     public boolean savePhilippinePassport(UserPhilippinePassport philippinePassport) {
-        String sql = "INSERT INTO user_philippine_passport (application_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place, expiry_date) VALUES (?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO user_philippine_passport (application_id, has_philippine_passport, philippine_passport_number, issue_date, issue_place, expiry_date) " +
+                     "VALUES (?, ?, ?, ?, ?, ?) " +
+                     "ON CONFLICT (application_id) DO UPDATE SET " +
+                     "has_philippine_passport = EXCLUDED.has_philippine_passport, " +
+                     "philippine_passport_number = EXCLUDED.philippine_passport_number, " +
+                     "issue_date = EXCLUDED.issue_date, " +
+                     "issue_place = EXCLUDED.issue_place, " +
+                     "expiry_date = EXCLUDED.expiry_date";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -31,7 +38,8 @@ public class UserPhilippinePassportDAO {
                 pstmt.setNull(6, java.sql.Types.DATE);
             }
             
-            return pstmt.executeUpdate() > 0;
+            pstmt.executeUpdate();
+            return true; // Assume success if no exception is thrown
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -18,11 +18,12 @@ CREATE TABLE admin_info (
 CREATE TABLE passport_application (
     application_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    status VARCHAR(20) CHECK (status IN ('Pending', 'Accepted', 'Denied')) DEFAULT 'Pending',
+    status VARCHAR(20) CHECK (status IN ('Pending', 'Accepted', 'Denied', 'Cancelled')) DEFAULT 'Pending',
     feedback TEXT,
     reference_id VARCHAR(50) UNIQUE,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reviewed_at TIMESTAMP NULL,
+    is_card_received BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES account(user_id) ON DELETE CASCADE
 );
 
@@ -92,7 +93,7 @@ CREATE TABLE user_parents (
 CREATE TABLE user_philippine_passport (
     application_id INT PRIMARY KEY,
     has_philippine_passport BOOLEAN DEFAULT FALSE,
-    philippine_passport_number VARCHAR(50) UNIQUE,
+    philippine_passport_number VARCHAR(50),
     issue_date DATE,
     expiry_date DATE,
     issue_place VARCHAR(100),

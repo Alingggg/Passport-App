@@ -8,7 +8,7 @@ import java.sql.*;
 public class UserForeignPassportDAO {
     
     public boolean saveForeignPassport(UserForeignPassport foreignPassport) {
-        String sql = "INSERT INTO user_foreign_passport (application_id, has_foreign_passport, issuing_country, foreign_passport_number) ";
+        String sql = "INSERT INTO user_foreign_passport (application_id, has_foreign_passport, issuing_country, foreign_passport_number) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

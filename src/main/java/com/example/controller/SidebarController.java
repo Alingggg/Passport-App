@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.Main;
 import com.example.model.PassportApplication;
-import com.example.model.UserProfile;
 import com.example.service.ApplicationService;
 import com.example.util.UserSession;
 
@@ -38,9 +37,7 @@ public class SidebarController {
         configureForUserRole();
     }
     
-    /**
-     * Configure the sidebar based on the user's role from UserSession
-     */
+    // Configure the sidebar based on the user's role from UserSession
     private void configureForUserRole() {
         boolean isAdmin = userSession.isAdmin();
         
@@ -53,9 +50,7 @@ public class SidebarController {
         System.out.println("Sidebar initialized for role: " + userSession.getRole());
     }
     
-    /**
-     * Set the active tab for the current user type
-     */
+    // Set the active tab for the current user type
     public void setActiveTab(String tabId) {
         // Reset all buttons to default style
         String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: white; -fx-background-radius: 15;";
@@ -85,12 +80,13 @@ public class SidebarController {
     @FXML
     void profileBtn(ActionEvent event) {
         try {
-            PassportApplication application = applicationService.getLatestApplication();
-
-            if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
+            // Use the lightweight check to determine if an accepted profile exists.
+            if (applicationService.hasAcceptedApplication()) {
+                // An accepted profile exists, so the user has a valid passport.
                 System.out.println("User has an accepted application. Navigating to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");
             } else {
+                // No accepted profile found. Navigate to the generic user profile page.
                 System.out.println("User does not have an accepted application. Navigating to UserProfile...");
                 Main.setRoot("UserProfile");
             }
@@ -103,21 +99,33 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
-            // 1. Check if user has a PENDING application
-            if (applicationService.hasPendingApplication()) {
-                System.out.println("User has a pending application. Navigating to UserApplicationStatus...");
-                Main.setRoot("UserApplicationStatus");
-            } else {
-                // 2. If not, check if they have an accepted passport to determine re-application flow
-                UserProfile acceptedProfile = applicationService.getLatestAcceptedUserProfile();
-                if (acceptedProfile != null) {
-                    System.out.println("User has an accepted passport. Navigating to UserAlreadyPassportHolder for reapplication...");
-                    Main.setRoot("UserAlreadyPassportHolder");
+            // Get the user's most recent application
+            PassportApplication latestApplication = applicationService.getLatestApplication();
+
+            if (latestApplication != null) {
+                String status = latestApplication.getStatus().toUpperCase();
+                boolean isCardReceived = latestApplication.isCardReceived();
+
+                // These statuses mean the application is "active" and the user should see its status.
+                if ("PENDING".equals(status) || "DENIED".equals(status) || ("ACCEPTED".equals(status) && !isCardReceived)) {
+                    System.out.println("User has an active application. Navigating to UserApplicationStatus...");
+                    Main.setRoot("UserApplicationStatus");
                 } else {
-                    // 3. No pending and no accepted application, so it's a fresh application
-                    System.out.println("User has no application. Navigating to UserNotPassportHolder...");
-                    Main.setRoot("UserNotPassportHolder");
+                    // This covers "Cancelled" status, or "Accepted" where the card has been received.
+                    // In these cases, the user should be able to start a new application.
+                    // We check if they have any other accepted passport to decide which starting page to show.
+                    if (applicationService.hasAcceptedApplication()) {
+                        System.out.println("User has a completed/cancelled application but also an accepted one. Navigating to UserAlreadyPassportHolder...");
+                        Main.setRoot("UserAlreadyPassportHolder");
+                    } else {
+                        System.out.println("User's latest application is completed/cancelled, and they have no other accepted one. Navigating to UserNotPassportHolder...");
+                        Main.setRoot("UserNotPassportHolder");
+                    }
                 }
+            } else {
+                // No application record exists at all. This is a first-time applicant.
+                System.out.println("User has no application. Navigating to UserNotPassportHolder...");
+                Main.setRoot("UserNotPassportHolder");
             }
         } catch (IOException e) {
             System.err.println("Error loading FXML from SidebarController applicationBtn: " + e.getMessage());

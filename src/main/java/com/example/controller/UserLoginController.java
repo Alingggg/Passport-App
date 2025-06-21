@@ -5,7 +5,6 @@ import java.io.IOException;
 import com.example.Main;
 import com.example.dao.AccountDAO;
 import com.example.model.Account;
-import com.example.model.PassportApplication;
 import com.example.service.ApplicationService;
 import com.example.util.PasswordUtil;
 import com.example.util.UserSession;
@@ -116,9 +115,8 @@ public class UserLoginController {
     // Renamed and updated logic
     private void routeUserBasedOnApplicationStatus() {
         try {
-            PassportApplication application = applicationService.getLatestApplication(); 
-            
-            if (application != null && "ACCEPTED".equalsIgnoreCase(application.getStatus())) {
+            // Use the lightweight check to determine if an accepted profile exists.
+            if (applicationService.hasAcceptedApplication()) {
                 // User has an accepted application - go to UserPassportInfo
                 System.out.println("User has an accepted application. Routing to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");

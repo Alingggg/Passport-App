@@ -4,23 +4,28 @@ import java.time.LocalDateTime;
 
 public class PassportApplication {
     private Integer applicationId;
+    private Integer userId;
     private String status;
     private String feedback;
     private String referenceId;
     private LocalDateTime submittedAt;
     private LocalDateTime reviewedAt;
+    private boolean isCardReceived;
     
     // Constructors
     public PassportApplication() {}
     
-    public PassportApplication(Integer applicationId) {
-        this.applicationId = applicationId;
+    public PassportApplication(Integer userId) {
+        this.userId = userId;
         this.status = "Pending";
     }
     
     // Getters and Setters
     public Integer getApplicationId() { return applicationId; }
     public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+
+    public Integer getUserId() { return userId; }
+    public void setUserId(Integer userId) { this.userId = userId; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
@@ -36,4 +41,7 @@ public class PassportApplication {
     
     public LocalDateTime getReviewedAt() { return reviewedAt; }
     public void setReviewedAt(LocalDateTime reviewedAt) { this.reviewedAt = reviewedAt; }
+
+    public boolean isCardReceived() { return isCardReceived; }
+    public void setCardReceived(boolean cardReceived) { isCardReceived = cardReceived; }
 }

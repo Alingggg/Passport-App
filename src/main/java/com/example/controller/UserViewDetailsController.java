@@ -153,13 +153,21 @@ public class UserViewDetailsController {
             btnNavigate.setOnAction(event -> {
                 if (currentUserProfile != null && currentUserProfile.getApplication() != null) {
                     Integer applicationId = currentUserProfile.getApplication().getApplicationId();
-                    boolean deleted = applicationService.deleteCompleteApplication(applicationId);
-                    if (deleted) {
-                        showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been cancelled.");
+                    
+                    boolean cancelled = applicationService.cancelApplication(applicationId);
+
+                    if (cancelled) {
+                        showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been successfully cancelled.");
                         try {
-                            Main.setRoot("UserNotPassportHolder");
+                            // Check if user has a previously accepted passport to determine navigation
+                            UserProfile acceptedProfile = applicationService.getLatestAcceptedUserProfile();
+                            if (acceptedProfile != null) {
+                                Main.setRoot("UserAlreadyPassportHolder");
+                            } else {
+                                Main.setRoot("UserNotPassportHolder");
+                            }
                         } catch (IOException e) {
-                            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not go to application start.");
+                            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not navigate after cancellation.");
                         }
                     } else {
                         showAlert(Alert.AlertType.ERROR, "Error", "Failed to cancel your application. Please try again.");

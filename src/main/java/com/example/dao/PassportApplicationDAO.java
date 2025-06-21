@@ -16,14 +16,17 @@ public class PassportApplicationDAO {
      * @return The generated application_id, or -1 on failure.
      */
     public int saveApplication(PassportApplication application) {
-        String sql = "INSERT INTO passport_application (application_id, reference_id, status, feedback, submitted_at, reviewed_at) VALUES (?, ?, 'Pending', NULL, CURRENT_TIMESTAMP, NULL)";
+        // Corrected SQL to insert user_id and set is_card_received to false by default.
+        // The application_id is generated automatically by the database.
+        String sql = "INSERT INTO passport_application (user_id, reference_id, status, feedback, submitted_at, reviewed_at, is_card_received) VALUES (?, ?, 'Pending', NULL, CURRENT_TIMESTAMP, NULL, FALSE)";
         
         try (Connection conn = dbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             String referenceId = "PA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             
-            pstmt.setInt(1, application.getApplicationId());
+            // Use getUserId() instead of getApplicationId()
+            pstmt.setInt(1, application.getUserId());
             pstmt.setString(2, referenceId);
             
             int affectedRows = pstmt.executeUpdate();
@@ -42,7 +45,7 @@ public class PassportApplicationDAO {
     }
 
     public PassportApplication findByApplicationId(Integer applicationId) {
-        String sql = "SELECT application_id, status, feedback, reference_id, submitted_at, reviewed_at " +
+        String sql = "SELECT application_id, user_id, status, feedback, reference_id, submitted_at, reviewed_at, is_card_received " +
                     "FROM passport_application WHERE application_id = ?";
         
         try (Connection conn = dbUtil.getConnection();
@@ -54,6 +57,7 @@ public class PassportApplicationDAO {
             if (rs.next()) {
                 PassportApplication app = new PassportApplication();
                 app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
                 app.setStatus(rs.getString("status"));
                 app.setFeedback(rs.getString("feedback"));
                 app.setReferenceId(rs.getString("reference_id"));
@@ -63,6 +67,7 @@ public class PassportApplicationDAO {
                 if (reviewedAt != null) {
                     app.setReviewedAt(reviewedAt.toLocalDateTime());
                 }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
                 
                 return app;
             }
@@ -124,6 +129,20 @@ public class PassportApplicationDAO {
         return false;
     }
 
+    public boolean hasAcceptedApplication(int userId) {
+        String sql = "SELECT 1 FROM passport_application WHERE user_id = ? AND status = 'Accepted' LIMIT 1";
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // Returns true if a record is found
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean updateStatus(Integer applicationId, String status, String feedback) {
         String sql = "UPDATE passport_application SET status = ?, feedback = ?, reviewed_at = CURRENT_TIMESTAMP WHERE application_id = ?";
 
@@ -134,6 +153,20 @@ public class PassportApplicationDAO {
             pstmt.setString(2, feedback);
             pstmt.setInt(3, applicationId);
 
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateStatusToCancelled(Integer applicationId) {
+        String sql = "UPDATE passport_application SET status = 'Cancelled' WHERE application_id = ?";
+
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, applicationId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

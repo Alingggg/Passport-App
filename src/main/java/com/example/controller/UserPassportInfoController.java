@@ -222,8 +222,8 @@ public class UserPassportInfoController {
         // UserMinorInfo
         UserMinorInfo minorInfo = profile.getMinorInfo();
         if (minorInfo != null) {
-            setText(lblIsMinor, minorInfo.getIsMinor() ? "YES" : "NO");
-            if (minorInfo.getIsMinor()) {
+            setText(lblIsMinor, minorInfo.isMinor() ? "YES" : "NO");
+            if (minorInfo.isMinor()) {
                 setText(lblTravelingCompanion, minorInfo.getCompanionFullName());
                 setText(lblCompanionRelationship, minorInfo.getCompanionRelationship());
                 setText(lblMinorContactNumber, minorInfo.getCompanionContactNumber());

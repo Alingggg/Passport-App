@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class UserPhilippinePassport {
     private Integer applicationId;
-    private Boolean hasPhilippinePassport;
+    private boolean hasPhilippinePassport;
     private String philippinePassportNumber;
     private LocalDate issueDate;
     private LocalDate expiryDate;
@@ -22,8 +22,8 @@ public class UserPhilippinePassport {
     public Integer getApplicationId() { return applicationId; }
     public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
 
-    public Boolean getHasPhilippinePassport() { return hasPhilippinePassport; }
-    public void setHasPhilippinePassport(Boolean hasPhilippinePassport) { this.hasPhilippinePassport = hasPhilippinePassport; }
+    public boolean getHasPhilippinePassport() { return hasPhilippinePassport; }
+    public void setHasPhilippinePassport(boolean hasPhilippinePassport) { this.hasPhilippinePassport = hasPhilippinePassport; }
 
     public String getPhilippinePassportNumber() { return philippinePassportNumber; }
     public void setPhilippinePassportNumber(String philippinePassportNumber) { this.philippinePassportNumber = philippinePassportNumber; }

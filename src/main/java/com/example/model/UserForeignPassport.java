@@ -2,7 +2,7 @@ package com.example.model;
 
 public class UserForeignPassport {
     private Integer applicationId;
-    private Boolean hasForeignPassport;
+    private boolean hasForeignPassport;
     private String issuingCountry;
     private String foreignPassportNumber;
     
@@ -18,8 +18,8 @@ public class UserForeignPassport {
     public Integer getApplicationId() { return applicationId; }
     public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
 
-    public Boolean getHasForeignPassport() { return hasForeignPassport; }
-    public void setHasForeignPassport(Boolean hasForeignPassport) { this.hasForeignPassport = hasForeignPassport; }
+    public boolean getHasForeignPassport() { return hasForeignPassport; }
+    public void setHasForeignPassport(boolean hasForeignPassport) { this.hasForeignPassport = hasForeignPassport; }
     
     public String getIssuingCountry() { return issuingCountry; }
     public void setIssuingCountry(String issuingCountry) { this.issuingCountry = issuingCountry; }

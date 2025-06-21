@@ -14,7 +14,7 @@ public class UserMinorInfoDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, minorInfo.getApplicationId());
-            pstmt.setBoolean(2, minorInfo.getIsMinor());
+            pstmt.setBoolean(2, minorInfo.isMinor());
             pstmt.setString(3, minorInfo.getCompanionFullName());
             pstmt.setString(4, minorInfo.getCompanionRelationship());
             pstmt.setString(5, minorInfo.getCompanionContactNumber());

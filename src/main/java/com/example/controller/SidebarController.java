@@ -107,7 +107,7 @@ public class SidebarController {
                 boolean isCardReceived = latestApplication.isCardReceived();
 
                 // These statuses mean the application is "active" and the user should see its status.
-                if ("PENDING".equals(status) || "DENIED".equals(status) || ("ACCEPTED".equals(status) && !isCardReceived)) {
+                if ("PENDING".equalsIgnoreCase(status) || "DENIED".equalsIgnoreCase(status) || ("ACCEPTED".equalsIgnoreCase(status) && !isCardReceived)) {
                     System.out.println("User has an active application. Navigating to UserApplicationStatus...");
                     Main.setRoot("UserApplicationStatus");
                 } else {

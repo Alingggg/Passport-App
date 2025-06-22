@@ -159,36 +159,24 @@
                      </font>
                   </Label>
                   <Label fx:id="lblCitizenshipAcquiredBy" layoutX="163.0" layoutY="642.0" prefHeight="27.0" prefWidth="506.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="18.0" layoutY="688.0" prefHeight="16.0" prefWidth="206.0" style="-fx-text-fill: #696868;" text="Are you a foreign passport holder?">
+                  <Label layoutX="18.0" layoutY="688.0" prefHeight="16.0" prefWidth="129.0" style="-fx-text-fill: #696868;" text="Foreign Passport No.:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblForeignPassportHolder" layoutX="223.0" layoutY="682.0" prefHeight="27.0" prefWidth="88.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="317.0" layoutY="688.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
+                  <Label layoutX="387.0" layoutY="688.0" prefHeight="16.0" prefWidth="51.0" style="-fx-text-fill: #696868;" text="Country:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblCountry" layoutX="373.0" layoutY="682.0" prefHeight="27.0" prefWidth="94.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="475.0" layoutY="688.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
+                  <Label fx:id="lblCountry" layoutX="444.0" layoutY="682.0" prefHeight="27.0" prefWidth="226.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label fx:id="lblForeignPassportNo" layoutX="151.0" layoutY="682.0" prefHeight="27.0" prefWidth="225.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label layoutX="18.0" layoutY="728.0" prefHeight="16.0" prefWidth="142.0" style="-fx-text-fill: #696868;" text="Philippine Passport No.:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblForeignPassportNo" layoutX="558.0" layoutY="682.0" prefHeight="27.0" prefWidth="111.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="18.0" layoutY="728.0" prefHeight="16.0" prefWidth="290.0" style="-fx-text-fill: #696868;" text="Have you ever been issued a Philippine Passport? ">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblPhilippinePassportHolder" layoutX="310.0" layoutY="722.0" prefHeight="27.0" prefWidth="89.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="407.0" layoutY="728.0" prefHeight="16.0" prefWidth="81.0" style="-fx-text-fill: #696868;" text="Passport No.:">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblPhilippinePassportNo" layoutX="492.0" layoutY="722.0" prefHeight="27.0" prefWidth="177.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label fx:id="lblPhilippinePassportNo" layoutX="161.0" layoutY="722.0" prefHeight="27.0" prefWidth="509.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                   <Label layoutX="18.0" layoutY="768.0" prefHeight="16.0" prefWidth="66.0" style="-fx-text-fill: #696868;" text="Issue Date:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
@@ -201,30 +189,24 @@
                      </font>
                   </Label>
                   <Label fx:id="lblPlaceOfIssue" layoutX="477.0" layoutY="762.0" prefHeight="27.0" prefWidth="193.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="18.0" layoutY="808.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Are you 18 years old below?">
+                  <Label layoutX="18.0" layoutY="803.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblIsMinor" layoutX="192.0" layoutY="802.0" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="318.0" layoutY="804.0" prefHeight="26.0" prefWidth="178.0" style="-fx-text-fill: #696868;" text="Name of traveling companion:">
+                  <Label fx:id="lblTravelingCompanion" layoutX="197.0" layoutY="802.0" prefHeight="27.0" prefWidth="173.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label layoutX="380.0" layoutY="808.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblTravelingCompanion" layoutX="497.0" layoutY="802.0" prefHeight="27.0" prefWidth="173.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="18.0" layoutY="848.0" prefHeight="16.0" prefWidth="162.0" style="-fx-text-fill: #696868;" text="Companion's Relationship:">
+                  <Label fx:id="lblCompanionRelationship" layoutX="544.0" layoutY="802.0" prefHeight="27.0" prefWidth="126.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label layoutX="18.0" layoutY="845.0" prefHeight="16.0" prefWidth="170.0" style="-fx-text-fill: #696868;" text="Companion Contact Number:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblCompanionRelationship" layoutX="182.0" layoutY="842.0" prefHeight="27.0" prefWidth="134.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
-                  <Label layoutX="419.0" layoutY="848.0" prefHeight="16.0" prefWidth="100.0" style="-fx-text-fill: #696868;" text="Contact Number:">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblMinorContactNumber" layoutX="524.0" layoutY="843.0" prefHeight="27.0" prefWidth="145.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
+                  <Label fx:id="lblMinorContactNumber" layoutX="190.0" layoutY="841.0" prefHeight="27.0" prefWidth="145.0" style="-fx-border-color: #D3D3D3; -fx-border-radius: 5; -fx-padding: 3 5 3 5;" />
                   <Label layoutX="18.0" layoutY="908.0" style="-fx-text-fill: #696868;" text="Documents">
                      <font>
                         <Font name="Arial Bold" size="21.0" />

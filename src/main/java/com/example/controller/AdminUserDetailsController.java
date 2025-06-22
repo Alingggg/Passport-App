@@ -25,6 +25,7 @@ public class AdminUserDetailsController {
 
     @FXML private SidebarController sidebarController;
 
+    // Personal Information Labels
     @FXML private Label lblLastName;
     @FXML private Label lblFirstName;
     @FXML private Label lblMiddleName;
@@ -33,41 +34,52 @@ public class AdminUserDetailsController {
     @FXML private Label lblCompleteAddress;
     @FXML private Label lblCivilStatus;
     @FXML private Label lblGender;
+
+    // Contact Information Labels
     @FXML private Label lblMobileNumber1;
     @FXML private Label lblMobileNumber2;
     @FXML private Label lblTelephoneNumber1;
     @FXML private Label lblTelephoneNumber2;
     @FXML private Label lblEmailAddress1;
     @FXML private Label lblEmailAddress2;
+
+    // Work Information Labels
     @FXML private Label lblOccupation1;
     @FXML private Label lblOccupation2;
     @FXML private Label lblWorkAddress1;
     @FXML private Label lblWorkAddress2;
     @FXML private Label lblWorkTelephone1;
     @FXML private Label lblWorkTelephone2;
+
+    // Family Information Labels
     @FXML private Label lblSpouseName;
     @FXML private Label lblSpouseCitizenship;
     @FXML private Label lblFatherName;
     @FXML private Label lblMotherName;
     @FXML private Label lblFatherCitizenship;
     @FXML private Label lblMotherCitizenship;
+
+    // Citizenship Information Label
     @FXML private Label lblCitizenshipAcquiredBy;
-    @FXML private Label lblForeignPassportHolder;
+
+    // Foreign Passport Information Labels
     @FXML private Label lblCountry;
     @FXML private Label lblForeignPassportNo;
-    @FXML private Label lblPhilippinePassportHolder;
+
+    // Philippine Passport Information Labels
     @FXML private Label lblPhilippinePassportNo;
     @FXML private Label lblIssueDate;
     @FXML private Label lblPlaceOfIssue;
-    @FXML private Label lblIsMinor;
+
+    // Minor Information Labels
     @FXML private Label lblTravelingCompanion;
     @FXML private Label lblCompanionRelationship;
     @FXML private Label lblMinorContactNumber;
+
+    // Buttons
     @FXML private Button btnViewValidID;
     @FXML private Button btnViewPSA;
     @FXML private Button btnReceiveCard;
-    @FXML private Button btnAcceptApplication;
-    @FXML private Button btnDenyApplication;
 
     private ApplicationService applicationService = new ApplicationService();
     private UserProfile currentUserProfile;
@@ -105,6 +117,7 @@ public class AdminUserDetailsController {
     private void populateFields(UserProfile profile) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 
+        // UserInfo
         UserInfo userInfo = profile.getUserInfo();
         if (userInfo != null) {
             setText(lblLastName, userInfo.getLastName());
@@ -120,6 +133,7 @@ public class AdminUserDetailsController {
             setText(lblCitizenshipAcquiredBy, userInfo.getAcquiredCitizenship());
         }
 
+        // UserContact
         List<UserContact> contacts = profile.getUserContacts();
         if (contacts != null) {
             if (contacts.size() > 0 && contacts.get(0) != null) {
@@ -136,6 +150,7 @@ public class AdminUserDetailsController {
             }
         }
 
+        // UserWork
         List<UserWork> works = profile.getUserWorks();
         if (works != null) {
             if (works.size() > 0 && works.get(0) != null) {
@@ -152,6 +167,7 @@ public class AdminUserDetailsController {
             }
         }
 
+        // UserSpouse
         UserSpouse spouse = profile.getSpouse();
         if (spouse != null) {
             setText(lblSpouseName, spouse.getSpouseFullName());
@@ -161,6 +177,7 @@ public class AdminUserDetailsController {
             setText(lblSpouseCitizenship, "N/A");
         }
 
+        // UserParents
         UserParents parents = profile.getParents();
         if (parents != null) {
             setText(lblFatherName, parents.getFatherFullName());
@@ -169,9 +186,9 @@ public class AdminUserDetailsController {
             setText(lblMotherCitizenship, parents.getMotherCitizenship());
         }
 
+        // UserForeignPassport
         UserForeignPassport foreignPassport = profile.getForeignPassport();
         if (foreignPassport != null) {
-            setText(lblForeignPassportHolder, foreignPassport.getHasForeignPassport() ? "YES" : "NO");
             if (foreignPassport.getHasForeignPassport()) {
                 setText(lblCountry, foreignPassport.getIssuingCountry());
                 setText(lblForeignPassportNo, foreignPassport.getForeignPassportNumber());
@@ -181,9 +198,9 @@ public class AdminUserDetailsController {
             }
         }
 
+        // UserPhilippinePassport
         UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
         if (philippinePassport != null) {
-            setText(lblPhilippinePassportHolder, philippinePassport.getHasPhilippinePassport() ? "YES" : "NO");
             if (philippinePassport.getHasPhilippinePassport()) {
                 setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
                 if (philippinePassport.getIssueDate() != null) {
@@ -197,9 +214,9 @@ public class AdminUserDetailsController {
             }
         }
 
+        // UserMinorInfo
         UserMinorInfo minorInfo = profile.getMinorInfo();
         if (minorInfo != null) {
-            setText(lblIsMinor, minorInfo.isMinor() ? "YES" : "NO");
             if (minorInfo.isMinor()) {
                 setText(lblTravelingCompanion, minorInfo.getCompanionFullName());
                 setText(lblCompanionRelationship, minorInfo.getCompanionRelationship());
@@ -211,7 +228,7 @@ public class AdminUserDetailsController {
             }
         }
     }
-
+    
     private void configureImageViewButtons(List<com.example.model.Image> images) {
         boolean hasValidId = false;
         boolean hasPsa = false;
@@ -225,11 +242,19 @@ public class AdminUserDetailsController {
                 }
             }
         }
-        btnViewValidID.setDisable(!hasValidId);
-        btnViewPSA.setDisable(!hasPsa);
+        
+        // Only modify buttons if they exist in the FXML
+        if (btnViewValidID != null) {
+            btnViewValidID.setDisable(!hasValidId);
+        }
+        
+        if (btnViewPSA != null) {
+            btnViewPSA.setDisable(!hasPsa);
+        }
     }
 
     private void setText(Label label, String text) {
+        // Only set text if the label exists in the FXML
         if (label != null) {
             label.setText(text != null && !text.trim().isEmpty() ? text : "N/A");
         }
@@ -283,17 +308,8 @@ public class AdminUserDetailsController {
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
     @FXML
     private void receiveCardBtn(ActionEvent event) {
-        // Your existing method body
         if (currentApplication == null) {
             showAlert(Alert.AlertType.ERROR, "Error", "No application selected.");
             return;
@@ -309,5 +325,13 @@ public class AdminUserDetailsController {
         } else {
             showAlert(Alert.AlertType.ERROR, "Failed", "Could not update the card status.");
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

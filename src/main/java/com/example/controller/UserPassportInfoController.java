@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
-
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -67,18 +66,15 @@ public class UserPassportInfoController {
     @FXML private Label lblCitizenshipAcquiredBy;
 
     // Foreign Passport Information Labels
-    @FXML private Label lblForeignPassportHolder;
-    @FXML private Label lblCountry;
     @FXML private Label lblForeignPassportNo;
+    @FXML private Label lblCountry;
 
     // Philippine Passport Information Labels
-    @FXML private Label lblPhilippinePassportHolder;
     @FXML private Label lblPhilippinePassportNo;
     @FXML private Label lblIssueDate;
     @FXML private Label lblPlaceOfIssue;
 
     // Minor Information Labels
-    @FXML private Label lblIsMinor;
     @FXML private Label lblTravelingCompanion;
     @FXML private Label lblCompanionRelationship;
     @FXML private Label lblMinorContactNumber;
@@ -179,7 +175,6 @@ public class UserPassportInfoController {
             setText(lblSpouseCitizenship, "N/A");
         }
 
-
         // UserParents
         UserParents parents = profile.getParents();
         if (parents != null) {
@@ -192,7 +187,6 @@ public class UserPassportInfoController {
         // UserForeignPassport
         UserForeignPassport foreignPassport = profile.getForeignPassport();
         if (foreignPassport != null) {
-            setText(lblForeignPassportHolder, foreignPassport.getHasForeignPassport() ? "YES" : "NO");
             if (foreignPassport.getHasForeignPassport()) {
                 setText(lblCountry, foreignPassport.getIssuingCountry());
                 setText(lblForeignPassportNo, foreignPassport.getForeignPassportNumber());
@@ -205,7 +199,6 @@ public class UserPassportInfoController {
         // UserPhilippinePassport
         UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
         if (philippinePassport != null) {
-            setText(lblPhilippinePassportHolder, philippinePassport.getHasPhilippinePassport() ? "YES" : "NO");
             if (philippinePassport.getHasPhilippinePassport()) {
                 setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
                 if (philippinePassport.getIssueDate() != null) {
@@ -222,7 +215,6 @@ public class UserPassportInfoController {
         // UserMinorInfo
         UserMinorInfo minorInfo = profile.getMinorInfo();
         if (minorInfo != null) {
-            setText(lblIsMinor, minorInfo.isMinor() ? "YES" : "NO");
             if (minorInfo.isMinor()) {
                 setText(lblTravelingCompanion, minorInfo.getCompanionFullName());
                 setText(lblCompanionRelationship, minorInfo.getCompanionRelationship());
@@ -248,12 +240,19 @@ public class UserPassportInfoController {
                 }
             }
         }
-        btnViewValidID.setDisable(!hasValidId);
-        btnViewPSA.setDisable(!hasPsa);
+        
+        // Only modify buttons if they exist in the FXML
+        if (btnViewValidID != null) {
+            btnViewValidID.setDisable(!hasValidId);
+        }
+        
+        if (btnViewPSA != null) {
+            btnViewPSA.setDisable(!hasPsa);
+        }
     }
 
-
     private void setText(Label label, String text) {
+        // Only set text if the label exists in the FXML
         if (label != null) {
             label.setText(text != null && !text.trim().isEmpty() ? text : "N/A");
         }
@@ -307,7 +306,6 @@ public class UserPassportInfoController {
             showAlert(Alert.AlertType.INFORMATION, "No Image", "No " + imageType.replace("_", " ") + " image found for this application.");
         }
     }
-
 
     @FXML
     void backBtn(ActionEvent event) {

@@ -93,7 +93,8 @@ CREATE TABLE user_parents (
 CREATE TABLE user_philippine_passport (
     application_id INT PRIMARY KEY,
     has_philippine_passport BOOLEAN DEFAULT FALSE,
-    philippine_passport_number VARCHAR(50),
+    old_philippine_passport_number VARCHAR(50),
+    current_philippine_passport_number VARCHAR(50) UNIQUE,
     issue_date DATE,
     expiry_date DATE,
     issue_place VARCHAR(100),

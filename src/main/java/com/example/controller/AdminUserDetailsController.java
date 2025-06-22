@@ -9,12 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class AdminUserDetailsController {
     private static PassportApplication currentApplication;
@@ -202,7 +204,7 @@ public class AdminUserDetailsController {
         UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
         if (philippinePassport != null) {
             if (philippinePassport.getHasPhilippinePassport()) {
-                setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
+                setText(lblPhilippinePassportNo, philippinePassport.getCurrentPhilippinePassportNumber());
                 if (philippinePassport.getIssueDate() != null) {
                     setText(lblIssueDate, philippinePassport.getIssueDate().format(dateFormatter));
                 }
@@ -315,16 +317,34 @@ public class AdminUserDetailsController {
             return;
         }
 
-        boolean success = applicationService.setCardReceived(currentApplication.getApplicationId());
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Confirm Card Receipt");
+        dialog.setHeaderText("Enter the Place of Issue for the passport.");
+        dialog.setContentText("Place of Issue:");
 
-        if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Success", "The user's card status has been updated to 'Received'.");
-            if (btnReceiveCard != null) {
-                btnReceiveCard.setVisible(false); // Hide the button after successful update
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(issuePlace -> {
+            if (issuePlace.trim().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Validation Error", "Place of Issue cannot be empty.");
+                return;
             }
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Failed", "Could not update the card status.");
-        }
+
+            boolean success = applicationService.setCardReceived(currentApplication.getApplicationId(), issuePlace.trim());
+
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "The user's card status has been updated to 'Received'.");
+                if (btnReceiveCard != null) {
+                    btnReceiveCard.setVisible(false);
+                }
+                // Update the UI label instantly
+                if (lblPlaceOfIssue != null) {
+                    setText(lblPlaceOfIssue, issuePlace.trim());
+                }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Failed", "Could not update the card status and place of issue.");
+            }
+        });
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

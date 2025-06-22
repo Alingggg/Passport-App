@@ -182,7 +182,7 @@ public class ApplicationFormMapper {
                     philippinePassport.setIssuePlace(lblPlaceOfIssue.getText());
                 }
                 if (lblPhilippinePassportNo.getText() != null && !lblPhilippinePassportNo.getText().isEmpty()) {
-                    philippinePassport.setPhilippinePassportNumber(lblPhilippinePassportNo.getText());
+                    philippinePassport.setOldPhilippinePassportNumber(lblPhilippinePassportNo.getText());
                 }
             }
         }

@@ -200,7 +200,7 @@ public class UserPassportInfoController {
         UserPhilippinePassport philippinePassport = profile.getPhilippinePassport();
         if (philippinePassport != null) {
             if (philippinePassport.getHasPhilippinePassport()) {
-                setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
+                setText(lblPhilippinePassportNo, philippinePassport.getCurrentPhilippinePassportNumber());
                 if (philippinePassport.getIssueDate() != null) {
                     setText(lblIssueDate, philippinePassport.getIssueDate().format(dateFormatter));
                 }

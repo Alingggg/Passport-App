@@ -130,7 +130,7 @@ public class AdminUsersController {
                 String expiryDateStr = "N/A";
 
                 if (philippinePassport != null && philippinePassport.getHasPhilippinePassport()) {
-                    passportId = philippinePassport.getPhilippinePassportNumber();
+                    passportId = philippinePassport.getCurrentPhilippinePassportNumber();
                     if (philippinePassport.getIssueDate() != null) {
                         issueDateStr = philippinePassport.getIssueDate().format(dateFormatter);
                     }

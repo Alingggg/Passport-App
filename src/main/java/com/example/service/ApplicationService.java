@@ -160,6 +160,64 @@ public class ApplicationService {
         return getCompleteUserProfile(acceptedAppId);
     }
 
+    public boolean processApplicationAcceptance(int applicationId) {
+        // 1. Update application status to "Accepted" and reviewed_at
+        boolean statusUpdated = applicationDAO.updateStatus(applicationId, "Accepted", null);
+        if (!statusUpdated) {
+            System.err.println("Failed to update application status to Accepted for application_id: " + applicationId);
+            return false;
+        }
+
+        // 2. Fetch UserInfo to determine age for expiry calculation
+        UserInfo userInfo = userInfoDAO.findByApplicationId(applicationId);
+
+        // 3. Fetch existing passport data to preserve old number, or create new if none exists.
+        UserPhilippinePassport passportDetails = philippinePassportDAO.findByApplicationId(applicationId);
+        if (passportDetails == null) {
+            passportDetails = new UserPhilippinePassport();
+            passportDetails.setApplicationId(applicationId);
+        }
+        
+        passportDetails.setHasPhilippinePassport(true); // Mark as having a Philippine passport
+
+        // 4. Generate NEW passport number and set it as the CURRENT one
+        Random random = new Random();
+        int randomNumber = 1000000 + random.nextInt(9000000); // Generates a 7-digit number
+        String passportNumber = "P" + randomNumber;
+        passportDetails.setCurrentPhilippinePassportNumber(passportNumber);
+
+        // 5. Set issue_date to current date (date of acceptance)
+        LocalDate issueDate = LocalDate.now();
+        passportDetails.setIssueDate(issueDate);
+
+        // 6. Calculate expiry_date based on issue_date and user's age at time of issue
+        LocalDate expiryDate;
+        if (userInfo != null && userInfo.getBirthDate() != null) {
+            int ageAtIssue = Period.between(userInfo.getBirthDate(), issueDate).getYears();
+            if (ageAtIssue < 18) {
+                expiryDate = issueDate.plusYears(5); // 5-year validity for minors
+            } else {
+                expiryDate = issueDate.plusYears(10); // 10-year validity for adults
+            }
+        } else {
+            // Fallback if age cannot be determined
+            System.err.println("User birth date not found for application_id: " + applicationId + ". Defaulting passport expiry to 10 years from issue.");
+            expiryDate = issueDate.plusYears(10);
+        }
+        passportDetails.setExpiryDate(expiryDate);
+
+        // 7. Set issue_place to a default value
+        passportDetails.setIssuePlace("N/A");
+
+        // 8. Save/Update UserPhilippinePassport record
+        boolean passportSaved = philippinePassportDAO.savePhilippinePassport(passportDetails);
+        if (!passportSaved) {
+            System.err.println("Failed to save/update Philippine passport details for application_id: " + applicationId + " after application acceptance.");
+        }
+        
+        return passportSaved;
+    }
+
     public boolean updateCompleteUserProfile(UserProfile profile) {
         Integer userId = UserSession.getInstance().getUserId();
         if (userId == null) {
@@ -242,67 +300,6 @@ public class ApplicationService {
         return profile;
     }
 
-    public boolean processApplicationAcceptance(int applicationId) {
-        // 1. Update application status to "Accepted" and reviewed_at
-        boolean statusUpdated = applicationDAO.updateStatus(applicationId, "Accepted", null);
-        if (!statusUpdated) {
-            System.err.println("Failed to update application status to Accepted for application_id: " + applicationId);
-            return false;
-        }
-
-        // 2. Fetch UserInfo to determine age for expiry calculation
-        UserInfo userInfo = userInfoDAO.findByApplicationId(applicationId);
-        // It's crucial that userInfo and birthDate are available.
-        // If not, the age calculation and thus expiry date might be incorrect.
-        // For this example, we'll proceed, but in a real app, this might warrant stricter error handling
-        // or ensuring data integrity upstream.
-
-        // 3. Prepare UserPhilippinePassport details
-        UserPhilippinePassport passportDetails = new UserPhilippinePassport();
-        passportDetails.setApplicationId(applicationId);
-        passportDetails.setHasPhilippinePassport(true); // Mark as having a Philippine passport
-
-        // 4. Generate passport number: "P" + 7 random digits
-        Random random = new Random();
-        int randomNumber = 1000000 + random.nextInt(9000000); // Generates a 7-digit number (1,000,000 to 9,999,999)
-        String passportNumber = "P" + randomNumber;
-        passportDetails.setPhilippinePassportNumber(passportNumber);
-
-        // 5. Set issue_date to current date (date of acceptance)
-        LocalDate issueDate = LocalDate.now();
-        passportDetails.setIssueDate(issueDate);
-
-        // 6. Calculate expiry_date based on issue_date and user's age at time of issue
-        LocalDate expiryDate;
-        if (userInfo != null && userInfo.getBirthDate() != null) {
-            int ageAtIssue = Period.between(userInfo.getBirthDate(), issueDate).getYears();
-            if (ageAtIssue < 18) {
-                expiryDate = issueDate.plusYears(5); // 5-year validity for minors
-            } else {
-                expiryDate = issueDate.plusYears(10); // 10-year validity for adults
-            }
-        } else {
-            // Fallback if age cannot be determined (e.g., default to 10 years)
-            // This scenario should ideally be prevented by ensuring complete user data.
-            System.err.println("User birth date not found for user_id: " + applicationId + ". Defaulting passport expiry to 10 years from issue.");
-            expiryDate = issueDate.plusYears(10);
-        }
-        passportDetails.setExpiryDate(expiryDate);
-
-        // 7. Set issue_place to blank (null)
-        passportDetails.setIssuePlace(null);
-
-        // 8. Save/Update UserPhilippinePassport record
-        // The savePhilippinePassport DAO method should handle INSERT or UPDATE (ON CONFLICT)
-        boolean passportSaved = philippinePassportDAO.savePhilippinePassport(passportDetails);
-        if (!passportSaved) {
-            System.err.println("Failed to save/update Philippine passport details for user_id: " + applicationId + " after application acceptance.");
-            // Consider if the overall operation should fail if passport details can't be saved.
-        }
-        
-        return true;
-    }
-
     public boolean processApplicationDenial(int applicationId, String feedback) {
         // Update application status to "Denied", set feedback, and reviewed_at
         boolean statusUpdated = applicationDAO.updateStatus(applicationId, "Denied", feedback);
@@ -318,8 +315,22 @@ public class ApplicationService {
         return applicationDAO.updateStatusToCancelled(applicationId);
     }
 
-    public boolean setCardReceived(int applicationId) {
-        return applicationDAO.updateCardReceivedStatus(applicationId, true);
+    public boolean setCardReceived(int applicationId, String issuePlace) {
+        // This should ideally be a transaction
+        boolean statusUpdated = applicationDAO.updateCardReceivedStatus(applicationId, true);
+        if (!statusUpdated) {
+            System.err.println("Failed to update card received status for application_id: " + applicationId);
+            return false;
+        }
+
+        boolean placeUpdated = philippinePassportDAO.updateIssuePlace(applicationId, issuePlace);
+        if (!placeUpdated) {
+            System.err.println("Failed to update issue place for application_id: " + applicationId);
+            // In a real-world scenario with transactions, you would roll back the status update here.
+            return false;
+        }
+
+        return true;
     }
 
     /**

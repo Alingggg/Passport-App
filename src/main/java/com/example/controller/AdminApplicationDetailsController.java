@@ -179,7 +179,7 @@ public class AdminApplicationDetailsController {
         if (philippinePassport != null) {
             setText(lblPhilippinePassportHolder, philippinePassport.getHasPhilippinePassport() ? "YES" : "NO");
             if (philippinePassport.getHasPhilippinePassport()) {
-                setText(lblPhilippinePassportNo, philippinePassport.getPhilippinePassportNumber());
+                setText(lblPhilippinePassportNo, philippinePassport.getOldPhilippinePassportNumber());
                 if (philippinePassport.getIssueDate() != null) {
                     setText(lblIssueDate, philippinePassport.getIssueDate().format(dateFormatter));
                 }

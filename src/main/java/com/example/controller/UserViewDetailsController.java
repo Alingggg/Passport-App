@@ -154,9 +154,9 @@ public class UserViewDetailsController {
                 if (currentUserProfile != null && currentUserProfile.getApplication() != null) {
                     Integer applicationId = currentUserProfile.getApplication().getApplicationId();
                     
-                    boolean cancelled = applicationService.cancelApplication(applicationId);
+                    boolean deleted = applicationService.deleteCompleteApplication(applicationId);
 
-                    if (cancelled) {
+                    if (deleted) {
                         showAlert(Alert.AlertType.INFORMATION, "Cancelled", "Your application has been successfully cancelled.");
                         try {
                             // Check if user has a previously accepted passport to determine navigation

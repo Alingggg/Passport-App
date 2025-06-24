@@ -3,9 +3,13 @@ package com.example.controller;
 import java.io.IOException;
 
 import com.example.Main;
+import com.example.service.ApplicationService;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class UserNotPassportHolderController {
 
@@ -13,9 +17,25 @@ public class UserNotPassportHolderController {
     private SidebarController sidebarController;
 
     @FXML
+    private Label lblStatusMessage;
+
+    @FXML
+    private Button btnAction;
+
+    private final ApplicationService applicationService = new ApplicationService();
+
+    @FXML
     public void initialize() {
         if (sidebarController != null) {
             sidebarController.setActiveTab("application");
+        }
+        Platform.runLater(this::updateStatus);
+    }
+
+    private void updateStatus() {
+        if (applicationService.hasExpiredPassport()) {
+            lblStatusMessage.setText("Your passport has expired.");
+            btnAction.setText("Re-apply Now");
         }
     }
 

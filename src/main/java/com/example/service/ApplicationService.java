@@ -125,6 +125,14 @@ public class ApplicationService {
         return userId != null && applicationDAO.hasAcceptedApplication(userId);
     }
 
+    public boolean hasExpiredPassport() {
+        Integer userId = UserSession.getInstance().getUserId();
+        if (userId == null) {
+            return false;
+        }
+        return applicationDAO.findLatestExpiredApplicationByUserId(userId) != null;
+    }
+
     /**
      * Gets the most recent application for the current user, regardless of status.
      * This is useful for checking the status of the latest submission.

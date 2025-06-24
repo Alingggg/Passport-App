@@ -80,9 +80,13 @@ public class SidebarController {
     @FXML
     void profileBtn(ActionEvent event) {
         try {
-            // Use the lightweight check to determine if an accepted profile exists.
-            if (applicationService.hasAcceptedApplication()) {
-                // An accepted profile exists, so the user has a valid passport.
+            // Check for expired passport first.
+            if (applicationService.hasExpiredPassport()) {
+                // If expired, route to UserProfile which will show the "expired" message.
+                System.out.println("User has an expired passport. Navigating to UserProfile...");
+                Main.setRoot("UserProfile");
+            } else if (applicationService.hasAcceptedApplication()) {
+                // An accepted, non-expired profile exists, so the user has a valid passport.
                 System.out.println("User has an accepted application. Navigating to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");
             } else {
@@ -99,6 +103,13 @@ public class SidebarController {
     @FXML
     void applicationBtn(ActionEvent event) {
         try {
+            // If passport is expired, always navigate to UserNotPassportHolder to show status and re-apply option.
+            if (applicationService.hasExpiredPassport()) {
+                System.out.println("User has an expired passport. Navigating to UserNotPassportHolder...");
+                Main.setRoot("UserNotPassportHolder");
+                return;
+            }
+
             // Get the user's most recent application
             PassportApplication latestApplication = applicationService.getLatestApplication();
 

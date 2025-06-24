@@ -115,14 +115,17 @@ public class UserLoginController {
     // Renamed and updated logic
     private void routeUserBasedOnApplicationStatus() {
         try {
-            // Use the lightweight check to determine if an accepted profile exists.
-            if (applicationService.hasAcceptedApplication()) {
-                // User has an accepted application - go to UserPassportInfo
+            // Check for expired passport first.
+            if (applicationService.hasExpiredPassport()) {
+                // If expired, route to UserProfile which will show the "expired" message.
+                System.out.println("User has an expired passport. Routing to UserProfile...");
+                Main.setRoot("UserProfile");
+            } else if (applicationService.hasAcceptedApplication()) {
+                // User has a valid, non-expired application - go to UserPassportInfo
                 System.out.println("User has an accepted application. Routing to UserPassportInfo...");
                 Main.setRoot("UserPassportInfo");
             } else {
                 // User doesn't have an accepted application (or no application at all) - go to UserProfile
-                // UserProfileController will then decide whether to show UserApplicationStatus or UserNotPassportHolder
                 System.out.println("User does not have an accepted application. Routing to UserProfile...");
                 Main.setRoot("UserProfile");
             }

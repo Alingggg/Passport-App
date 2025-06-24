@@ -315,6 +315,45 @@ public class PassportApplicationDAO {
         return applications;
     }
 
+    public PassportApplication findLatestExpiredApplicationByUserId(int userId) {
+        String sql = "SELECT pa.* " +
+                     "FROM ( " +
+                     "    SELECT *, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY submitted_at DESC) as rn " +
+                     "    FROM passport_application " +
+                     "    WHERE status = 'Accepted' AND user_id = ? " +
+                     ") pa " +
+                     "JOIN user_philippine_passport upp ON pa.application_id = upp.application_id " +
+                     "WHERE pa.rn = 1 AND upp.expiry_date < CURRENT_DATE";
+
+        try (Connection conn = dbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                PassportApplication app = new PassportApplication();
+                app.setApplicationId(rs.getInt("application_id"));
+                app.setUserId(rs.getInt("user_id"));
+                app.setStatus(rs.getString("status"));
+                app.setFeedback(rs.getString("feedback"));
+                app.setReferenceId(rs.getString("reference_id"));
+                app.setSubmittedAt(rs.getTimestamp("submitted_at").toLocalDateTime());
+                
+                Timestamp reviewedAt = rs.getTimestamp("reviewed_at");
+                if (reviewedAt != null) {
+                    app.setReviewedAt(reviewedAt.toLocalDateTime());
+                }
+                app.setCardReceived(rs.getBoolean("is_card_received"));
+                
+                return app;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<PassportApplication> getLatestCardPendingApplicationForEachUser() {
         List<PassportApplication> applications = new ArrayList<>();
         String sql = "SELECT * " +

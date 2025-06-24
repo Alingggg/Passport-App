@@ -529,21 +529,33 @@ public class UserApplicationFormController {
     private List<Image> createImages() {
         List<Image> images = new ArrayList<>();
         
-        // Show a progress dialog
-        ProgressIndicator progress = new ProgressIndicator();
-        progress.setMaxSize(50, 50);
-        
-        Label statusLabel = new Label("Uploading documents...");
-        
-        VBox progressBox = new VBox(10, statusLabel, progress);
+        // --- START: Improved Progress Dialog ---
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.setPrefSize(60, 60);
+
+        Label titleLabel = new Label("Uploading Documents");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #40659C;");
+
+        Label statusLabel = new Label("Please wait, this may take a moment...");
+        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #696868;");
+        statusLabel.setWrapText(true);
+        statusLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+        VBox progressBox = new VBox(20, titleLabel, progressIndicator, statusLabel);
         progressBox.setAlignment(Pos.CENTER);
-        progressBox.setPadding(new Insets(20));
-        
+        progressBox.setPadding(new Insets(30));
+        progressBox.setStyle("-fx-background-color: #F8F4F1;");
+        progressBox.setPrefSize(400, 250);
+
         Stage progressStage = new Stage();
-        progressStage.setScene(new Scene(progressBox));
-        progressStage.setTitle("Uploading Documents");
         progressStage.initModality(Modality.APPLICATION_MODAL);
+        progressStage.initOwner(scrollPane.getScene().getWindow());
         progressStage.setResizable(false);
+        progressStage.setTitle("Uploading...");
+
+        Scene scene = new Scene(progressBox);
+        progressStage.setScene(scene);
+        // --- END: Improved Progress Dialog ---
         
         // Create and start the upload task
         Task<List<Image>> uploadTask = new Task<>() {

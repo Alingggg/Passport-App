@@ -23,6 +23,10 @@ public class supabaseUtil {
     private static String getStorageBucket() {
         return ConfigLoader.get("SUPABASE_STORAGE_BUCKET");
     }
+
+    private static String getSupabaseServiceRoleKey() {
+        return ConfigLoader.get("SUPABASE_SERVICE_ROLE_KEY");
+    }
     
     private static final HttpClient client = HttpClient.newHttpClient();
     
@@ -52,7 +56,7 @@ public class supabaseUtil {
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(getSupabaseUrl() + "/storage/v1/object/" + getStorageBucket() + "/" + uniqueFileName))
             .header("apikey", getSupabaseApiKey())
-            .header("Authorization", "Bearer " + getSupabaseApiKey())
+            .header("Authorization", "Bearer " + getSupabaseServiceRoleKey())
             .header("Content-Type", contentType)
             .header("Cache-Control", "3600")
             .PUT(HttpRequest.BodyPublishers.ofByteArray(fileContent))

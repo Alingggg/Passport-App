@@ -29,7 +29,7 @@
          <font><Font name="Arial Bold" size="30" /></font>
       </Label>
 
-      <Label layoutX="412.0" layoutY="367.0" text="To complete the process, visit your selected Consular Office for:">
+      <Label layoutX="412.0" layoutY="367.0" text="To complete the process, visit your nearest Consular Office for:">
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
@@ -37,12 +37,23 @@
          <font><Font name="Arial Bold" size="13" /></font>
       </Label>
 
-      <Label layoutX="517.0" layoutY="404.0" style="-fx-text-fill: #40659C;" text="Passport claiming instructions">
-         <font><Font name="Arial Bold" size="13" /></font>
-      </Label>
-
-      <Label layoutX="471.0" layoutY="468.0" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
+      <Label layoutX="471.0" layoutY="494.0" style="-fx-text-fill: #F20707;" text="Bring this reference number and a valid ID when you visit.">
          <font><Font name="Arial Italic" size="11" /></font>
+      </Label>
+      <Label layoutX="582.0" layoutY="408.0" style="-fx-text-fill: #40659C;" text="Payment">
+         <font>
+            <Font name="Arial Bold" size="13" />
+         </font>
+      </Label>
+      <Label layoutX="535.0" layoutY="432.0" style="-fx-text-fill: #40659C;" text="Regular – Php 950.00">
+         <font>
+            <Font name="Arial Bold" size="13" />
+         </font>
+      </Label>
+      <Label layoutX="535.0" layoutY="448.0" style="-fx-text-fill: #40659C;" text="Expedite – Php 1.200.00">
+         <font>
+            <Font name="Arial Bold" size="13" />
+         </font>
       </Label>
    </children>
 </AnchorPane>
